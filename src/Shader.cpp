@@ -1,3 +1,5 @@
+/* Shader Class Abstraction */
+
 #include "Shader.h"
 
 #include <GL/glext.h>
@@ -50,7 +52,7 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath)
     glCompileShader(fragmentShader);
 
     // Create final shader program
-    program = glCreateProgram();
+    program = glCreateProgram(); // must be != 0
     glAttachShader(program, vertexShader);
     glAttachShader(program, fragmentShader);
     glLinkProgram(program);
@@ -113,11 +115,6 @@ Shader::Shader(const char *vertexPath,
     glDeleteShader(fragmentShader);
     glDeleteShader(tessControlShader);
     glDeleteShader(tessEvalShader);
-}
-
-Shader::~Shader()
-{
-    glDeleteProgram(program);
 }
 
 // Get uniform named name location

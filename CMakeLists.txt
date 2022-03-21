@@ -10,6 +10,10 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(glfw3 REQUIRED)
 find_package(glad REQUIRED)
 
+# Génère les tests  : la commande "ctest" permet de lancer tout les tests
+enable_testing()
+add_subdirectory(tests)
+
 # Libraries
 set(LIBS glfw glad)
 set(glm_dir /usr/include/glm) # header only librairy
@@ -19,7 +23,7 @@ file(GLOB SRCS "src/*.cpp")
 # Liste des définitions
 file(GLOB HEADERS "include/*.h")
 
-add_library(GLtemplate STATIC ${SRCS} ${HEADERS})
+add_library(GLtemplate SHARED ${SRCS} ${HEADERS})
 target_link_libraries(GLtemplate ${LIBS})
 target_include_directories(
   GLtemplate
@@ -38,7 +42,7 @@ install(
   RUNTIME DESTINATION bin/GLtemplate)
 export(TARGETS GLtemplate FILE "${CMAKE_SOURCE_DIR}/GLtemplateConfig.cmake")
 install(EXPORT GLtemplateConfig DESTINATION "lib/cmake/GLtemplate")
-
+install(FILES ${HEADERS} DESTINATION /usr/local/include/GLtemplate)
 string(ASCII 27 ESCAPE)
 message("${ESCAPE}[1;36m")
 message("======================= INSTALLATION =======================")
