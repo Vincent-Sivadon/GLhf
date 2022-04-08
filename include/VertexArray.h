@@ -4,14 +4,16 @@
 
 class VertexArray
 {
-private:
+public:
     GLuint ID;
-    GLuint buffer;
 
 public:
-    VertexArray(GLuint buffer, int count);
-    ~VertexArray();
+    VertexArray() {}
+    VertexArray(int location, int count);
+    ~VertexArray() {}
 
     void bind();
     void unbind();
+
+    void destroy();
 };

@@ -1,5 +1,7 @@
 #include "VertexBuffer.h"
 
+#include <stdio.h>
+
 VertexBuffer::VertexBuffer(const void *data, GLuint size)
 {
     glGenBuffers(1, &ID);
@@ -7,17 +9,19 @@ VertexBuffer::VertexBuffer(const void *data, GLuint size)
     glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 }
 
-VertexBuffer::~VertexBuffer()
+void VertexBuffer::bind() const
 {
-    glDeleteBuffers(1, &ID);
-}
+    printf("vao id : %u\n", ID);
 
-void VertexBuffer::Bind() const
-{
     glBindBuffer(GL_ARRAY_BUFFER, ID);
 }
 
-void VertexBuffer::Unbind() const
+void VertexBuffer::unbind() const
 {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void VertexBuffer::destroy()
+{
+    glDeleteBuffers(1, &ID);
 }

@@ -9,9 +9,12 @@ private:
     GLuint ID;
 
 public:
+    VertexBuffer() {}
     VertexBuffer(const void *data, GLuint size);
-    ~VertexBuffer();
+    ~VertexBuffer() {}
 
-    void Bind() const;
-    void Unbind() const;
+    void bind() const;
+    void unbind() const;
+
+    void destroy();
 };

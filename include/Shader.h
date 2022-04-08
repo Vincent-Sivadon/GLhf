@@ -16,9 +16,6 @@ private:
     // Shader program
     GLuint program;
 
-    // Get uniform named name location
-    GLint getUniformLocation(const std::string &name);
-
 public:
     Shader() {}
     // Shader program creation from files (vertex, fragment)
@@ -37,6 +34,8 @@ public:
 
     // Set uniform named name to mat
     void SetUniform(const std::string &name, const glm::mat4 &mat);
+    // Get uniform named name location
+    GLint getUniformLocation(const std::string &name);
 
     // Cleans memory
     void destroy() { glDeleteProgram(program); }
