@@ -4,7 +4,7 @@
 
 class VertexArray
 {
-public:
+private:
     GLuint ID;
 
 public:
