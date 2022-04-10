@@ -29,14 +29,16 @@ public:
     ~Shader(){};
 
     // Bind the shader program
-    void bind() { glUseProgram(program); }
-    void unbind() { glUseProgram(0); }
+    void Bind() { glUseProgram(program); }
+    void Unbind() { glUseProgram(0); }
 
     // Set uniform named name to mat
     void SetUniform(const std::string &name, const glm::mat4 &mat);
     // Get uniform named name location
-    GLint getUniformLocation(const std::string &name);
+    GLint GetUniformLocation(const std::string &name);
+    // Set program
+    void SetProgram(GLuint prog) { program = prog; }
 
     // Cleans memory
-    void destroy() { glDeleteProgram(program); }
+    void Destroy() { glDeleteProgram(program); }
 };

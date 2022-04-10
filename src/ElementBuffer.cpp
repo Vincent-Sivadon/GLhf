@@ -8,17 +8,17 @@ ElementBuffer::ElementBuffer(const GLuint *data, GLuint count)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLuint), data, GL_STATIC_DRAW);
 }
 
-void ElementBuffer::bind() const
+void ElementBuffer::Bind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ID);
 }
 
-void ElementBuffer::unbind() const
+void ElementBuffer::Unbind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void ElementBuffer::destroy()
+void ElementBuffer::Destroy()
 {
     glDeleteBuffers(1, &ID);
 }

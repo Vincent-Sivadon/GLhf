@@ -46,13 +46,13 @@ public:
     virtual ~App() = default;
 
     // App's main function
-    void run();
+    void Run();
 
     // Functions to be implemented
-    virtual void startup() = 0;         // Initialize OpenGL objects
-    virtual void render(double ct) = 0; // Rendering protocole
-    virtual void processInput();        // Input Management
-    virtual void shutdown() = 0;        // Memory cleaning
+    virtual void Startup() = 0;         // Initialize OpenGL objects
+    virtual void Render(double ct) = 0; // Rendering protocole
+    virtual void ProcessInput();        // Input Management
+    virtual void Shutdown() = 0;        // Memory cleaning
 
 protected:
     // Window
@@ -70,7 +70,7 @@ protected:
     int main(int argc, const char **argv) \
     {                                     \
         a *app = new a;                   \
-        app->run();                       \
+        app->Run();                       \
         delete app;                       \
         return 0;                         \
     }

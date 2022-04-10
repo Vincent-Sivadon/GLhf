@@ -118,7 +118,7 @@ Shader::Shader(const char *vertexPath,
 }
 
 // Get uniform named name location
-GLint Shader::getUniformLocation(const std::string &name)
+GLint Shader::GetUniformLocation(const std::string &name)
 {
     return glGetUniformLocation(program, name.c_str());
 }
@@ -126,6 +126,6 @@ GLint Shader::getUniformLocation(const std::string &name)
 // Set uniform named name to mat
 void Shader::SetUniform(const std::string &name, const glm::mat4 &mat)
 {
-    GLint location = getUniformLocation(name);
+    GLint location = GetUniformLocation(name);
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
 }

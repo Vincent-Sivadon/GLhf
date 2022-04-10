@@ -3,7 +3,7 @@
 #include <iostream>
 
 // App's main function
-void App::run()
+void App::Run()
 {
     // GLFW initialization
     // -------------------
@@ -39,7 +39,7 @@ void App::run()
 
     // Overrided function
     // ------------------
-    startup();
+    Startup();
 
     // Game loop
     // ----------
@@ -53,25 +53,25 @@ void App::run()
 
         // Rendering
         // ---------
-        render(glfwGetTime());
+        Render(glfwGetTime());
         glfwSwapBuffers(window);
 
         // Input
         // -----
         glfwPollEvents();
-        processInput();
+        ProcessInput();
     }
 
     // Clean memory
     // ------------
-    shutdown();
+    Shutdown();
     glfwDestroyWindow(window);
     glfwTerminate();
 }
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void App::processInput()
+void App::ProcessInput()
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);

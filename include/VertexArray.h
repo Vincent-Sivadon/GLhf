@@ -12,8 +12,8 @@ public:
     VertexArray(int location, int count);
     ~VertexArray() {}
 
-    void bind();
-    void unbind();
+    void Bind();
+    void Unbind();
 
-    void destroy();
+    void Destroy();
 };

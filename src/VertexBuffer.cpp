@@ -9,19 +9,19 @@ VertexBuffer::VertexBuffer(const void *data, GLuint size)
     glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 }
 
-void VertexBuffer::bind() const
+void VertexBuffer::Bind() const
 {
     printf("vao id : %u\n", ID);
 
     glBindBuffer(GL_ARRAY_BUFFER, ID);
 }
 
-void VertexBuffer::unbind() const
+void VertexBuffer::Unbind() const
 {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void VertexBuffer::destroy()
+void VertexBuffer::Destroy()
 {
     glDeleteBuffers(1, &ID);
 }

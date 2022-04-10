@@ -9,24 +9,24 @@
 class StructureExample : public App
 {
 public:
-    void startup() override
+    void Startup() override
     {
         std::cout << "============================== Startup ==============================\n";
     }
 
-    void render(double time) override
+    void Render(double time) override
     {
         std::cout << "|Rendering|";
     }
 
-    void processInput() override
+    void ProcessInput() override
     {
-        std::cout << "|Processing Input|";
+        std::cout << "|Processing Input|\n";
 
         exit(0); // leaving that message makes so we don't test shutdown, but it's more convenient
     }
 
-    void shutdown() override
+    void Shutdown() override
     {
         std::cout << "\n============================== Shutdown ==============================\n";
     }

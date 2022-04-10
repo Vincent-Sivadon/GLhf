@@ -7,7 +7,7 @@
 class ShaderTest : public App
 {
 public:
-    void startup() override
+    void Startup() override
     {
         shader = Shader("../tests/shaders/triangle.vs", "../tests/shaders/triangle.fs");
 
@@ -15,23 +15,23 @@ public:
         glBindVertexArray(vao);
     }
 
-    void render(double time) override
+    void Render(double time) override
     {
         static const GLfloat green[] = {0.0f, 0.25f, 0.0f, 1.0f};
         glClearBufferfv(GL_COLOR, 0, green);
 
-        shader.bind();
+        shader.Bind();
         glDrawArrays(GL_TRIANGLES, 0, 3);
     }
 
-    void processInput()
+    void ProcessInput()
     {
         exit(0);
     }
 
-    void shutdown() override
+    void Shutdown() override
     {
-        shader.destroy();
+        shader.Destroy();
         glDeleteVertexArrays(1, &vao);
     }
 

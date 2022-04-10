@@ -14,11 +14,11 @@ public:
     ElementBuffer(const GLuint *data, GLuint count);
     ~ElementBuffer() {}
 
-    void bind() const;
-    void unbind() const;
+    void Bind() const;
+    void Unbind() const;
 
-    void destroy();
+    void Destroy();
 
     // Getter
-    inline GLuint getCount() const { return count; };
+    inline GLuint GetCount() const { return count; };
 };

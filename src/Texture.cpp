@@ -13,7 +13,7 @@ Texture2D::Texture2D()
 }
 
 // Generates texture from image data
-void Texture2D::generate(GLuint w, GLuint h, const GLubyte *data)
+void Texture2D::Generate(GLuint w, GLuint h, const GLubyte *data)
 {
     // Redefine dimensions
     width = w;

@@ -7,7 +7,7 @@
 class VAOTest : public App
 {
 public:
-    void startup() override
+    void Startup() override
     {
         shader = Shader("../tests/shaders/data_triangle.vs", "../tests/shaders/data_triangle.fs");
 
@@ -26,25 +26,25 @@ public:
         vao = VertexArray(0, 3);
     }
 
-    void render(double time) override
+    void Render(double time) override
     {
         static const GLfloat green[] = {0.0f, 0.25f, 0.0f, 1.0f};
         glClearBufferfv(GL_COLOR, 0, green);
 
-        shader.bind();
-        vao.bind();
+        shader.Bind();
+        vao.Bind();
         glDrawArrays(GL_TRIANGLES, 0, 3);
     }
 
-    void processInput()
+    void ProcessInput()
     {
         exit(0);
     }
 
-    void shutdown() override
+    void Shutdown() override
     {
-        shader.destroy();
-        vao.destroy();
+        shader.Destroy();
+        vao.Destroy();
     }
 
 private:

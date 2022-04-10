@@ -7,7 +7,7 @@
 class EBOTest : public App
 {
 public:
-    void startup() override
+    void Startup() override
     {
         shader = Shader("../tests/shaders/data_triangle.vs", "../tests/shaders/data_triangle.fs");
 
@@ -29,28 +29,28 @@ public:
         ebo = ElementBuffer(indices, sizeof(indices));
     }
 
-    void render(double time) override
+    void Render(double time) override
     {
         static const GLfloat green[] = {0.0f, 0.25f, 0.0f, 1.0f};
         glClearBufferfv(GL_COLOR, 0, green);
 
-        shader.bind();
-        vao.bind();
-        ebo.bind();
+        shader.Bind();
+        vao.Bind();
+        ebo.Bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     }
 
     void processInput()
     {
-        // exit(0);
+        exit(0);
     }
 
-    void shutdown() override
+    void Shutdown() override
     {
-        shader.destroy();
-        vao.destroy();
-        vbo.destroy();
-        ebo.destroy();
+        shader.Destroy();
+        vao.Destroy();
+        vbo.Destroy();
+        ebo.Destroy();
     }
 
 private:

@@ -11,17 +11,17 @@ VertexArray::VertexArray(int location, int count)
     glEnableVertexAttribArray(location);
 }
 
-void VertexArray::bind()
+void VertexArray::Bind()
 {
     glBindVertexArray(ID);
 }
 
-void VertexArray::unbind()
+void VertexArray::Unbind()
 {
     glBindVertexArray(0);
 }
 
-void VertexArray::destroy()
+void VertexArray::Destroy()
 {
     glDeleteVertexArrays(1, &ID);
 }

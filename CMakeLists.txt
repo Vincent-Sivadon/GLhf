@@ -19,9 +19,11 @@ set(LIBS glfw glad)
 set(glm_dir /usr/include/glm) # header only librairy
 
 # Liste des fichiers sources
-file(GLOB SRCS "src/*.cpp")
+file(GLOB SRCS "src/*.cpp" "primitives/*.cpp")
 # Liste des définitions
-file(GLOB HEADERS "include/*.h")
+file(GLOB HEADERS "include/*.h" "primitives/*.h")
+# Liste des shaders primitives
+file(GLOB SHADERS "primitives/shaders/*")
 
 add_library(GLtemplate SHARED ${SRCS} ${HEADERS})
 target_link_libraries(GLtemplate ${LIBS})
@@ -43,6 +45,8 @@ install(
 export(TARGETS GLtemplate FILE "${CMAKE_SOURCE_DIR}/GLtemplateConfig.cmake")
 install(EXPORT GLtemplateConfig DESTINATION "lib/cmake/GLtemplate")
 install(FILES ${HEADERS} DESTINATION /usr/local/include/GLtemplate)
+install(FILES ${SHADERS} DESTINATION /usr/local/share/GLtemplate/)
+
 string(ASCII 27 ESCAPE)
 message("${ESCAPE}[1;36m")
 message("======================= INSTALLATION =======================")
