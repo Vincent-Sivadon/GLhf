@@ -27,6 +27,7 @@ file(GLOB SHADERS "primitives/shaders/*")
 
 add_library(GLtemplate SHARED ${SRCS} ${HEADERS})
 target_link_libraries(GLtemplate ${LIBS})
+target_compile_options(GLtemplate PUBLIC -g)
 target_include_directories(
   GLtemplate
   PUBLIC
