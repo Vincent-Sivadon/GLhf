@@ -29,12 +29,12 @@ add_library(GLtemplate SHARED ${SRCS} ${HEADERS})
 target_link_libraries(GLtemplate ${LIBS})
 target_include_directories(
   GLtemplate
-  PUBLIC "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include;${glm_dir}>" # for
-         # headers when building
-         $<INSTALL_INTERFACE:/usr/local/include/GLtemplate> # for client in
-                                                            # install mode
-         $<INSTALL_INTERFACE:/usr/local/lib>) # for config_impl.hpp in install
-                                              # mode)
+  PUBLIC
+    "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include;${glm_dir};${CMAKE_SOURCE_DIR}/primitives>" # for
+    # headers when building
+    $<INSTALL_INTERFACE:/usr/local/include/GLtemplate> # for client in install
+                                                       # mode
+    $<INSTALL_INTERFACE:/usr/local/lib>) # for config_impl.hpp in install mode)
 
 install(
   TARGETS GLtemplate

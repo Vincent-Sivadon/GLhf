@@ -11,32 +11,28 @@ class QuadTest : public App
 public:
     void Startup() override
     {
-        camera.Set(0.0f, 0.0f, 4.0f);
-        quad.Init(this);
-        quad.SetView(camera.GetViewMatrix());
+        quad.width = 0.5f;
+        quad.pos = glm::vec3(2.0f, -1.0f, 0.0f);
+        quad.Create(WIDTH, HEIGHT);
+        quad.SetColor(1.0, 1.0, 1.0);
+
+        quad2.Create(WIDTH, HEIGHT);
+        quad2.SetPosition(-2.0f, -1.0f);
+        quad2.SetColor(1.0, 1.0, 1.0);
+
+        AddShape(&quad2);
+        AddShape(&quad);
     }
 
-    void Render(double time) override
-    {
-        static const GLfloat green[] = {0.0f, 0.25f, 0.0f, 1.0f};
-        glClearBufferfv(GL_COLOR, 0, green);
+    void Render(double time) override {}
 
-        quad.SetView(camera.GetViewMatrix());
-        quad.Draw();
-    }
+    void ProcessInput() override {}
 
-    void ProcessInput() override
-    {
-        // exit(0);
-    }
-
-    void Shutdown() override
-    {
-        quad.Destroy();
-    }
+    void Shutdown() override {}
 
 private:
     Quad quad;
+    Quad quad2;
 };
 
 DECLARE_MAIN(QuadTest);

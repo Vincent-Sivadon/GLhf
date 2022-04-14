@@ -1,30 +1,65 @@
 #pragma once
 
-#include "GLtemplate.h"
+#include "Shape.h"
 
-class Quad
+class Quad : public Shape
 {
-private:
-    Shader shader;
-    VertexArray vao;
-    VertexBuffer vbo;
-    ElementBuffer ebo;
-
-    glm::mat4 model;
-    glm::mat4 view;
-    glm::mat4 projection;
-
-    App *app;
-
 public:
-    void Init(App *application);
-    void Destroy();
+    float width = 1.0f, height = 1.0f;
 
-    void Draw();
+    void Create(int winWidth, int winHeight) override;
+    void Destroy() override;
 
-    void SetModel(const glm::mat4 &mat);
-    void SetView(const glm::mat4 &mat);
-    void SetProjection(const glm::mat4 &proj);
-
-    float GetViewX() { return view[0][0]; }
+    void Draw() override;
 };
+
+void Quad::Create(int winWidth, int winHeight)
+{
+    shader = Shader("/usr/local/share/GLtemplate/shape.vs", "/usr/local/share/GLtemplate/shape.fs");
+
+    // Cube vertices
+    static const GLfloat vertices[] = {
+        1.0f, 1.0f, 0.0f,   // top right
+        1.0f, -1.0f, 0.0f,  // bottom right
+        -1.0f, -1.0f, 0.0f, // bottom left
+        -1.0f, 1.0f, 0.0f   // top left
+    };
+    GLuint indices[] = {
+        // note that we start from 0!
+        0, 1, 3, // first triangle
+        1, 2, 3  // second triangle
+    };
+
+    // Buffers
+    vbo = VertexBuffer(vertices, sizeof(vertices));
+    vao = VertexArray(0, 3);
+    ebo = ElementBuffer(indices, sizeof(indices));
+
+    // Projection Matrix
+    SetProjection(glm::perspective(glm::radians(45.0f), (float)winWidth / (float)winHeight, 0.1f, 100.0f));
+
+    // Model Matrix
+    model = glm::mat4(1.0f);
+    model = glm::translate(model, pos);
+    model = glm::scale(model, glm::vec3(width, height, 1.0f));
+    SetModel(model);
+
+    // View matrix
+    SetView(glm::mat4(1.0f));
+}
+
+void Quad::Destroy()
+{
+    shader.Destroy();
+    vao.Destroy();
+    vbo.Destroy();
+    ebo.Destroy();
+}
+
+void Quad::Draw()
+{
+    shader.Bind();
+    vao.Bind();
+    ebo.Bind();
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}

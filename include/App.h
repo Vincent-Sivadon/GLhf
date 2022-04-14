@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Camera.h"
+#include "Shape.h"
 
 #include <glad/glad.h>
 
@@ -12,6 +13,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include <vector>
 
 // Callback functions
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
@@ -66,7 +69,12 @@ public:
     inline static float lastX = WIDTH / 2.0f;
     inline static float lastY = HEIGHT / 2.0f;
 
+    // Game Objects
+    void AddShape(Shape *shape) { shapes.push_back(shape); }
+
 protected:
+    std::vector<Shape *> shapes;
+
     GLFWwindow *window;
 
     // Frames variables

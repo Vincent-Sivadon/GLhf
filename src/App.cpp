@@ -55,7 +55,14 @@ void App::Run()
 
         // Rendering
         // ---------
-        Render(glfwGetTime());
+        static const GLfloat green[] = {0.0f, 0.25f, 0.0f, 1.0f};
+        glClearBufferfv(GL_COLOR, 0, green);
+        for (Shape *shape : shapes)
+        {
+            shape->SetView(camera.GetViewMatrix());
+            shape->Draw();
+        }
+
         glfwSwapBuffers(window);
 
         // Input
@@ -65,6 +72,8 @@ void App::Run()
 
     // Clean memory
     // ------------
+    for (Shape *shape : shapes)
+        shape->Destroy();
     Shutdown();
     glfwDestroyWindow(window);
     glfwTerminate();
