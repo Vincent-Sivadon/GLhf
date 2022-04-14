@@ -6,3 +6,4 @@
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "Texture.h"
+#include "Camera.h"

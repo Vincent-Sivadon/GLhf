@@ -24,9 +24,9 @@ public:
         glDrawArrays(GL_TRIANGLES, 0, 3);
     }
 
-    void ProcessInput()
+    void ProcessInput() override
     {
-        exit(0);
+        // exit(0);
     }
 
     void Shutdown() override

@@ -5,8 +5,11 @@
 
 #include <iostream>
 
-void Quad::Init()
+void Quad::Init(App *application)
 {
+    // Define the application context
+    app = application;
+
     shader = Shader("/usr/local/share/GLtemplate/quad.vs", "/usr/local/share/GLtemplate/quad.fs");
 
     // Cube vertices
@@ -22,15 +25,19 @@ void Quad::Init()
         1, 2, 3  // second triangle
     };
 
+    // Buffers
     vbo = VertexBuffer(vertices, sizeof(vertices));
     vao = VertexArray(0, 3);
     ebo = ElementBuffer(indices, sizeof(indices));
 
     // Projection Matrix
-    projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);
-    // Model View Matrix
-    modelView = glm::mat4(1.0f);
-    modelView = glm::translate(modelView, glm::vec3(0.0f, 0.0f, -4.0f)); // Camera
+    SetProjection(glm::perspective(glm::radians(45.0f), (float)app->WIDTH / (float)app->HEIGHT, 0.1f, 100.0f));
+
+    // Model Matrix
+    SetModel(glm::mat4(1.0f));
+
+    // View matrix
+    SetView(glm::mat4(1.0f));
 }
 
 void Quad::Destroy()
@@ -41,29 +48,31 @@ void Quad::Destroy()
     ebo.Destroy();
 }
 
-void Quad::Draw(double ct)
+void Quad::Draw()
 {
-    // Set uniforms
-    // ------------
-    shader.Bind(); // Use shader program
-    shader.SetUniform("modelView", modelView);
-    shader.SetUniform("projection", projection);
-
-    // Draw Call
-    // ---------
+    shader.Bind();
     vao.Bind();
     ebo.Bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
-void Quad::ModelViewTranslatation(glm::vec3 vec)
+void Quad::SetModel(const glm::mat4 &mat)
 {
-    // Declaration
-    modelView = glm::mat4(1.0f);
+    shader.Bind(); // Use shader program
+    model = mat;
+    shader.SetUniform("model", model);
+}
 
-    // Camera
-    modelView = glm::translate(modelView, glm::vec3(0.0f, 0.0f, -4.0f));
+void Quad::SetView(const glm::mat4 &mat)
+{
+    shader.Bind(); // Use shader program
+    view = mat;
+    shader.SetUniform("view", view);
+}
 
-    // Translation by pos
-    modelView = glm::translate(modelView, vec);
+void Quad::SetProjection(const glm::mat4 &proj)
+{
+    shader.Bind();
+    projection = proj;
+    shader.SetUniform("projection", projection);
 }

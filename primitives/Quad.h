@@ -10,14 +10,21 @@ private:
     VertexBuffer vbo;
     ElementBuffer ebo;
 
+    glm::mat4 model;
+    glm::mat4 view;
     glm::mat4 projection;
-    glm::mat4 modelView;
+
+    App *app;
 
 public:
-    void Init();
+    void Init(App *application);
     void Destroy();
 
-    void Draw(double ct);
+    void Draw();
 
-    void ModelViewTranslatation(glm::vec3 vec);
+    void SetModel(const glm::mat4 &mat);
+    void SetView(const glm::mat4 &mat);
+    void SetProjection(const glm::mat4 &proj);
+
+    float GetViewX() { return view[0][0]; }
 };

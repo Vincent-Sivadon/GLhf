@@ -11,7 +11,9 @@ class QuadTest : public App
 public:
     void Startup() override
     {
-        quad.Init();
+        camera.Set(0.0f, 0.0f, 4.0f);
+        quad.Init(this);
+        quad.SetView(camera.GetViewMatrix());
     }
 
     void Render(double time) override
@@ -19,14 +21,11 @@ public:
         static const GLfloat green[] = {0.0f, 0.25f, 0.0f, 1.0f};
         glClearBufferfv(GL_COLOR, 0, green);
 
-        // Translation
-        glm::vec3 vec(0.5f * time, 0.5f * time, 0.0f);
-        quad.ModelViewTranslatation(vec);
-
-        quad.Draw(time);
+        quad.SetView(camera.GetViewMatrix());
+        quad.Draw();
     }
 
-    void processInput()
+    void ProcessInput() override
     {
         // exit(0);
     }

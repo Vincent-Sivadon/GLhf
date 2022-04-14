@@ -15,7 +15,7 @@ enable_testing()
 add_subdirectory(tests)
 
 # Libraries
-set(LIBS glfw glad)
+set(LIBS glfw glad ${FREETYPE_LIBRARIES})
 set(glm_dir /usr/include/glm) # header only librairy
 
 # Liste des fichiers sources

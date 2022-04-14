@@ -32,8 +32,10 @@ public:
     void Bind() { glUseProgram(program); }
     void Unbind() { glUseProgram(0); }
 
-    // Set uniform named name to mat
+    // Set uniform named name
     void SetUniform(const std::string &name, const glm::mat4 &mat);
+    void SetUniform(const std::string &name, const glm::vec3 &vec);
+
     // Get uniform named name location
     GLint GetUniformLocation(const std::string &name);
     // Set program

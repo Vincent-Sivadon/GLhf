@@ -129,3 +129,9 @@ void Shader::SetUniform(const std::string &name, const glm::mat4 &mat)
     GLint location = GetUniformLocation(name);
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
 }
+
+void Shader::SetUniform(const std::string &name, const glm::vec3 &vec)
+{
+    GLint location = GetUniformLocation(name);
+    glUniform3fv(location, 1, glm::value_ptr(vec));
+}

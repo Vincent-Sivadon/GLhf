@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "Camera.h"
+
 #include <glad/glad.h>
 
 #include <GLFW/glfw3.h>
@@ -13,7 +15,7 @@
 
 // Callback functions
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-void processInput(GLFWwindow *window);
+void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 
 /*
  * ------------- Abstract Class Application -------------
@@ -23,7 +25,7 @@ void processInput(GLFWwindow *window);
  * public:
  *     void startup() override {}           // Initialize OpenGL objects
  *     void render() override {}            // Rendering protocole
- *     void processInput() override {}      // Input Management
+ *     void ProcessInput() override {}      // Input Management (on top of default ones)
  *     void shutdown() override {}          // Memory cleaning
  * private:
  *     int member;
@@ -51,18 +53,30 @@ public:
     // Functions to be implemented
     virtual void Startup() = 0;         // Initialize OpenGL objects
     virtual void Render(double ct) = 0; // Rendering protocole
-    virtual void ProcessInput();        // Input Management
+    void defaultProcessInput();         // Default Input Management
+    virtual void ProcessInput() = 0;    // Input Management (user)
     virtual void Shutdown() = 0;        // Memory cleaning
 
-protected:
     // Window
-    int WIDTH;
-    int HEIGHT;
+    inline static int WIDTH = 1000.0f;
+    inline static int HEIGHT = 800.0f;
+
+    inline static Camera camera;
+    inline static bool firstMouse = true;
+    inline static float lastX = WIDTH / 2.0f;
+    inline static float lastY = HEIGHT / 2.0f;
+
+protected:
     GLFWwindow *window;
 
     // Frames variables
     float dt = 0;
     float lt = 0;
+
+    // Callback functions
+    void initCallbackFunctions(); // Set event callback functions
+    static void framebuffer_size_callback(int width, int height);
+    static void mouse_callback(double xpos, double ypos);
 };
 
 // Automatic main constructor
