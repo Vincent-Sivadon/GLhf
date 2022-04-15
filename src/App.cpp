@@ -55,8 +55,8 @@ void App::Run()
 
         // Rendering
         // ---------
-        static const GLfloat green[] = {0.0f, 0.25f, 0.0f, 1.0f};
-        glClearBufferfv(GL_COLOR, 0, green);
+        static const GLfloat black[] = {0.1f, 0.1f, 0.1f, 1.0f};
+        glClearBufferfv(GL_COLOR, 0, black);
         for (Shape *shape : shapes)
         {
             shape->SetView(camera.GetViewMatrix());

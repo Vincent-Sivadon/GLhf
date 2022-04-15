@@ -15,9 +15,9 @@ public:
     void Startup() override
     {
         disk.color = glm::vec3(1.0f, 1.0f, 1.0f);
-        disk.Create(WIDTH, HEIGHT);
+        disk.Create();
         disk2.pos = glm::vec3(2.0f, -0.5f, 0.0f);
-        disk2.Create(WIDTH, HEIGHT);
+        disk2.Create();
 
         edge.height = 0.05f;
         float dx = disk2.pos.x - disk.pos.x;
@@ -28,18 +28,18 @@ public:
         edge.angle = (float)atan(disk2.pos.y - edge.pos.y);
         // edge.angle = 1.6f;
         edge.color = glm::vec3(1.0f, 0.0f, 0.0f);
-        edge.Create(WIDTH, HEIGHT);
+        edge.Create();
 
         edg = Edge(disk, disk2);
         edg.color = glm::vec3(1.0f, 1.0f, 1.0f);
-        edg.Create(WIDTH, HEIGHT);
+        edg.Create();
 
         quad.width = 0.5f;
         quad.pos = glm::vec3(2.0f, -1.0f, 0.0f);
-        quad.Create(WIDTH, HEIGHT);
+        quad.Create();
         quad.SetColor(1.0, 1.0, 1.0);
 
-        quad2.Create(WIDTH, HEIGHT);
+        quad2.Create();
         quad2.SetPosition(-2.0f, -1.0f);
         quad2.SetColor(1.0, 1.0, 1.0);
 

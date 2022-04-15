@@ -4,11 +4,10 @@
 
 class VertexBuffer
 {
-private:
+public:
     // Every OpenGL object will have an ID (name)
     GLuint ID;
 
-public:
     VertexBuffer() {}
     VertexBuffer(const void *data, GLuint size);
     ~VertexBuffer() {}

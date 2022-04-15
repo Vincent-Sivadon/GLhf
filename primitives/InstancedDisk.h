@@ -4,9 +4,15 @@
 
 #include <math.h>
 
-class Disk : public Shape
+class InstancedDisk : public Shape
 {
+private:
+    VertexBuffer instancedVBO;
+
 public:
+    float N;
+    glm::vec2 *positions;
+
     float radius = 1.0f;
 
     void Create() override;
@@ -15,9 +21,12 @@ public:
     void Draw() override;
 };
 
-void Disk::Create()
+void InstancedDisk::Create()
 {
-    shader = Shader("/usr/local/share/GLtemplate/shape.vs", "/usr/local/share/GLtemplate/shape.fs");
+    assert(N > 0);
+    assert(positions != nullptr);
+
+    shader = Shader("/usr/local/share/GLtemplate/instanced_shape.vs", "/usr/local/share/GLtemplate/shape.fs");
 
     // Vertices
     static const GLfloat vertices[] = {
@@ -41,9 +50,22 @@ void Disk::Create()
         0, 8, 7,
         0, 1, 8};
 
-    // Buffers
+    // Vertex Buffers
     vbo = VertexBuffer(vertices, sizeof(vertices));
+    instancedVBO = VertexBuffer(positions, N * sizeof(glm::vec2));
+
+    // Vertex Array
+    vbo.Bind();
     vao = VertexArray(0, 3);
+
+    instancedVBO.Bind();
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, instancedVBO.ID); // this attribute comes from a different vertex buffer
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glVertexAttribDivisor(1, 1); // tell OpenGL this is an instanced vertex attribute.
+
+    // Element buffer
     ebo = ElementBuffer(indices, sizeof(indices));
 
     // Projection Matrix
@@ -61,20 +83,23 @@ void Disk::Create()
 
     // Color
     SetColor(color.x, color.y, color.z);
+
+    delete positions;
 }
 
-void Disk::Destroy()
+void InstancedDisk::Destroy()
 {
     shader.Destroy();
     vao.Destroy();
     vbo.Destroy();
+    instancedVBO.Destroy();
     ebo.Destroy();
 }
 
-void Disk::Draw()
+void InstancedDisk::Draw()
 {
     shader.Bind();
     vao.Bind();
     ebo.Bind();
-    glDrawElements(GL_TRIANGLES, 3 * 8, GL_UNSIGNED_INT, 0);
+    glDrawElementsInstanced(GL_TRIANGLES, 3 * 8, GL_UNSIGNED_INT, 0, N);
 }

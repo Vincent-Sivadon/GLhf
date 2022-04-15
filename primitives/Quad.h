@@ -7,13 +7,13 @@ class Quad : public Shape
 public:
     float width = 1.0f, height = 1.0f;
 
-    void Create(int winWidth, int winHeight) override;
+    void Create() override;
     void Destroy() override;
 
     void Draw() override;
 };
 
-void Quad::Create(int winWidth, int winHeight)
+void Quad::Create()
 {
     shader = Shader("/usr/local/share/GLtemplate/shape.vs", "/usr/local/share/GLtemplate/shape.fs");
 
@@ -36,7 +36,7 @@ void Quad::Create(int winWidth, int winHeight)
     ebo = ElementBuffer(indices, sizeof(indices));
 
     // Projection Matrix
-    SetProjection(glm::perspective(glm::radians(45.0f), (float)winWidth / (float)winHeight, 0.1f, 100.0f));
+    SetProjection(glm::perspective(glm::radians(45.0f), 1000.0f / 800.0f, 0.1f, 100.0f));
 
     // Model Matrix
     model = glm::mat4(1.0f);

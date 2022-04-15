@@ -23,7 +23,7 @@ public:
     glm::vec3 color;
     float angle = 0.0f;
 
-    virtual void Create(int winWidth, int winHeight) = 0;
+    virtual void Create() = 0;
     virtual void Destroy() = 0;
 
     virtual void Draw() = 0;
