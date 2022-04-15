@@ -41,11 +41,15 @@ void Quad::Create(int winWidth, int winHeight)
     // Model Matrix
     model = glm::mat4(1.0f);
     model = glm::translate(model, pos);
+    model = glm::rotate(model, angle, glm::vec3(0.0f, 0.0f, 1.0f));
     model = glm::scale(model, glm::vec3(width, height, 1.0f));
     SetModel(model);
 
     // View matrix
     SetView(glm::mat4(1.0f));
+
+    // Color
+    SetColor(color.x, color.y, color.z);
 }
 
 void Quad::Destroy()

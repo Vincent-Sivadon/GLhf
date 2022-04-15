@@ -21,6 +21,7 @@ public:
 
     glm::vec3 pos;
     glm::vec3 color;
+    float angle = 0.0f;
 
     virtual void Create(int winWidth, int winHeight) = 0;
     virtual void Destroy() = 0;
