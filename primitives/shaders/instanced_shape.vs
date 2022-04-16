@@ -1,13 +1,12 @@
 #version 330 core
 
 layout(location=0)in vec3 pos;
-layout(location=1)in vec2 instancePos;
+layout(location=1)in mat4 instanceModelMatrix;
 
-uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
 void main()
 {
-    gl_Position=projection*view*model*vec4(pos+glm::vec3(instancePos,0.f),1.);
+    gl_Position=projection*view*instanceModelMatrix*vec4(pos,1.);
 }

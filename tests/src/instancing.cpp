@@ -6,19 +6,34 @@
 #include <iostream>
 #include <string>
 #include <math.h>
+#include <unistd.h>
 
 class InstancingTest : public App
 {
 public:
     void Startup() override
     {
-        instDisk.N = 2;
-        instDisk.positions = new glm::vec2[2];
-        instDisk.positions[0] = glm::vec2(-1.0f, -1.0f);
-        instDisk.positions[1] = glm::vec2(1.0f, 1.0f);
-        instDisk.color = glm::vec3(1.0f, 1.0f, 1.0f);
-        instDisk.Create();
+        srand(getpid());
 
+        int N = 20;
+
+        // Properties
+        instDisk.N = N;
+        instDisk.positions = new glm::vec2[N];
+        instDisk.radius = 0.05f;
+        instDisk.color = glm::vec3(1.0f, 1.0f, 1.0f);
+
+        // Positions
+        for (int i = 0; i < instDisk.N; i++)
+        {
+            // Between -10 et 10
+            float x = 1 * (2 * (float)rand() / (float)RAND_MAX - 1);
+            float y = 1 * (2 * (float)rand() / (float)RAND_MAX - 1);
+            instDisk.positions[i] = glm::vec2(x, y);
+        }
+
+        // Creation
+        instDisk.Create();
         AddShape(&instDisk);
     }
 
