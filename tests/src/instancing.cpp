@@ -21,7 +21,7 @@ public:
         instDisk.N = N;
         instDisk.positions = new glm::vec2[N];
         instDisk.radius = 0.05f;
-        instDisk.color = glm::vec3(1.0f, 1.0f, 1.0f);
+        instDisk.color = glm::vec3(0.15f, 0.6f, 0.76f);
 
         // Positions
         for (int i = 0; i < instDisk.N; i++)
@@ -31,6 +31,9 @@ public:
             float y = 1 * (2 * (float)rand() / (float)RAND_MAX - 1);
             instDisk.positions[i] = glm::vec2(x, y);
         }
+
+        // Change shaders
+        instDisk.SetShaderNames("instanced_shiny_shape.vs", "instanced_shiny_shape.fs");
 
         // Creation
         instDisk.Create();

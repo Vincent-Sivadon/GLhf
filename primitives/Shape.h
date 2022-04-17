@@ -4,6 +4,9 @@
 
 #include "GLtemplate.h"
 
+#include <cstring>
+#include <string>
+
 class Shape
 {
 protected:
@@ -18,6 +21,9 @@ protected:
 
 public:
     virtual ~Shape() = default;
+
+    char vertexShaderPath[100] = "/usr/local/share/GLtemplate/shape.vs";
+    char fragmentShaderPath[100] = "/usr/local/share/GLtemplate/shape.fs";
 
     glm::vec3 pos;
     glm::vec3 color;
@@ -37,6 +43,8 @@ public:
     void SetPosition(float x, float y);
 
     void SetColor(float r, float g, float b);
+
+    void SetShaderNames(std::string vertexShaderName, std::string fragmentShaderName);
 };
 
 void Shape::SetModel(const glm::mat4 &mat)
@@ -84,4 +92,15 @@ void Shape::SetColor(float r, float g, float b)
     color = glm::vec3(r, g, b);
     shader.Bind();
     shader.SetUniform("color", color);
+}
+
+void Shape::SetShaderNames(std::string vertexShaderName, std::string fragmentShaderName)
+{
+    std::string dirPath = "/usr/local/share/GLtemplate/";
+
+    std::string newVertexPath = dirPath + vertexShaderName;
+    strcpy(vertexShaderPath, newVertexPath.c_str());
+
+    std::string newFragmentPath = dirPath + fragmentShaderName;
+    strcpy(fragmentShaderPath, newFragmentPath.c_str());
 }

@@ -3,6 +3,7 @@
 #include "Shape.h"
 
 #include <math.h>
+#include <string>
 
 class Disk : public Shape
 {
@@ -17,7 +18,7 @@ public:
 
 void Disk::Create()
 {
-    shader = Shader("/usr/local/share/GLtemplate/shape.vs", "/usr/local/share/GLtemplate/shape.fs");
+    shader = Shader(vertexShaderPath, fragmentShaderPath);
 
     // Vertices
     static const GLfloat vertices[] = {

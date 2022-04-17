@@ -15,7 +15,7 @@ public:
 
 void Quad::Create()
 {
-    shader = Shader("/usr/local/share/GLtemplate/shape.vs", "/usr/local/share/GLtemplate/shape.fs");
+    shader = Shader(vertexShaderPath, fragmentShaderPath);
 
     // Cube vertices
     static const GLfloat vertices[] = {

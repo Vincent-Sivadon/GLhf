@@ -13,6 +13,8 @@ public:
     int N;
     glm::vec2 *positions;
 
+    // char vertexShaderPath[100] = "/usr/local/share/GLtemplate/instanced_shape.vs";
+
     float radius = 1.0f;
 
     void Create() override;
@@ -26,7 +28,7 @@ void InstancedDisk::Create()
     assert(N > 0);
     assert(positions != nullptr);
 
-    shader = Shader("/usr/local/share/GLtemplate/instanced_shape.vs", "/usr/local/share/GLtemplate/shape.fs");
+    shader = Shader(vertexShaderPath, fragmentShaderPath);
 
     // Vertices
     static const GLfloat vertices[] = {
