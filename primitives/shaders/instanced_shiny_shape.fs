@@ -9,7 +9,18 @@ uniform vec3 color;
 
 void main()
 {
-    float r=.5f*length(position);
+    float r=length(position);
     
-    FragColor=vec4(color*glm::vec3(1.f-r),1.f);
+    float glow=.3/r;
+    glow=clamp(glow,0.,1.);
+    
+    // float newColor=1-step(.9,r);
+    
+    float newColor=cos(150.*r*(1.-r));
+    newColor*=glow;
+    
+    float st=1.-step(.5,r);
+    newColor+=100.*st;
+    
+    FragColor=vec4(color*newColor,.9f);
 }

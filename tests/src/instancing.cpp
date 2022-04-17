@@ -21,7 +21,7 @@ public:
         instDisk.N = N;
         instDisk.positions = new glm::vec2[N];
         instDisk.radius = 0.2f;
-        instDisk.color = glm::vec3(0.15f, 0.6f, 0.76f);
+        instDisk.color = glm::vec3(0.52941f, 0.36863f, 0.85490f);
 
         // Positions
         for (int i = 0; i < instDisk.N; i++)

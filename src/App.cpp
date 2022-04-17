@@ -31,6 +31,11 @@ void App::Run()
         std::cout
             << "Failed to initialize GLAD" << std::endl;
 
+    // Blending Mode
+    // -------------
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     // CALLBACK functions initialization
     // ---------------------------------
     initCallbackFunctions();
@@ -55,7 +60,7 @@ void App::Run()
 
         // Rendering
         // ---------
-        static const GLfloat black[] = {0.1f, 0.1f, 0.1f, 1.0f};
+        static const GLfloat black[] = {0.f, 0.f, 0.f, 1.0f};
         glClearBufferfv(GL_COLOR, 0, black);
         for (Shape *shape : shapes)
         {

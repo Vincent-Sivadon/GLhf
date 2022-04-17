@@ -11,7 +11,7 @@ private:
 
 public:
     int N;
-    int numberOfTriangles = 30;
+    int numberOfTriangles = 60;
 
     glm::vec2 *positions;
 
