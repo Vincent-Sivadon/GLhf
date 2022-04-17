@@ -11,9 +11,9 @@ private:
 
 public:
     int N;
-    glm::vec2 *positions;
+    int numberOfTriangles = 30;
 
-    // char vertexShaderPath[100] = "/usr/local/share/GLtemplate/instanced_shape.vs";
+    glm::vec2 *positions;
 
     float radius = 1.0f;
 
@@ -21,6 +21,8 @@ public:
     void Destroy() override;
 
     void Draw() override;
+
+    void CreateVertices(GLfloat *&vertices, GLuint *&indices);
 };
 
 void InstancedDisk::Create()
@@ -30,27 +32,9 @@ void InstancedDisk::Create()
 
     shader = Shader(vertexShaderPath, fragmentShaderPath);
 
-    // Vertices
-    static const GLfloat vertices[] = {
-        0.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        0.707107f, -0.707107, 0.0f,
-        0.0f, -1.0f, 0.0f,
-        -0.707107, -0.707107, 0.0f,
-        -1.0f, 0.0f, 0.0f,
-        -0.707107, 0.707107, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        0.707107, 0.707107, 0.0f};
-
-    static const GLuint indices[] = {
-        0, 2, 1,
-        0, 3, 2,
-        0, 4, 3,
-        0, 5, 4,
-        0, 6, 5,
-        0, 7, 6,
-        0, 8, 7,
-        0, 1, 8};
+    GLfloat *vertices;
+    GLuint *indices;
+    CreateVertices(vertices, indices);
 
     // Model Matrix
     glm::mat4 modelMatrices[N];
@@ -63,7 +47,7 @@ void InstancedDisk::Create()
     }
 
     // Vertex Buffers
-    vbo = VertexBuffer(vertices, sizeof(vertices));
+    vbo = VertexBuffer(vertices, 3 * (numberOfTriangles + 1) * sizeof(GLfloat));
     instancedVBO = VertexBuffer(modelMatrices, N * sizeof(glm::mat4));
 
     // Vertex Array
@@ -88,7 +72,7 @@ void InstancedDisk::Create()
     glVertexAttribDivisor(4, 1);
 
     // Element buffer
-    ebo = ElementBuffer(indices, sizeof(indices));
+    ebo = ElementBuffer(indices, 3 * numberOfTriangles * sizeof(GLuint));
 
     // Projection Matrix
     SetProjection(glm::perspective(glm::radians(45.0f), 1000.0f / 800.0f, 0.1f, 100.0f));
@@ -116,5 +100,39 @@ void InstancedDisk::Draw()
     shader.Bind();
     vao.Bind();
     ebo.Bind();
-    glDrawElementsInstanced(GL_TRIANGLES, 3 * 8, GL_UNSIGNED_INT, 0, N);
+    glDrawElementsInstanced(GL_TRIANGLES, 3 * numberOfTriangles, GL_UNSIGNED_INT, 0, N);
+}
+
+void InstancedDisk::CreateVertices(GLfloat *&vertices, GLuint *&indices)
+{
+    // Properties
+    float delta = 2 * M_PI / numberOfTriangles;
+
+    // Allocation
+    vertices = new GLfloat[(numberOfTriangles + 1) * 3]; // N + 1 points à 3 coords
+    indices = new GLuint[numberOfTriangles * 3];         // N triangles à 3 points
+
+    // Middle point
+    vertices[0] = 0.0f;
+    vertices[1] = 0.0f;
+    vertices[2] = 0.0f;
+
+    // Indices indices
+    unsigned int p = 2, q = 1;
+
+    for (int triangleID = 0; triangleID < numberOfTriangles; triangleID++)
+    {
+        vertices[3 * (triangleID + 1)] = cos((float)triangleID * delta);     // x coordinate
+        vertices[3 * (triangleID + 1) + 1] = sin((float)triangleID * delta); // y coordinate
+        vertices[3 * (triangleID + 1) + 2] = 0.0f;                           // z coordinate
+
+        if (p == numberOfTriangles + 1)
+            p = 1;
+        indices[3 * triangleID] = 0;
+        indices[3 * triangleID + 1] = p;
+        indices[3 * triangleID + 2] = q;
+
+        p++;
+        q++;
+    }
 }

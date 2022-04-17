@@ -20,13 +20,13 @@ public:
         // Properties
         instDisk.N = N;
         instDisk.positions = new glm::vec2[N];
-        instDisk.radius = 0.05f;
+        instDisk.radius = 0.2f;
         instDisk.color = glm::vec3(0.15f, 0.6f, 0.76f);
 
         // Positions
         for (int i = 0; i < instDisk.N; i++)
         {
-            // Between -10 et 10
+            // Between -1 et 1
             float x = 1 * (2 * (float)rand() / (float)RAND_MAX - 1);
             float y = 1 * (2 * (float)rand() / (float)RAND_MAX - 1);
             instDisk.positions[i] = glm::vec2(x, y);
