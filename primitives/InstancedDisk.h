@@ -4,6 +4,7 @@
 
 #include <math.h>
 #include <string>
+#include <algorithm>
 
 /* ************************* INSTANCED DISK CLASS ************************* */
 class InstancedDisk : public InstancedShape
@@ -13,8 +14,51 @@ public:
 
     GLfloat *CreateVertices();
     GLuint *CreateIndices();
+
+    void SetDefaultProperties();
 };
 /* ************************************************************************ */
+
+void InstancedDisk::SetDefaultProperties()
+{
+    float defaultWidth = 0.05f;
+    float defaultHeight = 0.05f;
+    float defaultAngle = 0.0f;
+
+    if (width == nullptr)
+    {
+        width = new float[N];
+        for (int i = 0; i < N; i++)
+            width[i] = defaultWidth;
+    }
+
+    if (height == nullptr)
+    {
+        height = new float[N];
+        for (int i = 0; i < N; i++)
+            height[i] = defaultHeight;
+    }
+
+    if (angle == nullptr)
+    {
+        angle = new float[N];
+        for (int i = 0; i < N; i++)
+            angle[i] = defaultAngle;
+    }
+
+    // Defines random positions if not already defined
+    if (positions == nullptr)
+    {
+        positions = new glm::vec2[N];
+        for (int i = 0; i < N; i++)
+        {
+            // Between -1 et 1
+            float x = 1 * (2 * (float)rand() / (float)RAND_MAX - 1);
+            float y = 1 * (2 * (float)rand() / (float)RAND_MAX - 1);
+            positions[i] = glm::vec2(x, y);
+        }
+    }
+}
 
 GLfloat *CreateDiskVertices(int nbTriangles, int &verticesSize)
 {

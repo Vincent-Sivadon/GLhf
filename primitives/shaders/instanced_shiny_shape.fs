@@ -14,13 +14,11 @@ void main()
     float glow=.3/r;
     glow=clamp(glow,0.,1.);
     
-    // float newColor=1-step(.9,r);
-    
     float newColor=cos(150.*r*(1.-r));
     newColor*=glow;
     
     float st=1.-step(.5,r);
-    newColor+=100.*st;
+    newColor+=500.*st;
     
     FragColor=vec4(color*newColor,.9f);
 }

@@ -17,10 +17,18 @@ public:
     GLfloat *CreateVertices();
     GLuint *CreateIndices();
 
+    void SetDefaultProperties();
+
     void InitPositions(glm::vec2 *diskPositions, int nb);
     void EdgePos(int k, const glm::vec2 &a, const glm::vec2 &b);
 };
 /* ************************************************************************ */
+
+void InstancedEdge::SetDefaultProperties()
+{
+    if (positions == nullptr)
+        throw "'InitPositions(...) must be explicitly called before Create(...)";
+}
 
 void InstancedEdge::EdgePos(int k, const glm::vec2 &a, const glm::vec2 &b)
 {
@@ -34,7 +42,7 @@ void InstancedEdge::EdgePos(int k, const glm::vec2 &a, const glm::vec2 &b)
 
     // Dimensions
     width[k] = sqrt(dx * dx + dy * dy);
-    height[k] = 0.02f;
+    height[k] = 0.0005f;
 
     // Rotation
     float alpha = (float)atan(dy / dx);
@@ -46,6 +54,9 @@ void InstancedEdge::EdgePos(int k, const glm::vec2 &a, const glm::vec2 &b)
 
 void InstancedEdge::InitPositions(glm::vec2 *diskPositions, int nb)
 {
+    if (diskPositions == nullptr)
+        throw "InstancedDisk.positions is nullptr when trying to init InstancedEdges with InitPositions";
+
     N = nb * (nb - 1) / 2;
     positions = new glm::vec2[N];
     width = new float[N];

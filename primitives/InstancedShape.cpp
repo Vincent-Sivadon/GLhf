@@ -13,8 +13,10 @@
 
 void InstancedShape::Create()
 {
-    assert(N > 0);
-    assert(positions != nullptr);
+    if (N <= 0)
+        throw "Trying to create InstancedShape with N<=0";
+
+    SetDefaultProperties();
 
     shader = Shader(vertexShaderPath, fragmentShaderPath);
 
@@ -22,7 +24,7 @@ void InstancedShape::Create()
     GLuint *indices = CreateIndices();
 
     // Model Matrix
-    glm::mat4 modelMatrices[N];
+    modelMatrices = new glm::mat4[N];
     for (int i = 0; i < N; i++)
     {
         modelMatrices[i] = glm::mat4(1.0f);
@@ -68,7 +70,8 @@ void InstancedShape::Create()
     // Color
     SetColor(color.x, color.y, color.z);
 
-    delete positions;
+    delete vertices;
+    delete indices;
 }
 
 void InstancedShape::Destroy()
@@ -78,6 +81,12 @@ void InstancedShape::Destroy()
     vbo.Destroy();
     instancedVBO.Destroy();
     ebo.Destroy();
+
+    delete positions;
+    delete width;
+    delete height;
+    delete angle;
+    delete modelMatrices;
 }
 
 void InstancedShape::Draw()
@@ -86,4 +95,15 @@ void InstancedShape::Draw()
     vao.Bind();
     ebo.Bind();
     glDrawElementsInstanced(GL_TRIANGLES, indicesSize / sizeof(GLuint), GL_UNSIGNED_INT, 0, N);
+}
+
+void InstancedShape::SetShaderNames(std::string vertexShaderName, std::string fragmentShaderName)
+{
+    std::string dirPath = "/usr/local/share/GLtemplate/";
+
+    std::string newVertexPath = dirPath + vertexShaderName;
+    strcpy(vertexShaderPath, newVertexPath.c_str());
+
+    std::string newFragmentPath = dirPath + fragmentShaderName;
+    strcpy(fragmentShaderPath, newFragmentPath.c_str());
 }

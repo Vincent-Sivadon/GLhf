@@ -38,6 +38,9 @@ void Shape::Create()
 
     // Color
     SetColor(color.x, color.y, color.z);
+
+    delete vertices;
+    delete indices;
 }
 
 void Shape::Destroy()

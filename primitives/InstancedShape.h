@@ -24,13 +24,22 @@ public:
 
     // To define model matrices
     glm::vec2 *positions;
+    glm::mat4 *modelMatrices;
+
+    // Shaders (override Shape members)
+    char vertexShaderPath[100] = "/usr/local/share/GLtemplate/instanced_shape.vs";
+    char fragmentShaderPath[100] = "/usr/local/share/GLtemplate/shape.fs";
 
     virtual GLfloat *CreateVertices() = 0;
     virtual GLuint *CreateIndices() = 0;
+
+    virtual void SetDefaultProperties() = 0;
 
     void Create() override;
     void Destroy() override;
 
     void Draw() override;
+
+    void SetShaderNames(std::string vertexShaderName, std::string fragmentShaderName) override;
 };
 /* ************************************************************************ */

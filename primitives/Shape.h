@@ -57,6 +57,6 @@ public:
 
     void SetColor(float r, float g, float b);
 
-    void SetShaderNames(std::string vertexShaderName, std::string fragmentShaderName);
+    virtual void SetShaderNames(std::string vertexShaderName, std::string fragmentShaderName);
 };
 /* ***************************************************************** */

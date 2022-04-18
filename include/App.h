@@ -88,11 +88,18 @@ protected:
 };
 
 // Automatic main constructor
-#define DECLARE_MAIN(a)                   \
-    int main(int argc, const char **argv) \
-    {                                     \
-        a *app = new a;                   \
-        app->Run();                       \
-        delete app;                       \
-        return 0;                         \
+#define DECLARE_MAIN(a)                    \
+    int main(int argc, const char **argv)  \
+    {                                      \
+        a *app = new a;                    \
+        try                                \
+        {                                  \
+            app->Run();                    \
+        }                                  \
+        catch (const char *msg)            \
+        {                                  \
+            std::cerr << msg << std::endl; \
+        }                                  \
+        delete app;                        \
+        return 0;                          \
     }
