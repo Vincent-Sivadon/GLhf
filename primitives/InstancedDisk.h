@@ -1,10 +1,10 @@
 #pragma once
-
+/*
 #include "Shape.h"
 
 #include <math.h>
 
-class InstancedDisk : public Shape
+class InstancedDisk
 {
 private:
     VertexBuffer instancedVBO;
@@ -17,10 +17,10 @@ public:
 
     float radius = 1.0f;
 
-    void Create() override;
-    void Destroy() override;
+    void Create();
+    void Destroy();
 
-    void Draw() override;
+    void Draw();
 
     void CreateVertices(GLfloat *&vertices, GLuint *&indices);
 };
@@ -136,3 +136,5 @@ void InstancedDisk::CreateVertices(GLfloat *&vertices, GLuint *&indices)
         q++;
     }
 }
+
+*/
