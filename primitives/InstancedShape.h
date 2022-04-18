@@ -18,6 +18,9 @@ protected:
 public:
     // Nb of instances
     int N;
+    float *height;
+    float *width;
+    float *angle;
 
     // To define model matrices
     glm::vec2 *positions;

@@ -27,8 +27,8 @@ void InstancedShape::Create()
     {
         modelMatrices[i] = glm::mat4(1.0f);
         modelMatrices[i] = glm::translate(modelMatrices[i], glm::vec3(positions[i], 0.0f));
-        modelMatrices[i] = glm::scale(modelMatrices[i], glm::vec3(width, height, 1.0f));
-        modelMatrices[i] = glm::rotate(modelMatrices[i], angle, glm::vec3(0.0f, 0.0f, -1.0f));
+        modelMatrices[i] = glm::rotate(modelMatrices[i], angle[i], glm::vec3(0.0f, 0.0f, -1.0f));
+        modelMatrices[i] = glm::scale(modelMatrices[i], glm::vec3(width[i], height[i], 1.0f));
     }
 
     // Vertex Buffers

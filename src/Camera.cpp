@@ -90,6 +90,7 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constr
 void Camera::ProcessKeyboard(CameraDirection direction, float deltaTime)
 {
     float velocity = Speed * deltaTime;
+
     if (direction == FORWARD)
         Position += Front * velocity;
     if (direction == BACKWARD)
@@ -98,4 +99,8 @@ void Camera::ProcessKeyboard(CameraDirection direction, float deltaTime)
         Position -= Right * velocity;
     if (direction == RIGHT)
         Position += Right * velocity;
+    if (direction == UP)
+        Position += Up * velocity;
+    if (direction == DOWN)
+        Position -= Up * velocity;
 }

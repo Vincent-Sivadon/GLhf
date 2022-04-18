@@ -30,8 +30,7 @@ public:
         edge.color = glm::vec3(1.0f, 0.0f, 0.0f);
         edge.Create();
 
-        edg = Edge(disk, disk2);
-        edg.color = glm::vec3(1.0f, 1.0f, 1.0f);
+        edg = Edge(&disk, &disk2);
         edg.Create();
 
         quad.width = 0.5f;
