@@ -40,11 +40,6 @@ public:
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     }
 
-    void ProcessInput() override
-    {
-        exit(0);
-    }
-
     void Shutdown() override
     {
         shader.Destroy();

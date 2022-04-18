@@ -49,12 +49,6 @@ public:
         AddShape(&edg);
     }
 
-    void Render(double time) override {}
-
-    void ProcessInput() override {}
-
-    void Shutdown() override {}
-
 private:
     Quad quad;
     Quad quad2;

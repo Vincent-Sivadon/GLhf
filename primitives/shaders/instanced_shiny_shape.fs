@@ -1,3 +1,5 @@
+/* For a Disk : fancy graph node */
+
 #version 330 core
 
 out vec4 FragColor;
@@ -18,7 +20,7 @@ void main()
     newColor*=glow;
     
     float st=1.-step(.5,r);
-    newColor+=500.*st;
+    newColor+=200.*st;
     
     FragColor=vec4(color*newColor,.9f);
 }

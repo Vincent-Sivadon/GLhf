@@ -1,4 +1,4 @@
-/* */
+/* 3D Camera Abstraction */
 
 #pragma once
 

@@ -1,3 +1,8 @@
+/* Instanced Shape : represent edges in a graph
+/* For now it needs to be initialized with InitCompleteGraph :
+/* It takes a glm::vec2 *diskPositions where each vec2 represent a Disk pos
+/* and will add an edge between every Disk to create a complete graph */
+
 #pragma once
 
 #include "InstancedShape.h"
@@ -19,15 +24,17 @@ public:
 
     void SetDefaultProperties();
 
-    void InitPositions(glm::vec2 *diskPositions, int nb);
+    void InitCompleteGraph(glm::vec2 *diskPositions, int nb);
     void EdgePos(int k, const glm::vec2 &a, const glm::vec2 &b);
 };
 /* ************************************************************************ */
 
 void InstancedEdge::SetDefaultProperties()
 {
+    // For now an InstancedEdge needs to be initialized as a complete graph
+    // with InitCompleteGraph
     if (positions == nullptr)
-        throw "'InitPositions(...) must be explicitly called before Create(...)";
+        throw "'InitCompleteGraph(...) must be explicitly called before Create(...)  (for now)";
 }
 
 void InstancedEdge::EdgePos(int k, const glm::vec2 &a, const glm::vec2 &b)
@@ -42,7 +49,7 @@ void InstancedEdge::EdgePos(int k, const glm::vec2 &a, const glm::vec2 &b)
 
     // Dimensions
     width[k] = sqrt(dx * dx + dy * dy);
-    height[k] = 0.0005f;
+    height[k] = 0.001f;
 
     // Rotation
     float alpha = (float)atan(dy / dx);
@@ -52,7 +59,7 @@ void InstancedEdge::EdgePos(int k, const glm::vec2 &a, const glm::vec2 &b)
         a.y < b.y ? angle[k] = alpha : angle[k] = M_PI - alpha;
 }
 
-void InstancedEdge::InitPositions(glm::vec2 *diskPositions, int nb)
+void InstancedEdge::InitCompleteGraph(glm::vec2 *diskPositions, int nb)
 {
     if (diskPositions == nullptr)
         throw "InstancedDisk.positions is nullptr when trying to init InstancedEdges with InitPositions";

@@ -1,3 +1,5 @@
+/* Disk Primitive Class */
+
 #pragma once
 
 #include "Shape.h"
@@ -6,6 +8,7 @@
 #include <string>
 
 /* ************************* DISK CLASS ************************* */
+
 class Disk : public Shape
 {
 public:
@@ -14,9 +17,10 @@ public:
     GLfloat *CreateVertices();
     GLuint *CreateIndices();
 };
+
 /* ************************************************************** */
 
-GLfloat *CreateDiskVertices(int nbTriangles, int &verticesSize)
+GLfloat *Disk::CreateVertices()
 {
     // Properties
     float delta = 2 * M_PI / nbTriangles;
@@ -41,7 +45,7 @@ GLfloat *CreateDiskVertices(int nbTriangles, int &verticesSize)
     return vertices;
 }
 
-GLuint *CreateDiskIndices(int nbTriangles, int &indicesSize)
+GLuint *Disk::CreateIndices()
 {
     // Properties
     float delta = 2 * M_PI / nbTriangles;
@@ -67,14 +71,4 @@ GLuint *CreateDiskIndices(int nbTriangles, int &indicesSize)
     indicesSize = 3 * nbTriangles * sizeof(GLuint);
 
     return indices;
-}
-
-GLfloat *Disk::CreateVertices()
-{
-    return CreateDiskVertices(nbTriangles, verticesSize);
-}
-
-GLuint *Disk::CreateIndices()
-{
-    return CreateDiskIndices(nbTriangles, indicesSize);
 }

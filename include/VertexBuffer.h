@@ -1,3 +1,5 @@
+/* Vertex Buffer Abstraction */
+
 #pragma once
 
 #include <glad/glad.h>

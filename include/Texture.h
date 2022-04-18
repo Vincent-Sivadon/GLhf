@@ -1,4 +1,5 @@
-/* Texture relative features abstraction */
+/* Texture relative features abstraction
+ * (doesn't work for now) */
 
 #pragma once
 

@@ -26,10 +26,10 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos);
  * class ExampleApp : public App
  * {
  * public:
- *     void startup() override {}           // Initialize OpenGL objects
- *     void render() override {}            // Rendering protocole
- *     void ProcessInput() override {}      // Input Management (on top of default ones)
- *     void shutdown() override {}          // Memory cleaning
+ *     void Startup() override {}           // Initialize OpenGL or GLtemplate objects
+ *     void Render() override {}            // Manual Rendering protocole
+ *     void ProcessInput() override {}      // Manual Input Management (on top of default ones)
+ *     void Shutdown() override {}          // Manual Memory cleaning
  * private:
  *     int member;
  * }
@@ -43,6 +43,19 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos);
  *        - rendering
  *        - input management
  *    - memory cleaning
+ * -----------------------------------
+ *
+ * Although, this library provides primitives that will makes things easier :
+ * class ExamplePrimitiveApp : public App
+ * {
+ * public:
+ *     void Startup() override {
+ *          disk.Create();
+ *          AddShape(&disk);
+ *     }
+ * private:
+ *     Disk disk;
+ * }
  */
 class App
 {
@@ -54,11 +67,11 @@ public:
     void Run();
 
     // Functions to be implemented
-    virtual void Startup() = 0;         // Initialize OpenGL objects
-    virtual void Render(double ct) = 0; // Rendering protocole
-    void defaultProcessInput();         // Default Input Management
-    virtual void ProcessInput() = 0;    // Input Management (user)
-    virtual void Shutdown() = 0;        // Memory cleaning
+    virtual void Startup() = 0;     // Initialize OpenGL objects
+    virtual void Render(double ct); // Rendering protocole
+    void defaultProcessInput();     // Default Input Management
+    virtual void ProcessInput();    // Input Management (dev)
+    virtual void Shutdown();        // Memory cleaning
 
     // Window
     inline static int WIDTH = 1000.0f;
@@ -86,6 +99,15 @@ protected:
     static void framebuffer_size_callback(int width, int height);
     static void mouse_callback(double xpos, double ypos);
 };
+
+// Useless for now
+void App::Render(double ct) {}
+
+// More input management
+void App::ProcessInput() {}
+
+// More memory cleaning
+void App::Shutdown() {}
 
 // Automatic main constructor
 #define DECLARE_MAIN(a)                    \

@@ -1,4 +1,4 @@
-/* */
+/* Primitive to draw and edge between 2 nodes (Disks) in a graph  */
 
 #pragma once
 

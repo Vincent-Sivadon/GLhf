@@ -1,4 +1,4 @@
-/* */
+/* Instancing Shape : one model will be stored in GPU, but N instances will be drawn */
 
 #include "InstancedShape.h"
 

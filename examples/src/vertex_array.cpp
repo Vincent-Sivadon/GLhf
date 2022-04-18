@@ -36,11 +36,6 @@ public:
         glDrawArrays(GL_TRIANGLES, 0, 3);
     }
 
-    void ProcessInput() override
-    {
-        // exit(0);
-    }
-
     void Shutdown() override
     {
         shader.Destroy();

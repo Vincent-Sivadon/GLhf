@@ -17,28 +17,22 @@ public:
     {
         srand(getpid());
 
-        int N = 100;
+        int N = 30;
 
         // Disk
         instDisk.N = N;
         instDisk.color = glm::vec3(0.52941f, 0.36863f, 0.85490f);
         instDisk.SetShaderNames("instanced_shiny_shape.vs", "instanced_shiny_shape.fs");
         instDisk.Create();
-        AddShape(&instDisk);
 
         // Edges (complete graph)
         instEdge.color = glm::vec3(1.0f, 1.0f, 1.0f);
-        instEdge.InitPositions(instDisk.positions, N);
-        instEdge.SetShaderNames("instanced_shape.vs", "shape.fs");
+        instEdge.InitCompleteGraph(instDisk.positions, N);
         instEdge.Create();
+
         AddShape(&instEdge);
+        AddShape(&instDisk);
     }
-
-    void Render(double time) override {}
-
-    void ProcessInput() override {}
-
-    void Shutdown() override {}
 
 private:
     InstancedDisk instDisk;

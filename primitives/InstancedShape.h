@@ -1,3 +1,5 @@
+/* Instancing Shape : one model will be stored in GPU, but N instances will be drawn */
+
 #pragma once
 
 #include "Shape.h"
@@ -10,6 +12,7 @@
 #include <math.h>
 
 /* ************************* INSTANCED SHAPE CLASS ************************* */
+
 class InstancedShape : public Shape
 {
 protected:
@@ -42,4 +45,5 @@ public:
 
     void SetShaderNames(std::string vertexShaderName, std::string fragmentShaderName) override;
 };
+
 /* ************************************************************************ */

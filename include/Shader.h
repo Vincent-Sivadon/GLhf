@@ -1,3 +1,5 @@
+/* Shader Abstraction */
+
 #pragma once
 
 #include <string>

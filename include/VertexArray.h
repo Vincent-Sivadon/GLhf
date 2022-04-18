@@ -1,3 +1,5 @@
+/* Vertex Array Abstraction */
+
 #pragma once
 
 #include <glad/glad.h>

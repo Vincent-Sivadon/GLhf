@@ -62,6 +62,8 @@ void App::Run()
         // ---------
         static const GLfloat black[] = {0.f, 0.f, 0.f, 1.0f};
         glClearBufferfv(GL_COLOR, 0, black);
+
+        // Draw every shapes
         for (Shape *shape : shapes)
         {
             shape->SetView(camera.GetViewMatrix());

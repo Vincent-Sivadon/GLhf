@@ -10,9 +10,8 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(glfw3 REQUIRED)
 find_package(glad REQUIRED)
 
-# Génère les tests  : la commande "ctest" permet de lancer tout les tests
-enable_testing()
-add_subdirectory(tests)
+# Generate examples binaries
+add_subdirectory(examples)
 
 # Libraries
 set(LIBS glfw glad ${FREETYPE_LIBRARIES})
