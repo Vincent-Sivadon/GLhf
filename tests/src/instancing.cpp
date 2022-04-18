@@ -20,7 +20,8 @@ public:
         // Properties
         instDisk.N = N;
         instDisk.positions = new glm::vec2[N];
-        instDisk.radius = 0.2f;
+        instDisk.width = 0.2f;
+        instDisk.height = 0.2f;
         instDisk.color = glm::vec3(0.52941f, 0.36863f, 0.85490f);
 
         // Positions

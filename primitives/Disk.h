@@ -5,54 +5,56 @@
 #include <math.h>
 #include <string>
 
+/* ************************* DISK CLASS ************************* */
 class Disk : public Shape
 {
 public:
-    int numberOfTriangles = 8;
+    int nbTriangles = 8;
 
     GLfloat *CreateVertices();
     GLuint *CreateIndices();
 };
+/* ************************************************************** */
 
-GLfloat *Disk::CreateVertices()
+GLfloat *CreateDiskVertices(int nbTriangles, int &verticesSize)
 {
     // Properties
-    float delta = 2 * M_PI / numberOfTriangles;
+    float delta = 2 * M_PI / nbTriangles;
 
     // Allocation
-    GLfloat *vertices = new GLfloat[(numberOfTriangles + 1) * 3];
+    GLfloat *vertices = new GLfloat[(nbTriangles + 1) * 3];
 
     // Middle point
     vertices[0] = 0.0f;
     vertices[1] = 0.0f;
     vertices[2] = 0.0f;
 
-    for (int triangleID = 0; triangleID < numberOfTriangles; triangleID++)
+    for (int triangleID = 0; triangleID < nbTriangles; triangleID++)
     {
         vertices[3 * (triangleID + 1)] = cos((float)triangleID * delta);     // x coordinate
         vertices[3 * (triangleID + 1) + 1] = sin((float)triangleID * delta); // y coordinate
         vertices[3 * (triangleID + 1) + 2] = 0.0f;                           // z coordinate
     }
 
-    verticesSize = 3 * (numberOfTriangles + 1) * sizeof(GLfloat);
+    verticesSize = 3 * (nbTriangles + 1) * sizeof(GLfloat);
 
     return vertices;
 }
 
-GLuint *Disk::CreateIndices()
+GLuint *CreateDiskIndices(int nbTriangles, int &indicesSize)
 {
     // Properties
-    float delta = 2 * M_PI / numberOfTriangles;
+    float delta = 2 * M_PI / nbTriangles;
 
     // Allocation
-    GLuint *indices = new GLuint[numberOfTriangles * 3];
+    GLuint *indices = new GLuint[nbTriangles * 3];
 
     // Indices indices
     unsigned int p = 2, q = 1;
 
-    for (int triangleID = 0; triangleID < numberOfTriangles; triangleID++)
+    for (int triangleID = 0; triangleID < nbTriangles; triangleID++)
     {
-        if (p == numberOfTriangles + 1)
+        if (p == nbTriangles + 1)
             p = 1;
         indices[3 * triangleID] = 0;
         indices[3 * triangleID + 1] = p;
@@ -62,7 +64,17 @@ GLuint *Disk::CreateIndices()
         q++;
     }
 
-    indicesSize = 3 * numberOfTriangles * sizeof(GLuint);
+    indicesSize = 3 * nbTriangles * sizeof(GLuint);
 
     return indices;
+}
+
+GLfloat *Disk::CreateVertices()
+{
+    return CreateDiskVertices(nbTriangles, verticesSize);
+}
+
+GLuint *Disk::CreateIndices()
+{
+    return CreateDiskIndices(nbTriangles, indicesSize);
 }
