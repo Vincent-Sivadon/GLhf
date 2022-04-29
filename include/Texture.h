@@ -12,7 +12,7 @@ public:
     GLuint ID;
 
     // Texture image dimensions
-    GLuint width, height;
+    GLint width, height;
 
     // Texture Format
     GLuint internalFormat;
@@ -28,8 +28,10 @@ public:
     Texture2D();
 
     // Generates texture from image data
+    void Create(const char * image_path);
     void Create(GLuint w, GLuint h, const GLubyte *data);
 
     // Binds the texture as the current actvie GL_TEXTURE_2D object
     void Bind() const;
+    void Unbind() const;
 };

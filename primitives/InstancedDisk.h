@@ -66,7 +66,8 @@ GLfloat *CreateDiskVertices(int nbTriangles, int &verticesSize)
     float delta = 2 * M_PI / nbTriangles;
 
     // Allocation
-    GLfloat *vertices = new GLfloat[(nbTriangles + 1) * 3];
+    int size = (nbTriangles + 1) * (3 + 2);
+    GLfloat *vertices = new GLfloat[size];
 
     // Middle point
     vertices[0] = 0.0f;
@@ -75,12 +76,15 @@ GLfloat *CreateDiskVertices(int nbTriangles, int &verticesSize)
 
     for (int triangleID = 0; triangleID < nbTriangles; triangleID++)
     {
-        vertices[3 * (triangleID + 1)] = cos((float)triangleID * delta);     // x coordinate
-        vertices[3 * (triangleID + 1) + 1] = sin((float)triangleID * delta); // y coordinate
-        vertices[3 * (triangleID + 1) + 2] = 0.0f;                           // z coordinate
+        vertices[(3+2) * (triangleID + 1)] = cos((float)triangleID * delta);     // x coordinate
+        vertices[(3+2) * (triangleID + 1) + 1] = sin((float)triangleID * delta); // y coordinate
+        vertices[(3+2) * (triangleID + 1) + 2] = 0.0f;                           // z coordinate
+
+        vertices[(3+2) * (triangleID + 1) + 3] = vertices[(3+2) * (triangleID + 1)] / 2.0f + 0.5f;        // Tex coords
+        vertices[(3+2) * (triangleID + 1) + 4] = vertices[(3+2) * (triangleID + 1) + 1] / 2.0f + 0.5f;    // Tex coords
     }
 
-    verticesSize = 3 * (nbTriangles + 1) * sizeof(GLfloat);
+    verticesSize = size * sizeof(GLfloat);
 
     return vertices;
 }

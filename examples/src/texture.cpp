@@ -2,12 +2,9 @@
  * to see the output, executes the binary
  * independantly from ctest */
 
-#include "../include/GLtemplate.h"
+#include <GLtemplate/GLtemplate.h>
 
 #include <iostream>
-
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
 
 class TextureExample : public App
 {
@@ -16,10 +13,7 @@ public:
     {
         std::cout << "============================== Startup ==============================\n";
 
-        int wi, he, nbr_channels;
-        unsigned char *data = stbi_load("../resources/minion.jpg", &wi, &he, &nbr_channels, 0);
-        texture.Create(wi, he, data);
-        stbi_image_free(data);
+        texture.Create("../resources/brickwall.jpg");
 
         // Texture Quad
         static const GLfloat vertices[] = {

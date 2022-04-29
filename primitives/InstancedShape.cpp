@@ -39,7 +39,7 @@ void InstancedShape::Create()
 
     // Vertex Array
     vbo.Bind();
-    vao = VertexArray(0, 3);
+    vao = VertexArray(0, 3, 1, 2);
 
     instancedVBO.Bind();
     // glBindBuffer(GL_ARRAY_BUFFER, instancedVBO.ID); // this attribute comes from a different vertex buffer
@@ -99,11 +99,6 @@ void InstancedShape::Draw()
 
 void InstancedShape::SetShaderNames(const std::string vertexShaderName, const std::string fragmentShaderName)
 {
-    const std::string dirPath("/usr/local/share/GLtemplate/");
-
-    const std::string newVertexPath(dirPath + vertexShaderName);
-    strcpy(vertexShaderPath, newVertexPath.c_str());
-
-    const std::string newFragmentPath = dirPath + fragmentShaderName;
-    strcpy(fragmentShaderPath, newFragmentPath.c_str());
+    strcpy(vertexShaderPath, vertexShaderName.c_str());
+    strcpy(fragmentShaderPath, fragmentShaderName.c_str());
 }

@@ -9,7 +9,7 @@ class VAOTest : public App
 public:
     void Startup() override
     {
-        shader = Shader("../tests/shaders/data_triangle.vs", "../tests/shaders/data_triangle.fs");
+        shader = Shader("data_triangle.vs", "data_triangle.fs");
 
         float vertices[] = {
             -0.5f, -0.5f, 0.0f,

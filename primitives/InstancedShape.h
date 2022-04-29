@@ -30,8 +30,8 @@ public:
     glm::mat4 *modelMatrices;
 
     // Shaders (override Shape members)
-    char vertexShaderPath[100] = "/usr/local/share/GLtemplate/instanced_shape.vs";
-    char fragmentShaderPath[100] = "/usr/local/share/GLtemplate/shape.fs";
+    char vertexShaderPath[100] = "instanced_shape.vs";
+    char fragmentShaderPath[100] = "shape.fs";
 
     virtual GLfloat *CreateVertices() = 0;
     virtual GLuint *CreateIndices() = 0;

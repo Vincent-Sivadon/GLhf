@@ -29,8 +29,8 @@ protected:
 public:
     virtual ~Shape() = default;
 
-    char vertexShaderPath[100] = "/usr/local/share/GLtemplate/shape.vs";
-    char fragmentShaderPath[100] = "/usr/local/share/GLtemplate/shape.fs";
+    char vertexShaderPath[100] = "shape.vs";
+    char fragmentShaderPath[100] = "shape.fs";
 
     // Properties
     glm::vec3 pos;

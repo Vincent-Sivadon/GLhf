@@ -20,7 +20,7 @@ void Shape::Create()
 
     // Buffers
     vbo = VertexBuffer(vertices, verticesSize);
-    vao = VertexArray(0, 3);
+    vao = VertexArray(0, 3, 1, 2);
     ebo = ElementBuffer(indices, indicesSize);
 
     // Projection Matrix

@@ -70,6 +70,8 @@ void App::Run()
             shape->Draw();
         }
 
+        Render(ct);
+
         glfwSwapBuffers(window);
 
         // Input

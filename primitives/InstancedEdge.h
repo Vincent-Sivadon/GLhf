@@ -110,14 +110,15 @@ void InstancedEdge::InitFromEdges(std::vector<std::pair<u64, u64>>& edges, glm::
 
 GLfloat *InstancedEdge::CreateVertices()
 {
-    GLfloat *vertices = new GLfloat[3 * 4]{
-        0.5f, 0.5f, 0.0f,   // top right
-        0.5f, -0.5f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f, // bottom left
-        -0.5f, 0.5f, 0.0f   // top left
+    int size = 3*4 + 2*4;
+    GLfloat *vertices = new GLfloat[size]{
+        0.5f, 0.5f, 0.0f, 1.0f, 1.0f,   // top right
+        0.5f, -0.5f, 0.0f, 1.0f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
+        -0.5f, 0.5f, 0.0f, 0.0f, 1.0f   // top left
     };
 
-    verticesSize = 3 * 4 * sizeof(GLfloat);
+    verticesSize = size * sizeof(GLfloat);
 
     return vertices;
 }
