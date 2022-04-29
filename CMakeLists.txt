@@ -11,10 +11,12 @@ find_package(glfw3 REQUIRED)
 find_package(glad REQUIRED)
 
 # Generate examples binaries
-add_subdirectory(examples)
+if(DEFINED EXAMPLES)
+  add_subdirectory(examples)
+endif(DEFINED EXAMPLES)
 
 # Libraries
-set(LIBS glfw glad ${FREETYPE_LIBRARIES})
+set(LIBS glfw glad)
 set(glm_dir /usr/include/glm) # header only librairy
 
 # Liste des fichiers sources
@@ -22,19 +24,21 @@ file(GLOB SRCS "src/*.cpp" "primitives/*.cpp")
 # Liste des définitions
 file(GLOB HEADERS "include/*.h" "primitives/*.h")
 # Liste des shaders primitives
-file(GLOB SHADERS "primitives/shaders/*")
+file(GLOB SHADERS "resources/shaders/examples/*" "resources/shaders/primitives/*")
+
+set(BUILD_INCL ${CMAKE_SOURCE_DIR}/include;${glm_dir};${CMAKE_SOURCE_DIR}/primitives;${CMAKE_SOURCE_DIR}/external)
 
 add_library(GLtemplate SHARED ${SRCS} ${HEADERS})
 target_link_libraries(GLtemplate ${LIBS})
 target_compile_options(GLtemplate PUBLIC -g)
 target_include_directories(
   GLtemplate
-  PUBLIC
-    "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include;${glm_dir};${CMAKE_SOURCE_DIR}/primitives>" # for
-    # headers when building
-    $<INSTALL_INTERFACE:/usr/local/include/GLtemplate> # for client in install
-                                                       # mode
-    $<INSTALL_INTERFACE:/usr/local/lib>) # for config_impl.hpp in install mode)
+  PUBLIC "$<BUILD_INTERFACE:${BUILD_INCL}>" # for
+         # headers when building
+         $<INSTALL_INTERFACE:/usr/local/include/GLtemplate> # for client in
+                                                            # install mode
+         $<INSTALL_INTERFACE:/usr/local/lib>) # for config_impl.hpp in install
+                                              # mode)
 
 install(
   TARGETS GLtemplate

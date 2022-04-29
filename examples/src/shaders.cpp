@@ -9,7 +9,7 @@ class ShaderTest : public App
 public:
     void Startup() override
     {
-        shader = Shader("../tests/shaders/triangle.vs", "../tests/shaders/triangle.fs");
+        shader = Shader("triangle.vs", "triangle.fs");
 
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);

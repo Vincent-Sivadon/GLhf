@@ -29,35 +29,52 @@ std::string readFile(const char *filePath)
 }
 
 // Shader program creation from files (vertex, fragment)
-Shader::Shader(const char *vertexPath, const char *fragmentPath)
+Shader::Shader(const char *vertexShaderName, const char *fragmentShaderName)
 {
+    // Change "texture.vs" to "/usr/local/share/GLtemplate/texture.vs"
+    // --------------------------------------------------------------
+    char vertexShaderPath[100];
+    char fragmentShaderPath[100];
+    const std::string dirPath("/usr/local/share/GLtemplate/");
+    const std::string newVertexPath(dirPath + vertexShaderName);
+    strcpy(vertexShaderPath, newVertexPath.c_str());
+    const std::string newFragmentPath = dirPath + fragmentShaderName;
+    strcpy(fragmentShaderPath, newFragmentPath.c_str());
+    
     // Read shader files
-    std::string vertexShaderStr = readFile(vertexPath);
-    std::string fragmentShaderStr = readFile(fragmentPath);
+    // -----------------
+    std::string vertexShaderStr = readFile(vertexShaderPath);
+    std::string fragmentShaderStr = readFile(fragmentShaderPath);
 
     // Type conversion
+    // ---------------
     const char *vertexShaderSrc = vertexShaderStr.c_str();
     const char *fragmentShaderSrc = fragmentShaderStr.c_str();
 
     // Create shaders
+    // --------------
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
     // Compile vertex shader
+    // ---------------------
     glShaderSource(vertexShader, 1, &vertexShaderSrc, NULL);
     glCompileShader(vertexShader);
 
     // Compile fragment shader
+    // -----------------------
     glShaderSource(fragmentShader, 1, &fragmentShaderSrc, NULL);
     glCompileShader(fragmentShader);
 
     // Create final shader program
+    // ---------------------------
     program = glCreateProgram(); // must be != 0
     glAttachShader(program, vertexShader);
     glAttachShader(program, fragmentShader);
     glLinkProgram(program);
 
     // Delete shaders
+    // --------------
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 }
@@ -134,4 +151,10 @@ void Shader::SetUniform(const std::string &name, const glm::vec3 &vec)
 {
     GLint location = GetUniformLocation(name);
     glUniform3fv(location, 1, glm::value_ptr(vec));
+}
+
+void Shader::SetUniform(const std::string &name, const int i)
+{
+    GLint location = GetUniformLocation(name);
+    glUniform1i(location, i);
 }

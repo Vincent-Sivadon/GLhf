@@ -12,6 +12,7 @@ private:
 public:
     VertexArray() {}
     VertexArray(int location, int count);
+    VertexArray(int location, int count, int location2, int count2);
     ~VertexArray() {}
 
     void Bind();

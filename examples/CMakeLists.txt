@@ -17,6 +17,7 @@ foreach(example_source_file ${EXAMPLE_SRCS})
 
   # on link les librairies
   target_link_libraries(${example_name} glad glfw GLtemplate)
+  target_include_directories(${example_name} PUBLIC ${CMAKE_SOURCE_DIR}/external)
   target_compile_options(${example_name} PUBLIC -std=c++17)
 
 endforeach(example_source_file ${EXAMPLE_SRCS})

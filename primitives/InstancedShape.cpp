@@ -97,13 +97,13 @@ void InstancedShape::Draw()
     glDrawElementsInstanced(GL_TRIANGLES, indicesSize / sizeof(GLuint), GL_UNSIGNED_INT, 0, N);
 }
 
-void InstancedShape::SetShaderNames(std::string vertexShaderName, std::string fragmentShaderName)
+void InstancedShape::SetShaderNames(const std::string vertexShaderName, const std::string fragmentShaderName)
 {
-    std::string dirPath = "/usr/local/share/GLtemplate/";
+    const std::string dirPath("/usr/local/share/GLtemplate/");
 
-    std::string newVertexPath = dirPath + vertexShaderName;
+    const std::string newVertexPath(dirPath + vertexShaderName);
     strcpy(vertexShaderPath, newVertexPath.c_str());
 
-    std::string newFragmentPath = dirPath + fragmentShaderName;
+    const std::string newFragmentPath = dirPath + fragmentShaderName;
     strcpy(fragmentShaderPath, newFragmentPath.c_str());
 }

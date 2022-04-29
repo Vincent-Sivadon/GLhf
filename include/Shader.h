@@ -37,6 +37,7 @@ public:
     // Set uniform named name
     void SetUniform(const std::string &name, const glm::mat4 &mat);
     void SetUniform(const std::string &name, const glm::vec3 &vec);
+    void SetUniform(const std::string &name, const int i);
 
     // Get uniform named name location
     GLint GetUniformLocation(const std::string &name);
