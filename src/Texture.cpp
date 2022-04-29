@@ -22,7 +22,6 @@ void Texture2D::Create(GLuint w, GLuint h, const GLubyte *data)
     height = h;
 
     // Create texture
-
     glGenTextures(1, &ID);
     glBindTexture(GL_TEXTURE_2D, ID);
     glTexImage2D(GL_TEXTURE_2D, 0, internalFormat,
@@ -52,9 +51,9 @@ void Texture2D::Create(const char *image_path)
 {
     // Redefine dimensions
     int nbr_channels;
-    unsigned char *data = stbi_load(image_path, &width, &height, &nbr_channels, 0);
-    // Create texture
+    GLubyte *data = stbi_load(image_path, &width, &height, &nbr_channels, 0);
 
+    // Create texture
     glGenTextures(1, &ID);
     glBindTexture(GL_TEXTURE_2D, ID);
     // Set texture wraping parameters

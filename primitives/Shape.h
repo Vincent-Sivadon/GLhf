@@ -6,6 +6,7 @@
 #include "ElementBuffer.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
+#include "Texture.h"
 
 #include <cstring>
 #include <string>
@@ -14,6 +15,7 @@
 class Shape
 {
 protected:
+    Texture2D texture;
     Shader shader;
     VertexArray vao;
     VertexBuffer vbo;
@@ -25,6 +27,8 @@ protected:
 
     int verticesSize;
     int indicesSize;
+
+    int textureDefined = 0;
 
 public:
     virtual ~Shape() = default;
@@ -56,6 +60,9 @@ public:
     void SetPosition(float x, float y);
 
     void SetColor(float r, float g, float b);
+
+    void SetTexture(GLuint w, GLuint h, const GLubyte *data);
+    void SetTexture(const char *image_path);
 
     virtual void SetShaderNames(std::string vertexShaderName, std::string fragmentShaderName);
 };

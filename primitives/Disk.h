@@ -34,6 +34,9 @@ GLfloat *Disk::CreateVertices()
     vertices[1] = 0.0f;
     vertices[2] = 0.0f;
 
+    vertices[3] = 0.5f;
+    vertices[4] = 0.5f;
+
     for (int triangleID = 0; triangleID < nbTriangles; triangleID++)
     {
         vertices[(3+2) * (triangleID + 1)] = cos((float)triangleID * delta);     // x coordinate

@@ -53,6 +53,7 @@ void Shape::Destroy()
 
 void Shape::Draw()
 {
+    texture.Bind();
     shader.Bind();
     vao.Bind();
     ebo.Bind();
@@ -115,4 +116,19 @@ void Shape::SetShaderNames(std::string vertexShaderName, std::string fragmentSha
 
     std::string newFragmentPath = dirPath + fragmentShaderName;
     strcpy(fragmentShaderPath, newFragmentPath.c_str());
+}
+
+void Shape::SetTexture(GLuint w, GLuint h, const GLubyte *data)
+{
+    textureDefined = 1;
+    shader.SetUniform("textureDefined", 1);
+    texture.Create(w, h, data);
+}
+
+// ATTENTION : doit-être appelé après Create()
+void Shape::SetTexture(const char *image_path)
+{
+    textureDefined = 1;
+    shader.SetUniform("textureDefined", 1);
+    texture.Create(image_path);
 }

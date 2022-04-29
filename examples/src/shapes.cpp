@@ -18,6 +18,7 @@ public:
         disk.Create();
         disk2.pos = glm::vec3(2.0f, -0.5f, 0.0f);
         disk2.Create();
+        disk2.SetTexture("../resources/brickwall.jpg");
 
         edge.height = 0.05f;
         float dx = disk2.pos.x - disk.pos.x;

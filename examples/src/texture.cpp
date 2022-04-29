@@ -11,9 +11,24 @@ class TextureExample : public App
 public:
     void Startup() override
     {
-        std::cout << "============================== Startup ==============================\n";
+        // Create Data
+        // -----------
+        int w = 1024;
+        int h = 1024;
+        GLubyte *data = (GLubyte *)malloc(w * h * 3 * sizeof(GLubyte));
 
-        texture.Create("../resources/brickwall.jpg");
+        for (int i = 0; i < h; i++)
+            for (int j = 0; j < 3*w; j+=3)
+                for (int jj = 0; jj < 3; jj++)
+                {
+                    unsigned int ic = ((float)i/w) * 255.0f;
+                    data[i * (3*w) + j+jj] = ic;
+                }
+
+        std::cout << (unsigned int)(553/w) << std::endl;
+
+        //texture.Create("../resources/brickwall.jpg");
+        texture.Create(w, h, data);
 
         // Texture Quad
         static const GLfloat vertices[] = {
