@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <math.h>
+#include <unistd.h>
 
 typedef float real;
 
@@ -13,8 +14,8 @@ typedef float real;
 #define H 800   // Number of pixels of the frame (texture quad) on y-axis
 
 /****************************SIMULATION PARAMETERS****************************/
-static const unsigned int Nx = W/5;     // Number of inside points of the mesh on x-axis
-static const unsigned int Ny = H/5;     // Number of inside points of the mesh on y-axis
+static const unsigned int Nx = 200;     // Number of inside points of the mesh on x-axis
+static const unsigned int Ny = 200;     // Number of inside points of the mesh on y-axis
 
 static const real Lx = 1.0;             // Domain Size on x-axis
 static const real Ly = 1.0;             // Domain Size on y-axis
@@ -22,9 +23,9 @@ static const real Ly = 1.0;             // Domain Size on y-axis
 static const real dx = Lx / (Nx + 1);   // Mesh cell size on x-axis
 static const real dy = Ly / (Ny + 1);   // Mesh cell size on y-axis
 
-static const real dt = 0.01;            // Time Step
+static const real dt = 0.01f;            // Time Step
 
-static const real diff = 0.1f;          // Diffusion Coefficient
+static const real diff = 0.001f;          // Diffusion Coefficient
 /****************************************************************************/
 
 
@@ -50,6 +51,7 @@ public:
     void UpdatePhysics();               // Update velocity and density fields
     void UpdateTextureData();           // Update texture data according to velocity fields
     void Render(double ct) override;    // Global update (texture data, velocity fields...)
+    void ProcessInput() override;
 
     /********PHYSICS********/
     void AddSource(real *field, real *source);
@@ -66,7 +68,7 @@ public:
     void UpdateVelocity();
 
     void SetVelocityBoundaryConditions();
-    void SetContinuityBoundaryConditions(float *field); // Set continuity boundary conditions for a given field
+    void SetContinuityBoundaryConditions(real *field); // Set continuity boundary conditions for a given field
 
 
     /***********CLEANING***********/
@@ -132,6 +134,7 @@ void Fluid::Startup()
     double coef = 0.0038f;
     quad.width = coef * W;
     quad.height = coef * H;
+    quad.SetColor(0.6, 0.4, 0.85);
     quad.Create();
 
     /* ****Initialization**** */
@@ -164,13 +167,13 @@ void Fluid::UpdateTextureData()
     for (int i=0 ; i<H ; i++)
         for (int j=0 ; j<W ; j++)
             {
-                int ii = (int) (i * (Ny+1) / H);
-                int jj = (int) (j * (Nx+1) / H);
+                int ii = round(i * (Ny+1) / H);
+                int jj = round(j * (Nx+1) / W);
 
                 /* Update RGB channels of the pixel */
-                tex_data[i * W + j].r = rhon1[IdX(ii,jj)]*250.0f;
-                tex_data[i * W + j].g = rhon1[IdX(ii,jj)]*250.0f;
-                tex_data[i * W + j].b = rhon1[IdX(ii,jj)]*250.0f;
+                tex_data[i * W + j].r = rhon1[IdX(ii,jj)]*255.0f;
+                tex_data[i * W + j].g = rhon1[IdX(ii,jj)]*255.0f;
+                tex_data[i * W + j].b = rhon1[IdX(ii,jj)]*255.0f;
             }
 }
 
@@ -181,6 +184,26 @@ void Fluid::Render(double ct)
     UpdatePhysics();
     UpdateTextureData();
     quad.UpdateTexture((GLubyte *)tex_data);
+}
+
+void Fluid::ProcessInput()
+{
+    int cursor_width = 10;
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+        {
+            double xpos, ypos;
+            glfwGetCursorPos(window, &xpos, &ypos);
+
+            int ii = round((H-ypos) * (Ny+1) / H);
+            int jj = round(xpos * (Nx+1) / W);
+            for (int i=ii-cursor_width ; i<ii+cursor_width ; i++)
+                for (int j=jj-cursor_width ; j<jj+cursor_width ; j++)
+                {
+                    if (i>=0 && i<=Ny+2 && j>=0 && j<=Nx+2)
+                        rhon1[IdX(i,j)] += 0.1f;
+                }
+        }
+
 }
 
 /* ********************************PHYSICS******************************* */
@@ -235,10 +258,10 @@ void Fluid::AdvectVelocity()
 
     for ( int i=1 ; i<Ny+1 ; i++ ) {
         for ( int j=1 ; j<Nx+1 ; j++ ) {
-            real x_u = i - dtx * un[IdX(i,j)];
-            real y_u = j - dty * un[IdX(i,j)];
-            real x_v = i - dtx * vn[IdX(i,j)];
-            real y_v = j - dty * vn[IdX(i,j)];
+            real x_u = j - dtx * un[IdX(i,j)];
+            real y_u = i - dty * un[IdX(i,j)];
+            real x_v = j - dtx * vn[IdX(i,j)];
+            real y_v = i - dty * vn[IdX(i,j)];
 
             if (x_u<0.5   ) x_u=0.5;
             if (x_u>Nx+0.5) x_u=Nx+0.5;
@@ -249,24 +272,24 @@ void Fluid::AdvectVelocity()
             if (y_v<0.5   ) y_v=0.5;
             if (y_v>Ny+0.5) y_v=Ny+0.5;
 
-            int i0_u = (int)x_u; int i1_u=i0_u+1;
-            int j0_u = (int)y_u; int j1_u=j0_u+1;
-            int i0_v = (int)x_v; int i1_v=i0_v+1;
-            int j0_v = (int)y_v; int j1_v=j0_v+1;
+            int j0_u = (int)x_u; int j1_u=j0_u+1;
+            int i0_u = (int)y_u; int i1_u=i0_u+1;
+            int j0_v = (int)x_v; int j1_v=j0_v+1;
+            int i0_v = (int)y_v; int i1_v=i0_v+1;
 
-            real s1_u = x_u-i0_u;
+            real s1_u = x_u-j0_u;
             real s0_u = 1-s1_u;
-            real t1_u = y_u-j0_u;
+            real t1_u = y_u-i0_u;
             real t0_u = 1-t1_u;
-            real s1_v = x_v-i0_v;
+            real s1_v = x_v-j0_v;
             real s0_v = 1-s1_v;
-            real t1_v = y_v-j0_v;
+            real t1_v = y_v-i0_v;
             real t0_v = 1-t1_v;            
 
-            un1[IdX(i,j)] = s0_u * (t0_u*un[IdX(i0_u,j0_u)] + t1_u*un[IdX(i0_u,j1_u)]) +
-                            s1_u * (t0_u*un[IdX(i1_u,j0_u)] + t1_u*un[IdX(i1_u,j1_u)]);
-            vn1[IdX(i,j)] = s0_v * (t0_v*vn[IdX(i0_v,j0_v)] + t1_v*vn[IdX(i0_v,j1_v)]) +
-                            s1_v * (t0_v*vn[IdX(i1_v,j0_v)] + t1_v*vn[IdX(i1_v,j1_v)]);
+            un1[IdX(i,j)] = t0_u * (s0_u*un[IdX(i0_u,j0_u)] + s1_u*un[IdX(i0_u,j1_u)]) +
+                            t1_u * (s0_u*un[IdX(i1_u,j0_u)] + s1_u*un[IdX(i1_u,j1_u)]);
+            vn1[IdX(i,j)] = t0_v * (s0_v*vn[IdX(i0_v,j0_v)] + s1_v*vn[IdX(i0_v,j1_v)]) +
+                            t1_v * (s0_v*vn[IdX(i1_v,j0_v)] + s1_v*vn[IdX(i1_v,j1_v)]);
         }
     }
     SetVelocityBoundaryConditions();
@@ -279,24 +302,24 @@ void Fluid::AdvectDensity()
 
     for ( int i=1 ; i<Ny+1 ; i++ ) {
         for ( int j=1 ; j<Nx+1 ; j++ ) {
-            real x = i - dtx * rhon[IdX(i,j)];
-            real y = j - dty * rhon[IdX(i,j)];
+            real y = i - dty * rhon[IdX(i,j)];
+            real x = j - dtx * rhon[IdX(i,j)];
 
             if (x<0.5   ) x=0.5;
             if (x>Nx+0.5) x=Nx+0.5;
             if (y<0.5   ) y=0.5;
             if (y>Ny+0.5) y=Ny+0.5;
 
-            int i0 = (int)x; int i1=i0+1;
-            int j0 = (int)y; int j1=j0+1;
+            int j0 = (int)x; int j1=j0+1;
+            int i0 = (int)y; int i1=i0+1;
 
-            real s1 = x-i0;
+            real s1 = x-j0;
             real s0 = 1-s1;
-            real t1 = y-j0;
+            real t1 = y-i0;
             real t0 = 1-t1;
 
-            rhon1[IdX(i,j)] = s0 * (t0*rhon[IdX(i0,j0)] + t1*rhon[IdX(i0,j1)]) +
-                              s1 * (t0*rhon[IdX(i1,j0)] + t1*rhon[IdX(i1,j1)]);
+            rhon1[IdX(i,j)] = t0 * (s0*rhon[IdX(i0,j0)] + s1*rhon[IdX(i0,j1)]) +
+                              t1 * (s0*rhon[IdX(i1,j0)] + s1*rhon[IdX(i1,j1)]);
         }
     }
     SetContinuityBoundaryConditions(rhon1);
@@ -304,7 +327,7 @@ void Fluid::AdvectDensity()
 
 void Fluid::UpdateDensity()
 {
-    AddSource(rhon1, rhon);
+    //AddSource(rhon1, rhon);
     SWAP(rhon, rhon1); DiffuseDensity();
     SWAP(rhon, rhon1); AdvectDensity();
 }
@@ -344,8 +367,8 @@ void Fluid::Project()
 
 void Fluid::UpdateVelocity()
 {
-    AddSource(un1, un);
-    AddSource(vn1, vn);
+    //AddSource(un1, un);
+    //AddSource(vn1, vn);
     
     SWAP(un1, un);
     SWAP(vn1, vn);
@@ -363,24 +386,24 @@ void Fluid::UpdateVelocity()
  * We consider the fluid is in a closed box */
 void Fluid::SetVelocityBoundaryConditions()
 {
-    // Run through both vertical walls
+    // Run through both horizontal walls
     for (int j=1 ; j<Nx+1 ; j++)
     {
-        un1[IdX(0   ,j)] = -un1[IdX(1 ,j)];
-        un1[IdX(Ny+1,j)] = -un1[IdX(Ny,j)];
+        un1[IdX(0   ,j)] = un1[IdX(1 ,j)];
+        un1[IdX(Ny+1,j)] = un1[IdX(Ny,j)];
 
-        vn1[IdX(0   ,j)] = vn1[IdX(1 ,j)];
-        vn1[IdX(Ny+1,j)] = vn1[IdX(Ny,j)];
+        vn1[IdX(0   ,j)] = -vn1[IdX(1 ,j)];
+        vn1[IdX(Ny+1,j)] = -vn1[IdX(Ny,j)];
     }
 
-    // Run through both horizontal walls
+    // Run through both vertical walls
     for (int i=1 ; i<Ny+1 ; i++)
     {
-        un1[IdX(i,0    )] = un1[IdX(i,1 )];
-        un1[IdX(i, Nx+1)] = un1[IdX(i,Nx)];
+        un1[IdX(i,0    )] = -un1[IdX(i,1 )];
+        un1[IdX(i, Nx+1)] = -un1[IdX(i,Nx)];
 
-        vn1[IdX(i,0    )] = -vn1[IdX(i,1 )];
-        vn1[IdX(i, Nx+1)] = -vn1[IdX(i,Nx)];
+        vn1[IdX(i,0    )] = vn1[IdX(i,1 )];
+        vn1[IdX(i, Nx+1)] = vn1[IdX(i,Nx)];
     }
 
     // All corners un
@@ -397,16 +420,16 @@ void Fluid::SetVelocityBoundaryConditions()
 }
 
 /* Set continuity boundary conditions for a given field */
-void Fluid::SetContinuityBoundaryConditions(float *field)
+void Fluid::SetContinuityBoundaryConditions(real *field)
 {
-    // Run through both vertical walls
+    // Run through both horizontal walls
     for (int j=1 ; j<Nx+1 ; j++)
     {
         field[IdX(0   ,j)] = field[IdX(1 ,j)];
         field[IdX(Ny+1,j)] = field[IdX(Ny,j)];
     }
 
-    // Run through both horizontal walls
+    // Run through both vertical walls
     for (int i=1 ; i<Ny+1 ; i++)
     {
         field[IdX(i,0    )] = field[IdX(i,1 )];
