@@ -2,6 +2,10 @@
 
 ## Example
 
+### Real time fluid simulation (Joe Stam)
+![Fluid](Fluid.gif "Fluid")
+
+### Graph Representation
 ![Graph](GLtemplateGraph.png "Graph")
 
 ## Usage
