@@ -76,6 +76,11 @@ void Texture2D::Create(const char *image_path)
     stbi_image_free(data);
 }
 
+void Texture2D::Update(const GLubyte *data)
+{
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
+}
+
 // Binds the texture as the current active GL_TEXTURE_2D texture object
 void Texture2D::Bind() const
 {

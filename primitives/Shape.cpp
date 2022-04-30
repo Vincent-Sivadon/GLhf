@@ -132,3 +132,8 @@ void Shape::SetTexture(const char *image_path)
     shader.SetUniform("textureDefined", 1);
     texture.Create(image_path);
 }
+
+void Shape::UpdateTexture(const GLubyte *data)
+{
+    texture.Update(data);
+}

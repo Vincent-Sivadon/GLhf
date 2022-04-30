@@ -63,6 +63,7 @@ public:
 
     void SetTexture(GLuint w, GLuint h, const GLubyte *data);
     void SetTexture(const char *image_path);
+    void UpdateTexture(const GLubyte *data);
 
     virtual void SetShaderNames(std::string vertexShaderName, std::string fragmentShaderName);
 };

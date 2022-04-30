@@ -30,6 +30,8 @@ public:
     // Generates texture from image data
     void Create(const char * image_path);
     void Create(GLuint w, GLuint h, const GLubyte *data);
+    
+    void Update(const GLubyte *data);
 
     // Binds the texture as the current actvie GL_TEXTURE_2D object
     void Bind() const;
