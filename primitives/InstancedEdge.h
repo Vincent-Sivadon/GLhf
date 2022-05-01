@@ -9,6 +9,7 @@
 
 #include <math.h>
 #include <string>
+#include <iostream>
 
 typedef unsigned long long u64;
 
@@ -28,7 +29,10 @@ public:
 
     void InitCompleteGraph(glm::vec2 *diskPos, int nb);
     void InitFromEdges(std::vector<std::pair<u64, u64>>& edges, glm::vec2 *diskPos);
+    void InitFromEdges(u64 * edges, u64 nb_edges, glm::vec2 *diskPos);
     void EdgePos(int k, const glm::vec2 &a, const glm::vec2 &b);
+
+    void UpdateModelMatrices(u64 * edges, glm::vec2 *diskPos);
 };
 /* ************************************************************************ */
 
@@ -40,6 +44,7 @@ void InstancedEdge::SetDefaultProperties()
         throw "'InitCompleteGraph(...) must be explicitly called before Create(...)  (for now)";
 }
 
+/* Init edge k according to the 2 disks positions a and b */
 void InstancedEdge::EdgePos(int k, const glm::vec2 &a, const glm::vec2 &b)
 {
     // Delta
@@ -107,6 +112,44 @@ void InstancedEdge::InitFromEdges(std::vector<std::pair<u64, u64>>& edges, glm::
         k++;
     }
 }
+
+void InstancedEdge::InitFromEdges(u64 * edges, u64 nb_edges, glm::vec2 *diskPos)
+{
+    if (diskPos == nullptr)
+        throw "InstancedDisk.positions is nullptr when trying to init InstancedEdges with InitPositions";
+    if (edges == nullptr)
+        throw "Trying to init InstancedEdge with nullptr edges";
+
+    diskPositions = diskPos;
+
+    positions = new glm::vec2[N];
+    width = new float[N];
+    height = new float[N];
+    angle = new float[N];
+
+    for (int i=0 ; i<nb_edges ; i++)
+        EdgePos(i, diskPositions[edges[2*i]], diskPositions[edges[2*i+1]]);
+}
+
+void InstancedEdge::UpdateModelMatrices(u64 * edges, glm::vec2 *diskPos)
+{
+    // Update position
+    for (int i=0 ; i<N ; i++)
+        EdgePos(i, diskPositions[edges[2*i]], diskPositions[edges[2*i+1]]);
+
+    // Update model matrices
+    for (int i = 0; i < N; i++)
+    {
+        modelMatrices[i] = glm::mat4(1.0f);
+        modelMatrices[i] = glm::translate(modelMatrices[i], glm::vec3(positions[i], 0.0f));
+        modelMatrices[i] = glm::rotate(modelMatrices[i], angle[i], glm::vec3(0.0f, 0.0f, -1.0f));
+        modelMatrices[i] = glm::scale(modelMatrices[i], glm::vec3(width[i], height[i], 1.0f));
+    }
+
+    // Upload data
+    instancedVBO.UpdateData(modelMatrices, N * sizeof(glm::mat4));
+}
+
 
 GLfloat *InstancedEdge::CreateVertices()
 {

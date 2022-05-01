@@ -16,9 +16,19 @@ public:
 
     GLfloat *CreateVertices();
     GLuint *CreateIndices();
+
+    void SetNumberOfTriangles(int n);
 };
 
 /* ************************************************************** */
+
+void Disk::SetNumberOfTriangles(int n)
+{
+    if (n<=0)
+        throw "Disk nbTriangles was set to n<=0";
+    nbTriangles = n;
+}
+
 
 GLfloat *Disk::CreateVertices()
 {

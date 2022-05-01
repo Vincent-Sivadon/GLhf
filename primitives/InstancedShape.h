@@ -37,6 +37,9 @@ public:
     virtual GLuint *CreateIndices() = 0;
 
     virtual void SetDefaultProperties() = 0;
+    void SetDimensions(float w, float h);
+
+    void UpdateModelMatrices();
 
     void Create() override;
     void Destroy() override;

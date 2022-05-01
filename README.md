@@ -6,6 +6,7 @@
 ![Fluid](Fluid.gif "Fluid")
 
 ### Graph Representation
+![GraphGif](Graph.gif "Graph Force Simulation")
 ![Graph](GLtemplateGraph.png "Graph")
 
 ## Usage

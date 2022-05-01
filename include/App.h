@@ -74,8 +74,8 @@ public:
     virtual void Shutdown();        // Memory cleaning
 
     // Window
-    inline static int WIDTH = 1000;
-    inline static int HEIGHT = 800;
+    inline static int WIDTH = 1800.0f;
+    inline static int HEIGHT = 950.0f;
 
     inline static Camera camera;
     inline static bool firstMouse = true;

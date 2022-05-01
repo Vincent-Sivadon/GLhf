@@ -24,7 +24,7 @@ void Shape::Create()
     ebo = ElementBuffer(indices, indicesSize);
 
     // Projection Matrix
-    SetProjection(glm::perspective(glm::radians(45.0f), 1000.0f / 800.0f, 0.1f, 100.0f));
+    SetProjection(glm::perspective(glm::radians(45.0f), 1800.0f / 950.0f, 0.1f, 400.0f));
 
     // Model Matrix
     model = glm::mat4(1.0f);
@@ -137,3 +137,10 @@ void Shape::UpdateTexture(const GLubyte *data)
 {
     texture.Update(data);
 }
+
+void Shape::SetTextureWrapMode(GLuint ws, GLuint wt)
+{
+    texture.wrapS = ws;
+    texture.wrapT = wt;
+}
+

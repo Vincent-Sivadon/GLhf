@@ -4,11 +4,14 @@
 
 #include <math.h>
 #include <string>
+#include <unistd.h>
 #include <algorithm>
 
 /* ************************* INSTANCED DISK CLASS ************************* */
 class InstancedDisk : public InstancedShape
 {
+private:
+    int posRange = 1;
 public:
     int nbTriangles = 60;
 
@@ -16,11 +19,19 @@ public:
     GLuint *CreateIndices();
 
     void SetDefaultProperties();
+    void SetPosRange(int range);
 };
 /* ************************************************************************ */
 
+void InstancedDisk::SetPosRange(int range)
+{
+    posRange = range;
+}
+
 void InstancedDisk::SetDefaultProperties()
 {
+    srand(getpid());
+
     float defaultWidth = 0.05f;
     float defaultHeight = 0.05f;
     float defaultAngle = 0.0f;
@@ -53,8 +64,8 @@ void InstancedDisk::SetDefaultProperties()
         for (int i = 0; i < N; i++)
         {
             // Between -1 et 1
-            float x = 1 * (2 * (float)rand() / (float)RAND_MAX - 1);
-            float y = 1 * (2 * (float)rand() / (float)RAND_MAX - 1);
+            float x = posRange * (2 * (float)rand() / (float)RAND_MAX - 1);
+            float y = posRange * (2 * (float)rand() / (float)RAND_MAX - 1);
             positions[i] = glm::vec2(x, y);
         }
     }

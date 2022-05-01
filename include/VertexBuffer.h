@@ -14,6 +14,8 @@ public:
     VertexBuffer(const void *data, GLuint size);
     ~VertexBuffer() {}
 
+    void UpdateData(const void *data, GLuint size);
+
     void Bind() const;
     void Unbind() const;
 

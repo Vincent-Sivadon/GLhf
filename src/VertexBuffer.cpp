@@ -9,6 +9,13 @@ VertexBuffer::VertexBuffer(const void *data, GLuint size)
     glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 }
 
+void VertexBuffer::UpdateData(const void *data, GLuint size)
+{
+    glBindBuffer(GL_ARRAY_BUFFER, ID);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
+}
+
+
 void VertexBuffer::Bind() const
 {
     printf("vao id : %u\n", ID);

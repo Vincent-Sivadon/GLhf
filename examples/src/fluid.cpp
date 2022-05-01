@@ -55,18 +55,18 @@ public:
 
     /********PHYSICS********/
     void AddSource(real *field, real *source);
-
+    // ------------------
     void DiffuseVelocity();
     void DiffuseDensity();
-
+    // ------------------
     void AdvectVelocity();
     void AdvectDensity();
-
+    // ------------------
     void Project();
-
+    // ------------------
     void UpdateDensity();
     void UpdateVelocity();
-
+    // ------------------
     void SetVelocityBoundaryConditions();
     void SetContinuityBoundaryConditions(real *field); // Set continuity boundary conditions for a given field
 
@@ -143,6 +143,7 @@ void Fluid::Startup()
     /* ********************** */
 
     /* Create and Set Texture */
+    quad.SetTextureWrapMode(GL_NEAREST, GL_LINEAR);
     quad.SetTexture(W, H, (GLubyte *)tex_data);
 
     /* Add to App Objects */
