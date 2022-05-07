@@ -1,4 +1,4 @@
-# GLTemplate : OpenGL application abstraction
+# GLhf : OpenGL application abstraction
 
 ## Example
 
@@ -7,7 +7,7 @@
 
 ### Graph Representation
 ![GraphGif](Graph.gif "Graph Force Simulation")
-![Graph](GLtemplateGraph.png "Graph")
+![Graph](GLhfGraph.png "Graph")
 
 ## Usage
 
@@ -18,7 +18,7 @@ A program that uses this paradigm should look like :
 class ExampleApp : public App
 {
 public:
-    void Startup() override {}           // Initialize OpenGL or GLtemplate objects
+    void Startup() override {}           // Initialize OpenGL or GLhf objects
     void Render() override {}            // Manual Rendering protocole
     void ProcessInput() override {}      // Manual Input Management (on top of default ones)
     void Shutdown() override {}          // Manual Memory cleaning

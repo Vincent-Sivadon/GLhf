@@ -5,7 +5,7 @@
 namespace GLhf
 {
 
-    VertexArray::VertexArray(int location, int count)
+    void VertexArray::Create(int location, int count)
     {
         glGenVertexArrays(1, &this->ID);
         glBindVertexArray(ID);
@@ -14,7 +14,7 @@ namespace GLhf
         glEnableVertexAttribArray(location);
     }
 
-    VertexArray::VertexArray(int location, int count, int location2, int count2)
+    void VertexArray::Create(int location, int count, int location2, int count2)
     {
         glGenVertexArrays(1, &this->ID);
         glBindVertexArray(ID);

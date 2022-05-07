@@ -14,8 +14,8 @@ namespace GLhf
         GLuint ID;
 
         VertexBuffer() {}
-        VertexBuffer(const void *data, GLuint size);
         ~VertexBuffer() {}
+        void Create(const void *data, GLuint size);
 
         void UpdateData(const void *data, GLuint size);
 

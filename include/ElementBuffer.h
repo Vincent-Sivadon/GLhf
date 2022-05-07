@@ -16,8 +16,8 @@ namespace GLhf
 
     public:
         ElementBuffer() {}
-        ElementBuffer(const GLuint *data, GLuint count);
         ~ElementBuffer() {}
+        void Create(const GLuint *data, GLuint count);
 
         void Bind() const;
         void Unbind() const;

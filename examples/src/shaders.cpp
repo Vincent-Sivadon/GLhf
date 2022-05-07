@@ -1,15 +1,15 @@
 /* Supposed to print a blue triangle on a green background */
 
-#include "../include/GLtemplate.h"
+#include "../include/GLhf.h"
 
 #include <iostream>
 
-class ShaderTest : public App
+class ShaderTest : public GLhf::App
 {
 public:
     void Startup() override
     {
-        shader = Shader("triangle.vs", "triangle.fs");
+        shader.Create("triangle.vs", "triangle.fs");
 
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
@@ -31,7 +31,7 @@ public:
     }
 
 private:
-    Shader shader;
+    GLhf::Shader shader;
     GLuint vao;
 };
 

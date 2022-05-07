@@ -5,7 +5,7 @@
 namespace GLhf
 {
 
-    VertexBuffer::VertexBuffer(const void *data, GLuint size)
+    void VertexBuffer::Create(const void *data, GLuint size)
     {
         glGenBuffers(1, &ID);
         glBindBuffer(GL_ARRAY_BUFFER, ID);

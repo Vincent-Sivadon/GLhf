@@ -28,7 +28,7 @@ namespace GLhf
         GLFWwindow * GetWindow();
 
         // Creation
-        void Create(const std::string title = "GLtemplate",
+        void Create(const std::string title = "GLhf",
                 int width = 1800,
                 int height = 950);
     };

@@ -14,9 +14,9 @@ namespace GLhf
 
     public:
         VertexArray() {}
-        VertexArray(int location, int count);
-        VertexArray(int location, int count, int location2, int count2);
         ~VertexArray() {}
+        void Create(int location, int count);
+        void Create(int location, int count, int location2, int count2);
 
         void Bind();
         void Unbind();

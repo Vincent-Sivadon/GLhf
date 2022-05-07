@@ -1,6 +1,6 @@
 /* Supposed to print a orange quad on a green background */
 
-#include "../include/GLtemplate.h"
+#include "../include/GLhf.h"
 #include "../primitives/Quad.h"
 #include "../primitives/Disk.h"
 #include "../primitives/Edge.h"
@@ -9,7 +9,7 @@
 #include <string>
 #include <math.h>
 
-class QuadTest : public App
+class QuadTest : public GLhf::App
 {
 public:
     void Startup() override
@@ -31,7 +31,7 @@ public:
         edge.color = glm::vec3(1.0f, 0.0f, 0.0f);
         edge.Create();
 
-        edg = Edge(&disk, &disk2);
+        edg.SetDisks(&disk, &disk2);
         edg.Create();
 
         quad.width = 0.5f;
@@ -51,12 +51,12 @@ public:
     }
 
 private:
-    Quad quad;
-    Quad quad2;
-    Disk disk;
-    Disk disk2;
-    Quad edge;
-    Edge edg;
+    GLhf::Quad quad;
+    GLhf::Quad quad2;
+    GLhf::Disk disk;
+    GLhf::Disk disk2;
+    GLhf::Quad edge;
+    GLhf::Edge edg;
 };
 
 DECLARE_MAIN(QuadTest);

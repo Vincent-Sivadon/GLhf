@@ -21,7 +21,7 @@ namespace GLhf
 
         SetDefaultProperties();
 
-        shader = Shader(vertexShaderPath, fragmentShaderPath);
+        shader.Create(vertexShaderPath, fragmentShaderPath);
 
         GLfloat *vertices = CreateVertices();
         GLuint *indices = CreateIndices();
@@ -37,12 +37,12 @@ namespace GLhf
         }
 
         // Vertex Buffers
-        vbo = VertexBuffer(vertices, verticesSize);
-        instancedVBO = VertexBuffer(modelMatrices, N * sizeof(glm::mat4));
+        vbo.Create(vertices, verticesSize);
+        instancedVBO.Create(modelMatrices, N * sizeof(glm::mat4));
 
         // Vertex Array
         vbo.Bind();
-        vao = VertexArray(0, 3, 1, 2);
+        vao.Create(0, 3, 1, 2);
 
         instancedVBO.Bind();
         // glBindBuffer(GL_ARRAY_BUFFER, instancedVBO.ID); // this attribute comes from a different vertex buffer
@@ -62,7 +62,7 @@ namespace GLhf
         glVertexAttribDivisor(4, 1);
 
         // Element buffer
-        ebo = ElementBuffer(indices, indicesSize);
+        ebo.Create(indices, indicesSize);
 
         // Projection Matrix
         SetProjection(glm::perspective(glm::radians(45.0f), 1800.0f / 950.0f, 0.1f, 400.0f));

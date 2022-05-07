@@ -1,4 +1,4 @@
 .vscode/
 build/
-GLtemplate-config.cmake
-GLtemplateConfig.cmake
+GLhf-config.cmake
+GLhfConfig.cmake

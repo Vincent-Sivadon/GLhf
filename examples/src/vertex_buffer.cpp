@@ -1,23 +1,23 @@
 /* Supposed to print a orange triangle on a green background */
 
-#include "../include/GLtemplate.h"
+#include "../include/GLhf.h"
 
 #include <iostream>
 
-class VBOTest : public App
+class VBOTest : public GLhf::App
 {
 public:
     void Startup() override
     {
-        shader = Shader("../tests/shaders/data_triangle.vs", "../tests/shaders/data_triangle.fs");
+        shader.Create("../tests/shaders/data_triangle.vs", "../tests/shaders/data_triangle.fs");
 
         float vertices[] = {
             -0.5f, -0.5f, 0.0f,
             0.5f, -0.5f, 0.0f,
             0.0f, 0.5f, 0.0f};
 
-        vbo = VertexBuffer(vertices, sizeof(vertices));
-        vao = VertexArray(0, 3);
+        vbo.Create(vertices, sizeof(vertices));
+        vao.Create(0, 3);
     }
 
     void Render(double time) override
@@ -37,9 +37,9 @@ public:
     }
 
 private:
-    Shader shader;
-    VertexArray vao;
-    VertexBuffer vbo;
+    GLhf::Shader shader;
+    GLhf::VertexArray vao;
+    GLhf::VertexBuffer vbo;
 };
 
 DECLARE_MAIN(VBOTest);

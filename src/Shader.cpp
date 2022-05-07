@@ -32,13 +32,13 @@ namespace GLhf
     }
 
     // Shader program creation from files (vertex, fragment)
-    Shader::Shader(const char *vertexShaderName, const char *fragmentShaderName)
+    void Shader::Create(const char *vertexShaderName, const char *fragmentShaderName)
     {
-        // Change "texture.vs" to "/usr/local/share/GLtemplate/texture.vs"
+        // Change "texture.vs" to "/usr/local/share/GLhf/texture.vs"
         // --------------------------------------------------------------
         char vertexShaderPath[100];
         char fragmentShaderPath[100];
-        const std::string dirPath("/usr/local/share/GLtemplate/");
+        const std::string dirPath("/usr/local/share/GLhf/");
         const std::string newVertexPath(dirPath + vertexShaderName);
         strcpy(vertexShaderPath, newVertexPath.c_str());
         const std::string newFragmentPath = dirPath + fragmentShaderName;
@@ -83,7 +83,7 @@ namespace GLhf
     }
 
     // Shader program creation from shader files (vertex, fragment, tessellation control, tesselation evaluation)
-    Shader::Shader(const char *vertexPath,
+    void Shader::Create(const char *vertexPath,
                 const char *fragmentPath,
                 const char *tessControlPath,
                 const char *tessEvalPath)

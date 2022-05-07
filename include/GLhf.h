@@ -1,4 +1,4 @@
-/* Include all GLtemplate library headers */
+/* Include all GLhf library headers */
 
 #include "App.h"
 #include "Shader.h"

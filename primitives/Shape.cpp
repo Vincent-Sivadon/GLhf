@@ -19,12 +19,12 @@ namespace GLhf
         GLfloat *vertices = CreateVertices();
         GLuint *indices = CreateIndices();
 
-        shader = Shader(vertexShaderPath, fragmentShaderPath);
+        shader.Create(vertexShaderPath, fragmentShaderPath);
 
         // Buffers
-        vbo = VertexBuffer(vertices, verticesSize);
-        vao = VertexArray(0, 3, 1, 2);
-        ebo = ElementBuffer(indices, indicesSize);
+        vbo.Create(vertices, verticesSize);
+        vao.Create(0, 3, 1, 2);
+        ebo.Create(indices, indicesSize);
 
         // Projection Matrix
         SetProjection(glm::perspective(glm::radians(45.0f), 1800.0f / 950.0f, 0.1f, 400.0f));
@@ -112,7 +112,7 @@ namespace GLhf
 
     void Shape::SetShaderNames(std::string vertexShaderName, std::string fragmentShaderName)
     {
-        std::string dirPath = "/usr/local/share/GLtemplate/";
+        std::string dirPath = "/usr/local/share/GLhf/";
 
         std::string newVertexPath = dirPath + vertexShaderName;
         strcpy(vertexShaderPath, newVertexPath.c_str());

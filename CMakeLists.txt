@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 # Notre projet est étiqueté mylib
-project(GLtemplate)
+project(GLhf)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -28,28 +28,28 @@ file(GLOB SHADERS "resources/shaders/examples/*" "resources/shaders/primitives/*
 
 set(BUILD_INCL ${CMAKE_SOURCE_DIR}/include;${glm_dir};${CMAKE_SOURCE_DIR}/primitives;${CMAKE_SOURCE_DIR}/external)
 
-add_library(GLtemplate SHARED ${SRCS} ${HEADERS})
-target_link_libraries(GLtemplate ${LIBS})
-target_compile_options(GLtemplate PUBLIC -g)
+add_library(GLhf SHARED ${SRCS} ${HEADERS})
+target_link_libraries(GLhf ${LIBS})
+target_compile_options(GLhf PUBLIC -g)
 target_include_directories(
-  GLtemplate
+  GLhf
   PUBLIC "$<BUILD_INTERFACE:${BUILD_INCL}>" # for
          # headers when building
-         $<INSTALL_INTERFACE:/usr/local/include/GLtemplate> # for client in
+         $<INSTALL_INTERFACE:/usr/local/include/GLhf> # for client in
                                                             # install mode
          $<INSTALL_INTERFACE:/usr/local/lib>) # for config_impl.hpp in install
                                               # mode)
 
 install(
-  TARGETS GLtemplate
-  EXPORT GLtemplateConfig
+  TARGETS GLhf
+  EXPORT GLhfConfig
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin/GLtemplate)
-export(TARGETS GLtemplate FILE "${CMAKE_SOURCE_DIR}/GLtemplateConfig.cmake")
-install(EXPORT GLtemplateConfig DESTINATION "lib/cmake/GLtemplate")
-install(FILES ${HEADERS} DESTINATION /usr/local/include/GLtemplate)
-install(FILES ${SHADERS} DESTINATION /usr/local/share/GLtemplate/)
+  RUNTIME DESTINATION bin/GLhf)
+export(TARGETS GLhf FILE "${CMAKE_SOURCE_DIR}/GLhfConfig.cmake")
+install(EXPORT GLhfConfig DESTINATION "lib/cmake/GLhf")
+install(FILES ${HEADERS} DESTINATION /usr/local/include/GLhf)
+install(FILES ${SHADERS} DESTINATION /usr/local/share/GLhf/)
 
 string(ASCII 27 ESCAPE)
 message("${ESCAPE}[1;36m")
@@ -65,7 +65,7 @@ message(
 message("========================== USAGE ===========================")
 message(
   "
-  Include <GLtemplate/GLtemplate.h> in your script,
+  Include <GLhf/GLhf.h> in your script,
   and use the following structure to build your application :
   ")
 message("${ESCAPE}[1;35m")
@@ -90,7 +90,7 @@ message(
 ")
 message("${ESCAPE}[1;36m")
 message("
-  Now to compile use can use CMake with find_package(GLtemplate REQUIRED)
+  Now to compile use can use CMake with find_package(GLhf REQUIRED)
   ")
 message("===========================================================")
 

@@ -16,8 +16,11 @@ namespace GLhf
 
     public:
         Edge() {}
-        Edge(Disk *d1, Disk *d2) : disk1(d1), disk2(d2)
+        void SetDisks(Disk *d1, Disk *d2)
         {
+            disk1 = d1;
+            disk2 = d2;
+
             // Thin quad (line)
             height = 0.05f;
 

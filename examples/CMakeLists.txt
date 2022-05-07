@@ -1,4 +1,4 @@
-# ===== Examples of GLtemplate library ===== #
+# ===== Examples of GLhf library ===== #
 
 file(GLOB EXAMPLE_SRCS "src/*.cpp")
 
@@ -16,7 +16,7 @@ foreach(example_source_file ${EXAMPLE_SRCS})
   add_executable(${example_name} ${example_source_file})
 
   # on link les librairies
-  target_link_libraries(${example_name} glad glfw GLtemplate)
+  target_link_libraries(${example_name} glad glfw GLhf)
   target_include_directories(${example_name} PUBLIC ${CMAKE_SOURCE_DIR}/external)
   target_compile_options(${example_name} PUBLIC -std=c++17 -Ofast)
 

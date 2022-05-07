@@ -1,6 +1,6 @@
 /* Supposed to print a orange quad on a green background */
 
-#include "../include/GLtemplate.h"
+#include "../include/GLhf.h"
 #include "../primitives/Disk.h"
 #include "../primitives/Quad.h"
 

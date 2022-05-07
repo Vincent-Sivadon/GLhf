@@ -1,6 +1,6 @@
 /* Supposed to print a orange quad on a green background */
 
-#include "../include/GLtemplate.h"
+#include "../include/GLhf.h"
 #include "../primitives/InstancedDisk.h"
 #include "../primitives/InstancedEdge.h"
 
@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <algorithm>
 
-class InstancingTest : public GLhf::App
+class Instancing : public GLhf::App
 {
 public:
     void Startup() override
@@ -30,9 +30,8 @@ public:
         instEdge.InitCompleteGraph(instDisk.positions, N);
         instEdge.Create();
 
-
-        AddShape(&instEdge);
-        AddShape(&instDisk);
+        this->AddShape(&instEdge);
+        this->AddShape(&instDisk);
     }
 
     void SetMainArgs(int argc, const char **argv) override
@@ -47,4 +46,4 @@ private:
     GLhf::InstancedEdge instEdge;
 };
 
-DECLARE_MAIN(InstancingTest);
+DECLARE_MAIN(Instancing);

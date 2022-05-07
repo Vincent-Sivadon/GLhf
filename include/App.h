@@ -4,7 +4,7 @@
  * class ExampleApp : public App
  * {
  * public:
- *     void Startup() override {}           // Initialize OpenGL or GLtemplate objects
+ *     void Startup() override {}           // Initialize OpenGL or GLhf objects
  *     void Render() override {}            // Manual Rendering protocole
  *     void ProcessInput() override {}      // Manual Input Management (on top of default ones)
  *     void Shutdown() override {}          // Manual Memory cleaning

@@ -2,11 +2,11 @@
  * to see the output, executes the binary
  * independantly from ctest */
 
-#include <GLtemplate/GLtemplate.h>
+#include <GLhf/GLhf.h>
 
 #include <iostream>
 
-class StructureExample : public App
+class StructureExample : public GLhf::App
 {
 public:
     void Startup() override

@@ -2,11 +2,11 @@
  * to see the output, executes the binary
  * independantly from ctest */
 
-#include <GLtemplate/GLtemplate.h>
+#include <GLhf/GLhf.h>
 
 #include <iostream>
 
-class TextureExample : public App
+class TextureExample : public GLhf::App
 {
 public:
     void Startup() override
@@ -44,10 +44,10 @@ public:
             1, 2, 3  // second triangle
         };
 
-        shader = Shader("texture.vs", "texture.fs");
-        vbo = VertexBuffer(vertices, sizeof(vertices));
-        vao = VertexArray(0, 3, 1, 2);
-        ebo = ElementBuffer(indices, sizeof(indices));
+        shader.Create("texture.vs", "texture.fs");
+        vbo.Create(vertices, sizeof(vertices));
+        vao.Create(0, 3, 1, 2);
+        ebo.Create(indices, sizeof(indices));
     }
 
     void Render(double time) override
@@ -60,11 +60,11 @@ public:
     }
 
 private:
-    Shader shader;
-    Texture2D texture;
-    VertexArray vao;
-    VertexBuffer vbo;
-    ElementBuffer ebo;
+    GLhf::Shader shader;
+    GLhf::Texture2D texture;
+    GLhf::VertexArray vao;
+    GLhf::VertexBuffer vbo;
+    GLhf::ElementBuffer ebo;
 };
 
 DECLARE_MAIN(TextureExample);

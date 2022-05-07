@@ -1,6 +1,6 @@
 /* Supposed to print a orange quad on a green background */
 
-#include "../include/GLtemplate.h"
+#include "../include/GLhf.h"
 #include "../primitives/Quad.h"
 
 #include <iostream>
@@ -39,7 +39,7 @@ typedef struct {
     GLubyte b;    
 } Pixel;
 
-class Fluid : public App
+class Fluid : public GLhf::App
 {
 public:
     /********INITIALIZATION********/
@@ -76,7 +76,7 @@ public:
 
 
 private:
-    Quad quad;  // Simulation frame quad
+    GLhf::Quad quad;  // Simulation frame quad
 
     Pixel * tex_data;           // Texture Data
     real *un, *un1, *vn, *vn1;  // Velocity Fields

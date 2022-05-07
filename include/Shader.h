@@ -23,15 +23,14 @@ namespace GLhf
 
     public:
         Shader() {}
+        ~Shader(){};
         // Shader program creation from files (vertex, fragment)
-        Shader(const char *vertexPath, const char *fragmentPath);
+        void Create(const char *vertexPath, const char *fragmentPath);
         // Shader program creation from shader files (vertex, fragment, tessellation control, tesselation evaluation)
-        Shader(const char *vertexPath,
+        void Create(const char *vertexPath,
             const char *fragmentPath,
             const char *tessControlPath,
             const char *tessEvalPath);
-        // Delete shader program memory
-        ~Shader(){};
 
         // Bind the shader program
         void Bind() { glUseProgram(program); }

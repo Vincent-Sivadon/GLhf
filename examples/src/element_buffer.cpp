@@ -1,15 +1,15 @@
 /* Supposed to print a orange quad on a green background */
 
-#include "../include/GLtemplate.h"
+#include "../include/GLhf.h"
 
 #include <iostream>
 
-class EBOTest : public App
+class EBOTest : public GLhf::App
 {
 public:
     void Startup() override
     {
-        shader = Shader("../tests/shaders/data_triangle.vs", "../tests/shaders/data_triangle.fs");
+        shader = GLhf::Shader("../tests/shaders/data_triangle.vs", "../tests/shaders/data_triangle.fs");
 
         // Cube vertices
         static const GLfloat vertices[] = {
@@ -24,9 +24,9 @@ public:
             1, 2, 3  // second triangle
         };
 
-        vbo = VertexBuffer(vertices, sizeof(vertices));
-        vao = VertexArray(0, 3);
-        ebo = ElementBuffer(indices, sizeof(indices));
+        vbo.Create(vertices, sizeof(vertices));
+        vao.Create(0, 3);
+        ebo.Create(indices, sizeof(indices));
     }
 
     void Render(double time) override
@@ -49,10 +49,10 @@ public:
     }
 
 private:
-    Shader shader;
-    VertexArray vao;
-    VertexBuffer vbo;
-    ElementBuffer ebo;
+    GLhf::Shader shader;
+    GLhf::VertexArray vao;
+    GLhf::VertexBuffer vbo;
+    GLhf::ElementBuffer ebo;
 };
 
 DECLARE_MAIN(EBOTest);
