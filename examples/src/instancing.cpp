@@ -30,8 +30,16 @@ public:
         instEdge.InitCompleteGraph(instDisk.positions, N);
         instEdge.Create();
 
+
         AddShape(&instEdge);
         AddShape(&instDisk);
+    }
+
+    void SetMainArgs(int argc, const char **argv) override
+    {
+        if (argc<2) throw "Usage : ./instancing [w]";
+        this->argc = argc;
+        this->argv = argv;
     }
 
 private:

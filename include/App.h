@@ -4,6 +4,8 @@
 
 #include "Camera.h"
 #include "Shape.h"
+#include "Window.h"
+#include "EventHandler.h"
 
 #include <glad/glad.h>
 
@@ -15,10 +17,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <vector>
-
-// Callback functions
-void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 
 /*
  * ------------- Abstract Class Application -------------
@@ -67,20 +65,14 @@ public:
     void Run();
 
     // Functions to be implemented
+    virtual void SetMainArgs(int argc, const char **argv);
     virtual void Startup() = 0;     // Initialize OpenGL objects
     virtual void Render(double ct); // Rendering protocole
     void defaultProcessInput();     // Default Input Management
     virtual void ProcessInput();    // Input Management (dev)
     virtual void Shutdown();        // Memory cleaning
 
-    // Window
-    inline static int WIDTH = 1800.0f;
-    inline static int HEIGHT = 950.0f;
 
-    inline static Camera camera;
-    inline static bool firstMouse = true;
-    inline static float lastX = WIDTH / 2.0f;
-    inline static float lastY = HEIGHT / 2.0f;
 
     // Game Objects
     void AddShape(Shape *shape) { shapes.push_back(shape); }
@@ -88,17 +80,25 @@ public:
 protected:
     std::vector<Shape *> shapes;
 
-    GLFWwindow *window;
+    Window window;
+    EventHandler event_handler;
+    Camera camera;
+
+    int argc;
+    const char **argv;
 
     // Frames variables
     float dt = 0;
     float lt = 0;
 
-    // Callback functions
-    void initCallbackFunctions(); // Set event callback functions
-    static void framebuffer_size_callback(int width, int height);
-    static void mouse_callback(double xpos, double ypos);
 };
+
+// Set main arguments
+void App::SetMainArgs(int argc, const char **argv)
+{
+    this->argc = argc;
+    this->argv = argv;
+}
 
 // Useless for now
 void App::Render(double ct) {}
@@ -116,6 +116,7 @@ void App::Shutdown() {}
         a *app = new a;                    \
         try                                \
         {                                  \
+            app->SetMainArgs(argc, argv);  \
             app->Run();                    \
         }                                  \
         catch (const char *msg)            \
