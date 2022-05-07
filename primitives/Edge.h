@@ -5,38 +5,43 @@
 #include "Quad.h"
 #include "Disk.h"
 
-class Edge : public Quad
+namespace GLhf 
 {
-private:
-    Disk *disk1;
-    Disk *disk2;
 
-public:
-    Edge() {}
-    Edge(Disk *d1, Disk *d2) : disk1(d1), disk2(d2)
+    class Edge : public Quad
     {
-        // Thin quad (line)
-        height = 0.05f;
+    private:
+        Disk *disk1;
+        Disk *disk2;
 
-        color = glm::vec3(1.0f, 1.0f, 1.0f);
+    public:
+        Edge() {}
+        Edge(Disk *d1, Disk *d2) : disk1(d1), disk2(d2)
+        {
+            // Thin quad (line)
+            height = 0.05f;
 
-        UpdatePosition();
-    }
+            color = glm::vec3(1.0f, 1.0f, 1.0f);
 
-    void UpdatePosition()
-    {
-        // Delta
-        float dx = disk2->pos.x - disk1->pos.x;
-        float dy = disk2->pos.y - disk1->pos.y;
+            UpdatePosition();
+        }
 
-        // Position
-        pos.x = dx / 2.0f;
-        pos.y = dy / 2.0f;
+        void UpdatePosition()
+        {
+            // Delta
+            float dx = disk2->pos.x - disk1->pos.x;
+            float dy = disk2->pos.y - disk1->pos.y;
 
-        // Width
-        width = sqrt(dx * dx + dy * dy);
+            // Position
+            pos.x = dx / 2.0f;
+            pos.y = dy / 2.0f;
 
-        // Rotation
-        angle = (float)atan(disk2->pos.y - pos.y);
-    }
-};
+            // Width
+            width = sqrt(dx * dx + dy * dy);
+
+            // Rotation
+            angle = (float)atan(disk2->pos.y - pos.y);
+        }
+    };
+
+}

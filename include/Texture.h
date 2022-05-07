@@ -5,35 +5,40 @@
 
 #include <glad/glad.h>
 
-class Texture2D
+namespace GLhf
 {
-public:
-    // Texture ID
-    GLuint ID;
 
-    // Texture image dimensions
-    GLint width, height;
+    class Texture2D
+    {
+    public:
+        // Texture ID
+        GLuint ID;
 
-    // Texture Format
-    GLuint internalFormat;
-    GLuint imageFormat;
+        // Texture image dimensions
+        GLint width, height;
 
-    // Texture configuration
-    GLuint wrapS;     // wrapping mode on S axis
-    GLuint wrapT;     // wrapping mode on T axis
-    GLuint filterMin; // filtering mode if texture pixels < screen pixels
-    GLuint filterMax; // filtering mode if texture pixels > screen pixels
+        // Texture Format
+        GLuint internalFormat;
+        GLuint imageFormat;
 
-    // Constructor (sets defalt texture modes)
-    Texture2D();
+        // Texture configuration
+        GLuint wrapS;     // wrapping mode on S axis
+        GLuint wrapT;     // wrapping mode on T axis
+        GLuint filterMin; // filtering mode if texture pixels < screen pixels
+        GLuint filterMax; // filtering mode if texture pixels > screen pixels
 
-    // Generates texture from image data
-    void Create(const char * image_path);
-    void Create(GLuint w, GLuint h, const GLubyte *data);
-    
-    void Update(const GLubyte *data);
+        // Constructor (sets defalt texture modes)
+        Texture2D();
 
-    // Binds the texture as the current actvie GL_TEXTURE_2D object
-    void Bind() const;
-    void Unbind() const;
-};
+        // Generates texture from image data
+        void Create(const char * image_path);
+        void Create(GLuint w, GLuint h, const GLubyte *data);
+        
+        void Update(const GLubyte *data);
+
+        // Binds the texture as the current actvie GL_TEXTURE_2D object
+        void Bind() const;
+        void Unbind() const;
+    };
+
+}

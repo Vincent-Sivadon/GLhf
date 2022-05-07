@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <algorithm>
 
-class InstancingTest : public App
+class InstancingTest : public GLhf::App
 {
 public:
     void Startup() override
@@ -43,8 +43,8 @@ public:
     }
 
 private:
-    InstancedDisk instDisk;
-    InstancedEdge instEdge;
+    GLhf::InstancedDisk instDisk;
+    GLhf::InstancedEdge instEdge;
 };
 
 DECLARE_MAIN(InstancingTest);

@@ -11,42 +11,43 @@
 
 #include <math.h>
 
-/* ************************* INSTANCED SHAPE CLASS ************************* */
-
-class InstancedShape : public Shape
+namespace GLhf 
 {
-protected:
-    VertexBuffer instancedVBO;
 
-public:
-    // Nb of instances
-    int N;
-    float *height;
-    float *width;
-    float *angle;
+    class InstancedShape : public Shape
+    {
+    protected:
+        VertexBuffer instancedVBO;
 
-    // To define model matrices
-    glm::vec2 *positions;
-    glm::mat4 *modelMatrices;
+    public:
+        // Nb of instances
+        int N;
+        float *height;
+        float *width;
+        float *angle;
 
-    // Shaders (override Shape members)
-    char vertexShaderPath[100] = "instanced_shape.vs";
-    char fragmentShaderPath[100] = "shape.fs";
+        // To define model matrices
+        glm::vec2 *positions;
+        glm::mat4 *modelMatrices;
 
-    virtual GLfloat *CreateVertices() = 0;
-    virtual GLuint *CreateIndices() = 0;
+        // Shaders (override Shape members)
+        char vertexShaderPath[100] = "instanced_shape.vs";
+        char fragmentShaderPath[100] = "shape.fs";
 
-    virtual void SetDefaultProperties() = 0;
-    void SetDimensions(float w, float h);
+        virtual GLfloat *CreateVertices() = 0;
+        virtual GLuint *CreateIndices() = 0;
 
-    void UpdateModelMatrices();
+        virtual void SetDefaultProperties() = 0;
+        void SetDimensions(float w, float h);
 
-    void Create() override;
-    void Destroy() override;
+        void UpdateModelMatrices();
 
-    void Draw() override;
+        void Create() override;
+        void Destroy() override;
 
-    void SetShaderNames(std::string vertexShaderName, std::string fragmentShaderName) override;
-};
+        void Draw() override;
 
-/* ************************************************************************ */
+        void SetShaderNames(std::string vertexShaderName, std::string fragmentShaderName) override;
+    };
+
+}

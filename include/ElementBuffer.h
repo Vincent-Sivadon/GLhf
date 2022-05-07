@@ -4,23 +4,28 @@
 
 #include <glad/glad.h>
 
-class ElementBuffer
+namespace GLhf
 {
-private:
-    // Every OpenGL object will have an ID (name)
-    GLuint ID;
-    GLuint count;
 
-public:
-    ElementBuffer() {}
-    ElementBuffer(const GLuint *data, GLuint count);
-    ~ElementBuffer() {}
+    class ElementBuffer
+    {
+    private:
+        // Every OpenGL object will have an ID (name)
+        GLuint ID;
+        GLuint count;
 
-    void Bind() const;
-    void Unbind() const;
+    public:
+        ElementBuffer() {}
+        ElementBuffer(const GLuint *data, GLuint count);
+        ~ElementBuffer() {}
 
-    void Destroy();
+        void Bind() const;
+        void Unbind() const;
 
-    // Getter
-    inline GLuint GetCount() const { return count; };
-};
+        void Destroy();
+
+        // Getter
+        inline GLuint GetCount() const { return count; };
+    };
+
+}

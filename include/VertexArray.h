@@ -4,19 +4,24 @@
 
 #include <glad/glad.h>
 
-class VertexArray
+namespace GLhf
 {
-private:
-    GLuint ID;
 
-public:
-    VertexArray() {}
-    VertexArray(int location, int count);
-    VertexArray(int location, int count, int location2, int count2);
-    ~VertexArray() {}
+    class VertexArray
+    {
+    private:
+        GLuint ID;
 
-    void Bind();
-    void Unbind();
+    public:
+        VertexArray() {}
+        VertexArray(int location, int count);
+        VertexArray(int location, int count, int location2, int count2);
+        ~VertexArray() {}
 
-    void Destroy();
-};
+        void Bind();
+        void Unbind();
+
+        void Destroy();
+    };
+
+}

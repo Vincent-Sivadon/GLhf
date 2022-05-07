@@ -4,20 +4,25 @@
 
 #include <glad/glad.h>
 
-class VertexBuffer
+namespace GLhf
 {
-public:
-    // Every OpenGL object will have an ID (name)
-    GLuint ID;
 
-    VertexBuffer() {}
-    VertexBuffer(const void *data, GLuint size);
-    ~VertexBuffer() {}
+    class VertexBuffer
+    {
+    public:
+        // Every OpenGL object will have an ID (name)
+        GLuint ID;
 
-    void UpdateData(const void *data, GLuint size);
+        VertexBuffer() {}
+        VertexBuffer(const void *data, GLuint size);
+        ~VertexBuffer() {}
 
-    void Bind() const;
-    void Unbind() const;
+        void UpdateData(const void *data, GLuint size);
 
-    void Destroy();
-};
+        void Bind() const;
+        void Unbind() const;
+
+        void Destroy();
+    };
+
+}

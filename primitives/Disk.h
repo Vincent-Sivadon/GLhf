@@ -7,85 +7,90 @@
 #include <math.h>
 #include <string>
 
-/* ************************* DISK CLASS ************************* */
-
-class Disk : public Shape
+namespace GLhf 
 {
-public:
-    int nbTriangles = 8;
+        
+    /* ************************* DISK CLASS ************************* */
 
-    GLfloat *CreateVertices();
-    GLuint *CreateIndices();
-
-    void SetNumberOfTriangles(int n);
-};
-
-/* ************************************************************** */
-
-void Disk::SetNumberOfTriangles(int n)
-{
-    if (n<=0)
-        throw "Disk nbTriangles was set to n<=0";
-    nbTriangles = n;
-}
-
-
-GLfloat *Disk::CreateVertices()
-{
-    // Properties
-    float delta = 2 * M_PI / nbTriangles;
-
-    // Allocation
-    int size = (nbTriangles + 1) * (3 + 2);
-    GLfloat *vertices = new GLfloat[size];
-
-    // Middle point
-    vertices[0] = 0.0f;
-    vertices[1] = 0.0f;
-    vertices[2] = 0.0f;
-
-    vertices[3] = 0.5f;
-    vertices[4] = 0.5f;
-
-    for (int triangleID = 0; triangleID < nbTriangles; triangleID++)
+    class Disk : public Shape
     {
-        vertices[(3+2) * (triangleID + 1)] = cos((float)triangleID * delta);     // x coordinate
-        vertices[(3+2) * (triangleID + 1) + 1] = sin((float)triangleID * delta); // y coordinate
-        vertices[(3+2) * (triangleID + 1) + 2] = 0.0f;                           // z coordinate
+    public:
+        int nbTriangles = 8;
 
-        vertices[(3+2) * (triangleID + 1) + 3] = vertices[(3+2) * (triangleID + 1)] / 2.0f + 0.5f;        // Tex coords
-        vertices[(3+2) * (triangleID + 1) + 4] = vertices[(3+2) * (triangleID + 1) + 1] / 2.0f + 0.5f;    // Tex coords
+        GLfloat *CreateVertices();
+        GLuint *CreateIndices();
+
+        void SetNumberOfTriangles(int n);
+    };
+
+    /* ************************************************************** */
+
+    void Disk::SetNumberOfTriangles(int n)
+    {
+        if (n<=0)
+            throw "Disk nbTriangles was set to n<=0";
+        nbTriangles = n;
     }
 
-    verticesSize = size * sizeof(GLfloat);
 
-    return vertices;
-}
-
-GLuint *Disk::CreateIndices()
-{
-    // Properties
-    float delta = 2 * M_PI / nbTriangles;
-
-    // Allocation
-    GLuint *indices = new GLuint[nbTriangles * 3];
-
-    // Indices indices
-    unsigned int p = 2, q = 1;
-
-    for (int triangleID = 0; triangleID < nbTriangles; triangleID++)
+    GLfloat *Disk::CreateVertices()
     {
-        if (p == nbTriangles + 1)
-            p = 1;
-        indices[3 * triangleID] = 0;
-        indices[3 * triangleID + 1] = p;
-        indices[3 * triangleID + 2] = q;
+        // Properties
+        float delta = 2 * M_PI / nbTriangles;
 
-        p++;
-        q++;
+        // Allocation
+        int size = (nbTriangles + 1) * (3 + 2);
+        GLfloat *vertices = new GLfloat[size];
+
+        // Middle point
+        vertices[0] = 0.0f;
+        vertices[1] = 0.0f;
+        vertices[2] = 0.0f;
+
+        vertices[3] = 0.5f;
+        vertices[4] = 0.5f;
+
+        for (int triangleID = 0; triangleID < nbTriangles; triangleID++)
+        {
+            vertices[(3+2) * (triangleID + 1)] = cos((float)triangleID * delta);     // x coordinate
+            vertices[(3+2) * (triangleID + 1) + 1] = sin((float)triangleID * delta); // y coordinate
+            vertices[(3+2) * (triangleID + 1) + 2] = 0.0f;                           // z coordinate
+
+            vertices[(3+2) * (triangleID + 1) + 3] = vertices[(3+2) * (triangleID + 1)] / 2.0f + 0.5f;        // Tex coords
+            vertices[(3+2) * (triangleID + 1) + 4] = vertices[(3+2) * (triangleID + 1) + 1] / 2.0f + 0.5f;    // Tex coords
+        }
+
+        verticesSize = size * sizeof(GLfloat);
+
+        return vertices;
     }
 
-    indicesSize = 3 * nbTriangles * sizeof(GLuint);
+    GLuint *Disk::CreateIndices()
+    {
+        // Properties
+        float delta = 2 * M_PI / nbTriangles;
 
-    return indices;
+        // Allocation
+        GLuint *indices = new GLuint[nbTriangles * 3];
+
+        // Indices indices
+        unsigned int p = 2, q = 1;
+
+        for (int triangleID = 0; triangleID < nbTriangles; triangleID++)
+        {
+            if (p == nbTriangles + 1)
+                p = 1;
+            indices[3 * triangleID] = 0;
+            indices[3 * triangleID + 1] = p;
+            indices[3 * triangleID + 2] = q;
+
+            p++;
+            q++;
+        }
+
+        indicesSize = 3 * nbTriangles * sizeof(GLuint);
+
+        return indices;
+    }
+
 }
