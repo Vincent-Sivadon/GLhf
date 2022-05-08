@@ -63,6 +63,8 @@ namespace GLhf
 
         lastX = xpos;
         lastY = ypos;
+
+        camera->ProcessMouseMovement(xoffset, yoffset);
     }
 
     void EventHandler::KeyCallback(int key, int scancode, int action, int mods)
@@ -91,13 +93,13 @@ namespace GLhf
                 else if (action == GLFW_RELEASE) keys.D = false;
                 break;
                     
-            case GLFW_KEY_UP:
-                if (action == GLFW_PRESS) keys.UP = true;
-                else if (action == GLFW_RELEASE) keys.UP = false;
+            case GLFW_KEY_SPACE:
+                if (action == GLFW_PRESS) keys.SPACE = true;
+                else if (action == GLFW_RELEASE) keys.SPACE = false;
                 break;
-            case GLFW_KEY_DOWN:
-                if (action == GLFW_PRESS) keys.DOWN = true;
-                else if (action == GLFW_RELEASE) keys.DOWN = false;
+            case GLFW_KEY_LEFT_SHIFT:
+                if (action == GLFW_PRESS) keys.LEFT_SHIFT = true;
+                else if (action == GLFW_RELEASE) keys.LEFT_SHIFT = false;
                 break;
 
             default:
@@ -120,8 +122,8 @@ namespace GLhf
         if (keys.S) camera->ProcessKeyboard(BACKWARD, dt);
         if (keys.A) camera->ProcessKeyboard(LEFT, dt);
         if (keys.D) camera->ProcessKeyboard(RIGHT, dt);
-        if (keys.UP) camera->ProcessKeyboard(UP, dt);
-        if (keys.DOWN) camera->ProcessKeyboard(DOWN, dt);
+        if (keys.SPACE) camera->ProcessKeyboard(UP, dt);
+        if (keys.LEFT_SHIFT) camera->ProcessKeyboard(DOWN, dt);
     }
 
 }

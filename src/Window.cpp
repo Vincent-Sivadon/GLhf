@@ -29,7 +29,7 @@ namespace GLhf
         glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
 
         // tell GLFW to capture our mouse
-        // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
         // GLAD Initialization
         // -------------------
@@ -39,6 +39,7 @@ namespace GLhf
         // Blending Mode
         // -------------
         glEnable(GL_BLEND);
+        glEnable(GL_DEPTH_TEST);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 

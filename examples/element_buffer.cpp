@@ -1,6 +1,6 @@
 /* Supposed to print a orange quad on a green background */
 
-#include "../include/GLhf.h"
+#include <GLhf/GLhf.h>
 
 #include <iostream>
 
@@ -9,7 +9,7 @@ class EBOTest : public GLhf::App
 public:
     void Startup() override
     {
-        shader = GLhf::Shader("../tests/shaders/data_triangle.vs", "../tests/shaders/data_triangle.fs");
+        shader.Create("../tests/shaders/data_triangle.vs", "../tests/shaders/data_triangle.fs");
 
         // Cube vertices
         static const GLfloat vertices[] = {

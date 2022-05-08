@@ -1,8 +1,6 @@
 /* Supposed to print a orange quad on a green background */
 
-#include "../include/GLhf.h"
-#include "../primitives/InstancedDisk.h"
-#include "../primitives/InstancedEdge.h"
+#include <GLhf/GLhf.h>
 
 #include <iostream>
 #include <string>
@@ -32,13 +30,6 @@ public:
 
         this->AddShape(&instEdge);
         this->AddShape(&instDisk);
-    }
-
-    void SetMainArgs(int argc, const char **argv) override
-    {
-        if (argc<2) throw "Usage : ./instancing [w]";
-        this->argc = argc;
-        this->argv = argv;
     }
 
 private:

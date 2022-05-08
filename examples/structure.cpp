@@ -14,12 +14,12 @@ public:
         std::cout << "============================== Startup ==============================\n";
     }
 
-    void Render(double time) override
+    void Render(double ct) override
     {
         std::cout << "|Rendering|";
     }
 
-    void ProcessInput() override
+    void PollEvents(double ct) override
     {
         std::cout << "|Processing Input|\n";
 

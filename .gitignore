@@ -1,4 +1,5 @@
 .vscode/
 build/
+examples/build/
 GLhf-config.cmake
 GLhfConfig.cmake

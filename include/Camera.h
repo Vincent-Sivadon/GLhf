@@ -29,7 +29,7 @@ namespace GLhf
         float Yaw = -90.0f;
         float Pitch = 0.0f;
         float Speed = 5.0f;
-        float Sensitivity = 0.1f;
+        float Sensitivity = 0.05f;
         float Zoom = 45.0f;
 
         // Directions

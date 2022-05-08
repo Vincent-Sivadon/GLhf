@@ -12,8 +12,8 @@ namespace GLhf
         bool S    = false;
         bool A    = false;
         bool D    = false;
-        bool UP   = false;
-        bool DOWN = false;
+        bool SPACE     = false;
+        bool LEFT_SHIFT = false;
     };
 
     class EventHandler {

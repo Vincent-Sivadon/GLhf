@@ -1,7 +1,6 @@
 /* Supposed to print a orange quad on a green background */
 
-#include "../include/GLhf.h"
-#include "../primitives/Quad.h"
+#include <GLhf/GLhf.h>
 
 #include <iostream>
 #include <string>
@@ -51,7 +50,7 @@ public:
     void UpdatePhysics();               // Update velocity and density fields
     void UpdateTextureData();           // Update texture data according to velocity fields
     void Render(double ct) override;    // Global update (texture data, velocity fields...)
-    void ProcessInput() override;
+    void PollEvents(double ct) override;
 
     /********PHYSICS********/
     void AddSource(real *field, real *source);
@@ -187,13 +186,13 @@ void Fluid::Render(double ct)
     quad.UpdateTexture((GLubyte *)tex_data);
 }
 
-void Fluid::ProcessInput()
+void Fluid::PollEvents(double ct)
 {
     int cursor_width = 10;
-    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+    if (glfwGetMouseButton(window.GetWindow(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
         {
             double xpos, ypos;
-            glfwGetCursorPos(window, &xpos, &ypos);
+            glfwGetCursorPos(window.GetWindow(), &xpos, &ypos);
 
             int ii = round((H-ypos) * (Ny+1) / H);
             int jj = round(xpos * (Nx+1) / W);

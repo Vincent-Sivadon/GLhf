@@ -10,11 +10,6 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(glfw3 REQUIRED)
 find_package(glad REQUIRED)
 
-# Generate examples binaries
-if(DEFINED EXAMPLES)
-  add_subdirectory(examples)
-endif(DEFINED EXAMPLES)
-
 # Libraries
 set(LIBS glfw glad)
 set(glm_dir /usr/include/glm) # header only librairy

@@ -1,41 +1,3 @@
-/*
- * ------------- Abstract Class Application -------------
- * A program that uses this paradigm should look like :
- * class ExampleApp : public App
- * {
- * public:
- *     void Startup() override {}           // Initialize OpenGL or GLhf objects
- *     void Render() override {}            // Manual Rendering protocole
- *     void ProcessInput() override {}      // Manual Input Management (on top of default ones)
- *     void Shutdown() override {}          // Manual Memory cleaning
- * private:
- *     int member;
- * }
- * -----------------------------------
- * DECLARE_MAIN(ExampleApp);
- * -----------------------------------
- * The main will look like :
- *    - Glad and GLFW initialization
- *    - while loop with :
- *        - framerate management
- *        - rendering
- *        - input management
- *    - memory cleaning
- * -----------------------------------
- *
- * Although, this library provides primitives that will makes things easier :
- * class ExamplePrimitiveApp : public App
- * {
- * public:
- *     void Startup() override {
- *          disk.Create();
- *          AddShape(&disk);
- *     }
- * private:
- *     Disk disk;
- * }
- */
-
 #pragma once
 
 #include "Camera.h"
@@ -57,6 +19,7 @@
 namespace GLhf
 {
 
+    /* See examples/app for an example of how to use this structure */
     class App
     {
     public:
@@ -70,11 +33,8 @@ namespace GLhf
         virtual void SetMainArgs(int argc, const char **argv);
         virtual void Startup() = 0;     // Initialize OpenGL objects
         virtual void Render(double ct); // Rendering protocole
-        void defaultProcessInput();     // Default Input Management
-        virtual void ProcessInput();    // Input Management (dev)
+        virtual void PollEvents(double ct);    // Input Management (dev)
         virtual void Shutdown();        // Memory cleaning
-
-
 
         // Game Objects
         void AddShape(Shape *shape) { shapes.push_back(shape); }
@@ -106,7 +66,7 @@ namespace GLhf
     void App::Render(double ct) {}
 
     // More input management
-    void App::ProcessInput() {}
+    void App::PollEvents(double ct) {}
 
     // More memory cleaning
     void App::Shutdown() {}

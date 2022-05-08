@@ -1,6 +1,6 @@
 /* Supposed to print a blue triangle on a green background */
 
-#include "../include/GLhf.h"
+#include <GLhf/GLhf.h>
 
 #include <iostream>
 

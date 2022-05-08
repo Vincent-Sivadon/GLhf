@@ -27,11 +27,12 @@ namespace GLhf
 
             // Input management
             event_handler.Process(dt);
+            PollEvents(dt);
 
             // Rendering
             // ---------
-            static const GLfloat black[] = {0.f, 0.f, 0.f, 1.0f};
-            glClearBufferfv(GL_COLOR, 0, black);
+            glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             // Draw every shapes
             for (Shape *shape : shapes)
