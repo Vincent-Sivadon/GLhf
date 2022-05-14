@@ -27,7 +27,7 @@ namespace GLhf
         ebo.Create(indices, indicesSize);
 
         // Projection Matrix
-        SetProjection(glm::perspective(glm::radians(45.0f), 1800.0f / 950.0f, 0.1f, 400.0f));
+        SetProjection(glm::perspective(glm::radians(45.0f), 1800.0f / 950.0f, 0.1f, 1000.0f));
 
         // Model Matrix
         model = glm::mat4(1.0f);
