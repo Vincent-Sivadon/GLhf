@@ -8,8 +8,7 @@
 #include <vector>
 #include <algorithm>
 
-#include <glad/glad.h>
-
+#include <GL/glew.h>
 #include <glm/glm.hpp>
 
 namespace GLhf

@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Window.h"
-#include "Camera.h"
+#include <Window.h>
+#include <Camera.h>
+
+#include <GL/glew.h>
 
 namespace GLhf
 {

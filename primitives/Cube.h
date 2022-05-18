@@ -2,9 +2,6 @@
 
 #include "Shape.h"
 
-#include <glad/glad.h>
-
-#include <GLFW/glfw3.h>
 #include <GL/glext.h>
 
 #include <glm/glm.hpp>
@@ -19,7 +16,105 @@ namespace GLhf
     private:
         GLfloat *CreateVertices() override;
         GLuint *CreateIndices() override;
+        void CreateVertices(GLfloat **vertices_coords, GLfloat **vertices_texcoords) override;
     };
+
+    void Cube::CreateVertices(GLfloat **vertices_coords, GLfloat **vertices_texcoords)
+    {
+        int vertices_coords_size = 6/*faces*/ * 2/*triangles*/ * 3/*vertices*/ * 3/*coords*/;
+        *vertices_coords = new GLfloat[vertices_coords_size]{
+            -0.5f, -0.5f, -0.5f,
+            0.5f, -0.5f, -0.5f, 
+            0.5f,  0.5f, -0.5f, 
+            0.5f,  0.5f, -0.5f, 
+            -0.5f,  0.5f, -0.5f,
+            -0.5f, -0.5f, -0.5f,
+
+            -0.5f, -0.5f,  0.5f,
+            0.5f, -0.5f,  0.5f, 
+            0.5f,  0.5f,  0.5f, 
+            0.5f,  0.5f,  0.5f, 
+            -0.5f,  0.5f,  0.5f,
+            -0.5f, -0.5f,  0.5f,
+
+            -0.5f,  0.5f,  0.5f,
+            -0.5f,  0.5f, -0.5f,
+            -0.5f, -0.5f, -0.5f,
+            -0.5f, -0.5f, -0.5f,
+            -0.5f, -0.5f,  0.5f,
+            -0.5f,  0.5f,  0.5f,
+
+            0.5f,  0.5f,  0.5f,
+            0.5f,  0.5f, -0.5f,
+            0.5f, -0.5f, -0.5f,
+            0.5f, -0.5f, -0.5f,
+            0.5f, -0.5f,  0.5f,
+            0.5f,  0.5f,  0.5f,
+
+            -0.5f, -0.5f, -0.5f,
+            0.5f, -0.5f, -0.5f, 
+            0.5f, -0.5f,  0.5f, 
+            0.5f, -0.5f,  0.5f, 
+            -0.5f, -0.5f,  0.5f,
+            -0.5f, -0.5f, -0.5f,
+
+            -0.5f,  0.5f, -0.5f,
+            0.5f,  0.5f, -0.5f, 
+            0.5f,  0.5f,  0.5f, 
+            0.5f,  0.5f,  0.5f, 
+            -0.5f,  0.5f,  0.5f,
+            -0.5f,  0.5f, -0.5f
+        };
+
+        int vertices_texcoords_size = 6*2*3*2;
+        *vertices_texcoords = new GLfloat[vertices_texcoords_size] {
+            0.0f, 0.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+
+            0.0f, 0.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f,
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 0.0f,
+
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f,
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 0.0f,
+
+            0.0f, 1.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 0.0f,
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+
+            0.0f, 1.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 0.0f,
+            0.0f, 0.0f,
+            0.0f, 1.0f
+          };
+
+        verticesSize = vertices_coords_size * sizeof(GLfloat);
+        TexCoordsSize = vertices_texcoords_size * sizeof(GLfloat);
+    }
+
 
     GLfloat *Cube::CreateVertices()
     {

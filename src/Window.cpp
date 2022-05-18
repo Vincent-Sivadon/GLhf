@@ -31,10 +31,10 @@ namespace GLhf
         // tell GLFW to capture our mouse
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-        // GLAD Initialization
+        // GLEW Initialization
         // -------------------
-        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-            throw "Failed to initialize GLAD";
+        if (glewInit() != GLEW_OK)
+            throw "Failed to initialize GLEW";
 
         // Blending Mode
         // -------------

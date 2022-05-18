@@ -2,11 +2,13 @@
 
 #pragma once
 
-#include "Shader.h"
-#include "ElementBuffer.h"
-#include "VertexArray.h"
-#include "VertexBuffer.h"
-#include "Texture.h"
+#include <Shader.h>
+#include <ElementBuffer.h>
+#include <VertexArray.h>
+#include <VertexBuffer.h>
+#include <Texture.h>
+
+#include <GL/glew.h>
 
 #include <cstring>
 #include <string>
@@ -21,6 +23,7 @@ namespace GLhf
         Shader shader;
         VertexArray vao;
         VertexBuffer vbo;
+        VertexBuffer TexCoordsBuffer;
         ElementBuffer ebo;
 
         glm::mat4 model;
@@ -29,6 +32,7 @@ namespace GLhf
 
         int verticesSize;
         int indicesSize;
+        int TexCoordsSize;
 
         int textureDefined = 0;
 
@@ -47,6 +51,7 @@ namespace GLhf
 
         virtual GLfloat *CreateVertices() = 0;
         virtual GLuint *CreateIndices() = 0;
+        virtual void CreateVertices(GLfloat **vertices_coords, GLfloat **vertices_texcoords) {}
 
         virtual void Create();
         virtual void Destroy();

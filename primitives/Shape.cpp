@@ -2,11 +2,6 @@
 
 #include "Shape.h"
 
-#include <glad/glad.h>
-
-#include <GLFW/glfw3.h>
-#include <GL/glext.h>
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -16,14 +11,20 @@ namespace GLhf
 
     void Shape::Create()
     {
-        GLfloat *vertices = CreateVertices();
+        // Vertex data
+        //GLfloat *vertices = CreateVertices();
+        GLfloat *vertices, *texcoords;
+        CreateVertices(&vertices, &texcoords);
         GLuint *indices = CreateIndices();
 
+        // Shader
         shader.Create(vertexShaderPath, fragmentShaderPath);
 
         // Buffers
         vbo.Create(vertices, verticesSize);
-        vao.Create(0, 3, 1, 2);
+        TexCoordsBuffer.Create(texcoords, 6*2*3*2*sizeof(GLfloat));
+        // vao.Create(0, 3, 1, 2);
+        vao.Create(vbo, TexCoordsBuffer);
         ebo.Create(indices, indicesSize);
 
         // Projection Matrix
@@ -59,8 +60,8 @@ namespace GLhf
         texture.Bind();
         shader.Bind();
         vao.Bind();
-        ebo.Bind();
         glDrawElements(GL_TRIANGLES, indicesSize / sizeof(GLuint), GL_UNSIGNED_INT, 0);
+        std::cout << "iosok" << std::endl;
     }
 
     void Shape::SetModel(const glm::mat4 &mat)
@@ -112,7 +113,7 @@ namespace GLhf
 
     void Shape::SetShaderNames(std::string vertexShaderName, std::string fragmentShaderName)
     {
-        std::string dirPath = "/usr/local/share/GLhf/";
+        std::string dirPath = "../resources/shaders/primitives/";
 
         std::string newVertexPath = dirPath + vertexShaderName;
         strcpy(vertexShaderPath, newVertexPath.c_str());

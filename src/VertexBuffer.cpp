@@ -21,8 +21,6 @@ namespace GLhf
 
     void VertexBuffer::Bind() const
     {
-        printf("vao id : %u\n", ID);
-
         glBindBuffer(GL_ARRAY_BUFFER, ID);
     }
 

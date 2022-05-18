@@ -1,11 +1,9 @@
 #pragma once
 
-#include "Camera.h"
-#include "Shape.h"
-#include "Window.h"
-#include "EventHandler.h"
-
-#include <glad/glad.h>
+#include <Camera.h>
+#include <Shape.h>
+#include <Window.h>
+#include <EventHandler.h>
 
 #include <GLFW/glfw3.h>
 #include <GL/glext.h>

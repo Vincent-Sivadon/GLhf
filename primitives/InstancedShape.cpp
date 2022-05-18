@@ -2,8 +2,6 @@
 
 #include "InstancedShape.h"
 
-#include <glad/glad.h>
-
 #include <GLFW/glfw3.h>
 #include <GL/glext.h>
 

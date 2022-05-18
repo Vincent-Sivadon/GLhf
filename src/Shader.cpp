@@ -34,11 +34,11 @@ namespace GLhf
     // Shader program creation from files (vertex, fragment)
     void Shader::Create(const char *vertexShaderName, const char *fragmentShaderName)
     {
-        // Change "texture.vs" to "/usr/local/share/GLhf/texture.vs"
+        // Change "texture.vs" to "../resources/primitives/texture.vs"
         // --------------------------------------------------------------
         char vertexShaderPath[100];
         char fragmentShaderPath[100];
-        const std::string dirPath("/usr/local/share/GLhf/");
+        const std::string dirPath("../resources/shaders/primitives/");
         const std::string newVertexPath(dirPath + vertexShaderName);
         strcpy(vertexShaderPath, newVertexPath.c_str());
         const std::string newFragmentPath = dirPath + fragmentShaderName;
