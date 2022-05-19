@@ -34,8 +34,12 @@ namespace GLhf
         char vertexShaderPath[100] = "instanced_shape.vs";
         char fragmentShaderPath[100] = "shape.fs";
 
-        virtual GLfloat *CreateVertices() = 0;
-        virtual GLuint *CreateIndices() = 0;
+        void CreateVertices(GLfloat **coords, GLfloat **texcoords) = 0;
+        void CreateVertices(GLfloat **coords, GLfloat **texcoords, GLfloat **normals) = 0;
+        GLuint *CreateElements() = 0;
+        GLfloat *CreateCoords() = 0;
+        GLfloat *CreateTexCoords() = 0;
+        GLfloat *CreateNormals() = 0;
 
         virtual void SetDefaultProperties() = 0;
         void SetDimensions(float w, float h);

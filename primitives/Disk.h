@@ -14,11 +14,17 @@ namespace GLhf
 
     class Disk : public Shape
     {
+    private:
+        GLfloat *Coords;
     public:
         int nbTriangles = 8;
 
-        GLfloat *CreateVertices();
-        GLuint *CreateIndices();
+        void CreateVertices(GLfloat **coords, GLfloat **texcoords) override;
+        void CreateVertices(GLfloat **coords, GLfloat **texcoords, GLfloat **normals) override;
+        GLuint *CreateElements() override;
+        GLfloat *CreateCoords() override;
+        GLfloat *CreateTexCoords() override;
+        GLfloat *CreateNormals() override;
 
         void SetNumberOfTriangles(int n);
     };
@@ -33,64 +39,94 @@ namespace GLhf
     }
 
 
-    GLfloat *Disk::CreateVertices()
+    GLfloat *Disk::CreateCoords()
     {
         // Properties
         float delta = 2 * M_PI / nbTriangles;
 
         // Allocation
-        int size = (nbTriangles + 1) * (3 + 2);
-        GLfloat *vertices = new GLfloat[size];
+        int size = (nbTriangles + 1) * 3;
+        GLfloat *coords = new GLfloat[size];
 
         // Middle point
-        vertices[0] = 0.0f;
-        vertices[1] = 0.0f;
-        vertices[2] = 0.0f;
-
-        vertices[3] = 0.5f;
-        vertices[4] = 0.5f;
+        coords[0] = 0.0f;
+        coords[1] = 0.0f;
+        coords[2] = 0.0f;
 
         for (int triangleID = 0; triangleID < nbTriangles; triangleID++)
         {
-            vertices[(3+2) * (triangleID + 1)] = cos((float)triangleID * delta);     // x coordinate
-            vertices[(3+2) * (triangleID + 1) + 1] = sin((float)triangleID * delta); // y coordinate
-            vertices[(3+2) * (triangleID + 1) + 2] = 0.0f;                           // z coordinate
-
-            vertices[(3+2) * (triangleID + 1) + 3] = vertices[(3+2) * (triangleID + 1)] / 2.0f + 0.5f;        // Tex coords
-            vertices[(3+2) * (triangleID + 1) + 4] = vertices[(3+2) * (triangleID + 1) + 1] / 2.0f + 0.5f;    // Tex coords
+            coords[3 * (triangleID + 1)] = cos((float)triangleID * delta);     // x coordinate
+            coords[3 * (triangleID + 1) + 1] = sin((float)triangleID * delta); // y coordinate
+            coords[3 * (triangleID + 1) + 2] = 0.0f;                           // z coordinate
         }
 
-        verticesSize = size * sizeof(GLfloat);
-
-        return vertices;
+        CoordsSize = size * sizeof(GLfloat);
+        return coords;
     }
 
-    GLuint *Disk::CreateIndices()
+    GLfloat *Disk::CreateTexCoords()
     {
         // Properties
         float delta = 2 * M_PI / nbTriangles;
 
         // Allocation
-        GLuint *indices = new GLuint[nbTriangles * 3];
+        int size = (nbTriangles + 1) * 2;
+        GLfloat *texcoords = new GLfloat[size];
 
-        // Indices indices
+        for (int triangleID = 0; triangleID < nbTriangles; triangleID++)
+        {
+            texcoords[2 * (triangleID + 1)] = Coords[3 * (triangleID + 1)] / 2.0f + 0.5f;
+            texcoords[2 * (triangleID + 1) + 1] = Coords[3 * (triangleID + 1) + 1] / 2.0f + 0.5f;
+        }
+
+        TexCoordsSize = size * sizeof(GLfloat);
+        return texcoords;
+    }
+
+    GLfloat *Disk::CreateNormals()
+    {
+        int size = TexCoordsSize;
+        GLfloat *normals = new GLfloat[size];
+
+        return normals;
+    }
+
+    GLuint *Disk::CreateElements()
+    {
+        // Properties
+        float delta = 2 * M_PI / nbTriangles;
+
+        // Allocation
+        GLuint *elements = new GLuint[nbTriangles * 3];
+
+        // Indices elements
         unsigned int p = 2, q = 1;
 
         for (int triangleID = 0; triangleID < nbTriangles; triangleID++)
         {
             if (p == nbTriangles + 1)
                 p = 1;
-            indices[3 * triangleID] = 0;
-            indices[3 * triangleID + 1] = p;
-            indices[3 * triangleID + 2] = q;
+            elements[3 * triangleID] = 0;
+            elements[3 * triangleID + 1] = p;
+            elements[3 * triangleID + 2] = q;
 
             p++;
             q++;
         }
 
-        indicesSize = 3 * nbTriangles * sizeof(GLuint);
+        ElementsSize = 3 * nbTriangles * sizeof(GLuint);
 
-        return indices;
+        return elements;
+    }
+    
+    void Disk::CreateVertices(GLfloat **coords, GLfloat **texcoords)
+    {
+        *coords = CreateCoords();
+        Coords = *coords;
+        *texcoords = CreateTexCoords();
     }
 
+    void Disk::CreateVertices(GLfloat **coords, GLfloat **texcoords, GLfloat **norrmals)
+    {
+    }
 }

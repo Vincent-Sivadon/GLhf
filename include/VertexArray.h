@@ -19,7 +19,11 @@ namespace GLhf
         ~VertexArray() {}
         void Create(int location, int count);
         void Create(int location, int count, int location2, int count2);
+        void Create(const VertexBuffer& coords_buffer);
         void Create(const VertexBuffer& coords_buffer, const VertexBuffer& tex_buffer);
+        void Create(const VertexBuffer& coords_buffer,
+                    const VertexBuffer& texcoords_buffer,
+                    const VertexBuffer& normals_buffer);
 
         void Bind();
         void Unbind();

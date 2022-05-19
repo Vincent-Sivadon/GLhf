@@ -21,20 +21,21 @@ namespace GLhf
     protected:
         Texture2D texture;
         Shader shader;
-        VertexArray vao;
-        VertexBuffer vbo;
+        VertexArray VAO;
+        VertexBuffer CoordsBuffer;
         VertexBuffer TexCoordsBuffer;
-        ElementBuffer ebo;
+        VertexBuffer NormalsBuffer;
+        ElementBuffer ElementsBuffer;
 
         glm::mat4 model;
         glm::mat4 view;
         glm::mat4 projection;
 
-        int verticesSize;
-        int indicesSize;
+        int ElementsSize;
+        int CoordsSize;
         int TexCoordsSize;
 
-        int textureDefined = 0;
+        int textured = 0;
 
     public:
         virtual ~Shape() = default;
@@ -49,9 +50,12 @@ namespace GLhf
         float width = 1.0f;
         float height = 1.0f;
 
-        virtual GLfloat *CreateVertices() = 0;
-        virtual GLuint *CreateIndices() = 0;
-        virtual void CreateVertices(GLfloat **vertices_coords, GLfloat **vertices_texcoords) {}
+        virtual void CreateVertices(GLfloat **coords, GLfloat **texcoords) = 0;
+        virtual void CreateVertices(GLfloat **coords, GLfloat **texcoords, GLfloat **normals) = 0;
+        virtual GLuint *CreateElements() = 0;
+        virtual GLfloat *CreateCoords() = 0;
+        virtual GLfloat *CreateTexCoords() = 0;
+        virtual GLfloat *CreateNormals() = 0;
 
         virtual void Create();
         virtual void Destroy();

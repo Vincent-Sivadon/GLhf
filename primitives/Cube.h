@@ -14,15 +14,18 @@ namespace GLhf
     class Cube : public Shape
     {
     private:
-        GLfloat *CreateVertices() override;
-        GLuint *CreateIndices() override;
-        void CreateVertices(GLfloat **vertices_coords, GLfloat **vertices_texcoords) override;
+        void CreateVertices(GLfloat **coords, GLfloat **texcoords) override;
+        void CreateVertices(GLfloat **coords, GLfloat **texcoords, GLfloat **normals) override;
+        GLuint *CreateElements() override;
+        GLfloat *CreateCoords() override;
+        GLfloat *CreateTexCoords() override;
+        GLfloat *CreateNormals() override;
     };
 
-    void Cube::CreateVertices(GLfloat **vertices_coords, GLfloat **vertices_texcoords)
+    GLfloat* Cube::CreateCoords()
     {
-        int vertices_coords_size = 6/*faces*/ * 2/*triangles*/ * 3/*vertices*/ * 3/*coords*/;
-        *vertices_coords = new GLfloat[vertices_coords_size]{
+        int coords_size = 6/*faces*/ * 2/*triangles*/ * 3/*vertices*/ * 3/*coords*/;
+        GLfloat *coords = new GLfloat[coords_size]{
             -0.5f, -0.5f, -0.5f,
             0.5f, -0.5f, -0.5f, 
             0.5f,  0.5f, -0.5f, 
@@ -66,8 +69,14 @@ namespace GLhf
             -0.5f,  0.5f, -0.5f
         };
 
-        int vertices_texcoords_size = 6*2*3*2;
-        *vertices_texcoords = new GLfloat[vertices_texcoords_size] {
+        CoordsSize = coords_size * sizeof(GLfloat);
+        return coords;
+    }
+
+    GLfloat *Cube::CreateTexCoords()
+    {
+        int texcoords_size = 6*2*3*2;
+        GLfloat *texcoords = new GLfloat[texcoords_size] {
             0.0f, 0.0f,
             1.0f, 0.0f,
             1.0f, 1.0f,
@@ -111,67 +120,77 @@ namespace GLhf
             0.0f, 1.0f
           };
 
-        verticesSize = vertices_coords_size * sizeof(GLfloat);
-        TexCoordsSize = vertices_texcoords_size * sizeof(GLfloat);
+          TexCoordsSize = texcoords_size * sizeof(GLfloat);
+          return texcoords;
     }
 
-
-    GLfloat *Cube::CreateVertices()
+    GLfloat *Cube::CreateNormals()
     {
-        int size = 6/*faces*/ * 2/*triangles*/ * 3/*vertices*/ * (3/*coords*/ + 2/*texcoords*/);
-        GLfloat *vertices = new GLfloat[size]{
-            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+        int size = CoordsSize;
+        GLfloat *normals = new GLfloat[size] {
+            0.0f,  0.0f, -1.0f,
+            0.0f,  0.0f, -1.0f, 
+            0.0f,  0.0f, -1.0f, 
+            0.0f,  0.0f, -1.0f, 
+            0.0f,  0.0f, -1.0f, 
+            0.0f,  0.0f, -1.0f, 
 
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+            0.0f,  0.0f, 1.0f,
+            0.0f,  0.0f, 1.0f,
+            0.0f,  0.0f, 1.0f,
+            0.0f,  0.0f, 1.0f,
+            0.0f,  0.0f, 1.0f,
+            0.0f,  0.0f, 1.0f,
 
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            -1.0f,  0.0f,  0.0f,
+            -1.0f,  0.0f,  0.0f,
+            -1.0f,  0.0f,  0.0f,
+            -1.0f,  0.0f,  0.0f,
+            -1.0f,  0.0f,  0.0f,
+            -1.0f,  0.0f,  0.0f,
 
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            1.0f,  0.0f,  0.0f,
+            1.0f,  0.0f,  0.0f,
+            1.0f,  0.0f,  0.0f,
+            1.0f,  0.0f,  0.0f,
+            1.0f,  0.0f,  0.0f,
+            1.0f,  0.0f,  0.0f,
 
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            0.0f, -1.0f,  0.0f,
+            0.0f, -1.0f,  0.0f,
+            0.0f, -1.0f,  0.0f,
+            0.0f, -1.0f,  0.0f,
+            0.0f, -1.0f,  0.0f,
+            0.0f, -1.0f,  0.0f,
 
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+            0.0f,  1.0f,  0.0f,
+            0.0f,  1.0f,  0.0f,
+            0.0f,  1.0f,  0.0f,
+            0.0f,  1.0f,  0.0f,
+            0.0f,  1.0f,  0.0f,
+            0.0f,  1.0f,  0.0f        
         };
 
-        verticesSize = size * sizeof(GLfloat);
-
-        return vertices;
+        return normals;
     }
 
-    GLuint *Cube::CreateIndices()
+    void Cube::CreateVertices(GLfloat **coords, GLfloat **texcoords)
     {
-        int size = 6/*faces*/ * 2/*triangles*/ * 3/*indices*/;
-        GLuint *indices = new GLuint[size]{
+        *coords = CreateCoords();
+        *texcoords = CreateTexCoords();
+    }
+
+    void Cube::CreateVertices(GLfloat **coords, GLfloat **texcoords, GLfloat **normals)
+    {
+        *coords = CreateCoords();
+        *texcoords = CreateTexCoords();
+        *normals = CreateNormals();
+    }
+
+    GLuint *Cube::CreateElements()
+    {
+        int size = 6/*faces*/ * 2/*triangles*/ * 3/*Elements*/;
+        GLuint *elements = new GLuint[size]{
             0, 1, 2,
             3, 4, 5,
             6, 7, 8,
@@ -186,9 +205,9 @@ namespace GLhf
             33, 34, 35
         };
 
-        indicesSize = size * sizeof(GLuint);
+        ElementsSize = size * sizeof(GLuint);
 
-        return indices;
+        return elements;
     }
 
 }

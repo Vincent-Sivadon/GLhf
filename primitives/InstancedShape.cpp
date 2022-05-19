@@ -21,8 +21,9 @@ namespace GLhf
 
         shader.Create(vertexShaderPath, fragmentShaderPath);
 
-        GLfloat *vertices = CreateVertices();
-        GLuint *indices = CreateIndices();
+        GLfloat *coords, *texcoords;
+        CreateVertices(&coords, &texcoords);
+        GLuint *elements = CreateElements();
 
         // Model Matrix
         modelMatrices = new glm::mat4[N];
@@ -35,15 +36,13 @@ namespace GLhf
         }
 
         // Vertex Buffers
-        vbo.Create(vertices, verticesSize);
+        CoordsBuffer.Create(coords, CoordsSize);
+        TexCoordsBuffer.Create(texcoords, TexCoordsSize);
         instancedVBO.Create(modelMatrices, N * sizeof(glm::mat4));
-
         // Vertex Array
-        vbo.Bind();
-        vao.Create(0, 3, 1, 2);
+        VAO.Create(CoordsBuffer, TexCoordsBuffer);
 
         instancedVBO.Bind();
-        // glBindBuffer(GL_ARRAY_BUFFER, instancedVBO.ID); // this attribute comes from a different vertex buffer
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void *)0);
         glEnableVertexAttribArray(2);
@@ -60,7 +59,7 @@ namespace GLhf
         glVertexAttribDivisor(4, 1);
 
         // Element buffer
-        ebo.Create(indices, indicesSize);
+        ElementsBuffer.Create(elements, ElementsSize);
 
         // Projection Matrix
         SetProjection(glm::perspective(glm::radians(45.0f), 1800.0f / 950.0f, 0.1f, 1000.0f));
@@ -71,8 +70,8 @@ namespace GLhf
         // Color
         SetColor(color.x, color.y, color.z);
 
-        delete vertices;
-        delete indices;
+        delete coords;
+        delete elements;
     }
 
     void InstancedShape::UpdateModelMatrices()
@@ -93,10 +92,10 @@ namespace GLhf
     void InstancedShape::Destroy()
     {
         shader.Destroy();
-        vao.Destroy();
-        vbo.Destroy();
+        VAO.Destroy();
+        CoordsBuffer.Destroy();
         instancedVBO.Destroy();
-        ebo.Destroy();
+        ElementsBuffer.Destroy();
 
         delete positions;
         delete width;
@@ -108,9 +107,9 @@ namespace GLhf
     void InstancedShape::Draw()
     {
         shader.Bind();
-        vao.Bind();
-        ebo.Bind();
-        glDrawElementsInstanced(GL_TRIANGLES, indicesSize / sizeof(GLuint), GL_UNSIGNED_INT, 0, N);
+        VAO.Bind();
+        ElementsBuffer.Bind();
+        glDrawElementsInstanced(GL_TRIANGLES, ElementsSize / sizeof(GLuint), GL_UNSIGNED_INT, 0, N);
     }
 
     void InstancedShape::SetShaderNames(const std::string vertexShaderName, const std::string fragmentShaderName)

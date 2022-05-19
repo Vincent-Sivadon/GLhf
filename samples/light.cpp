@@ -12,7 +12,7 @@ public:
     void Startup() override
     {
         cube.Create();
-        //cube.SetTexture("../resources/brickwall.jpg");
+        //cube.SetColor(1.0f, 0.5f, 0.31f);
         AddShape(&cube);
     }
 

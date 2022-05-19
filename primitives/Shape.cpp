@@ -12,20 +12,19 @@ namespace GLhf
     void Shape::Create()
     {
         // Vertex data
-        //GLfloat *vertices = CreateVertices();
-        GLfloat *vertices, *texcoords;
-        CreateVertices(&vertices, &texcoords);
-        GLuint *indices = CreateIndices();
+        GLfloat *coords, *texcoords, *normals;
+        CreateVertices(&coords, &texcoords, &normals);
+        GLuint *elements = CreateElements();
 
         // Shader
         shader.Create(vertexShaderPath, fragmentShaderPath);
 
-        // Buffers
-        vbo.Create(vertices, verticesSize);
-        TexCoordsBuffer.Create(texcoords, 6*2*3*2*sizeof(GLfloat));
-        // vao.Create(0, 3, 1, 2);
-        vao.Create(vbo, TexCoordsBuffer);
-        ebo.Create(indices, indicesSize);
+        // Vertex Buffers
+        CoordsBuffer.Create(coords, CoordsSize);
+        TexCoordsBuffer.Create(texcoords, TexCoordsSize);
+        NormalsBuffer.Create(normals, CoordsSize);
+        VAO.Create(CoordsBuffer, TexCoordsBuffer, NormalsBuffer);
+        ElementsBuffer.Create(elements, ElementsSize);
 
         // Projection Matrix
         SetProjection(glm::perspective(glm::radians(45.0f), 1800.0f / 950.0f, 0.1f, 1000.0f));
@@ -43,25 +42,28 @@ namespace GLhf
         // Color
         SetColor(color.x, color.y, color.z);
 
-        delete vertices;
-        delete indices;
+        delete coords;
+        delete texcoords;
+        delete normals;
+        delete elements;
     }
 
     void Shape::Destroy()
     {
         shader.Destroy();
-        vao.Destroy();
-        vbo.Destroy();
-        ebo.Destroy();
+        VAO.Destroy();
+        CoordsBuffer.Destroy();
+        TexCoordsBuffer.Destroy();
+        NormalsBuffer.Destroy();
+        ElementsBuffer.Destroy();
     }
 
     void Shape::Draw()
     {
         texture.Bind();
         shader.Bind();
-        vao.Bind();
-        glDrawElements(GL_TRIANGLES, indicesSize / sizeof(GLuint), GL_UNSIGNED_INT, 0);
-        std::cout << "iosok" << std::endl;
+        VAO.Bind();
+        glDrawElements(GL_TRIANGLES, ElementsSize / sizeof(GLuint), GL_UNSIGNED_INT, 0);
     }
 
     void Shape::SetModel(const glm::mat4 &mat)
@@ -124,16 +126,16 @@ namespace GLhf
 
     void Shape::SetTexture(GLuint w, GLuint h, const GLubyte *data)
     {
-        textureDefined = 1;
-        shader.SetUniform("textureDefined", 1);
+        textured = 1;
+        shader.SetUniform("textured", 1);
         texture.Create(w, h, data);
     }
 
     // ATTENTION : doit-être appelé après Create()
     void Shape::SetTexture(const char *image_path)
     {
-        textureDefined = 1;
-        shader.SetUniform("textureDefined", 1);
+        textured = 1;
+        shader.SetUniform("textured", 1);
         texture.Create(image_path);
     }
 

@@ -18,7 +18,7 @@ public:
             -0.5f, -0.5f, 0.0f, // bottom left
             -0.5f, 0.5f, 0.0f   // top left
         };
-        GLuint indices[] = {
+        GLuint elements[] = {
             // note that we start from 0!
             0, 1, 3, // first triangle
             1, 2, 3  // second triangle
@@ -26,7 +26,7 @@ public:
 
         vbo.Create(vertices, sizeof(vertices));
         vao.Create(0, 3);
-        ebo.Create(indices, sizeof(indices));
+        ebo.Create(elements, sizeof(elements));
     }
 
     void Render(double time) override
