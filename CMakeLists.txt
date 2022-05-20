@@ -14,12 +14,12 @@ find_package(glm REQUIRED)
 set(LIBS opengl32 glew32 glfw3)
 
 # Files
-file(GLOB SRCS "src/*.cpp" "primitives/*.cpp")
-file(GLOB HEADERS "include/*.h" "primitives/*.h")
+file(GLOB SRCS "src/*.cpp")
+file(GLOB HEADERS "include/*.h")
 file(GLOB SHADERS "resources/shaders/examples/*" "resources/shaders/primitives/*")
 
 # Include directories
-set(GLHF_INCLUDE_DIRS include primitives)
+set(GLHF_INCLUDE_DIRS include)
 set(LIB_INCLUDE_DIRS external/include)
 set(INCLUDE_DIRS ${GLHF_INCLUDE_DIRS} ${LIB_INCLUDE_DIRS})
 
