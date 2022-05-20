@@ -13,7 +13,7 @@ in vec3 Normal;
 void main()
 {
     // Hard coded light caracteristics
-    vec3 lightpos = vec3(1.0f);
+    vec3 lightpos = vec3(3.0f, 3.0f, -3.0f);
     vec3 lightcolor = vec3(1.0f);
     float ambientstrenght = 0.1;
     vec3 ambient = ambientstrenght * lightcolor;
