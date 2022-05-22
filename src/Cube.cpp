@@ -23,9 +23,6 @@ namespace GLhf
         /* Create Shader */
         shader_.Create("shape.vs", "shape.fs");
 
-        /* Texture Init */
-        texture_.Create(texture_file_.c_str());
-
         /* Set Properties */
         SetColor(color_.x, color_.y, color_.z);
         SetModel(model_matrix_);
@@ -39,7 +36,6 @@ namespace GLhf
         normal_buffer_.Destroy();
         element_buffer_.Destroy();
         vertex_array_.Destroy();
-        // Texture.Destroy() ?
     }
 
     void Cube::SetColor(float r, float g, float b)
@@ -54,9 +50,9 @@ namespace GLhf
         position_ = glm::vec3(x, y, z);
     }
 
-    void Cube::SetTexture(const std::string& filename)
+    void Cube::SetTexture(Texture2D& texture)
     {
-        texture_file_ = filename;
+        texture_ = &texture;
     }
 
     void Cube::SetModel(const glm::mat4& mat)
@@ -88,7 +84,7 @@ namespace GLhf
 
     void Cube::Bind() const
     {
-        texture_.Bind();
+        texture_->Bind();
         shader_.Bind();
         vertex_array_.Bind();
     }
