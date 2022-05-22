@@ -12,20 +12,20 @@ namespace GLhf
     {
     public:
         // Texture ID
-        GLuint ID;
+        GLuint id_;
 
         // Texture image dimensions
-        GLint width, height;
+        GLint width_, height_;
 
         // Texture Format
-        GLuint internalFormat;
-        GLuint imageFormat;
+        GLuint internal_format_;
+        GLuint image_format_;
 
         // Texture configuration
-        GLuint wrapS;     // wrapping mode on S axis
-        GLuint wrapT;     // wrapping mode on T axis
-        GLuint filterMin; // filtering mode if texture pixels < screen pixels
-        GLuint filterMax; // filtering mode if texture pixels > screen pixels
+        GLuint wrap_s_;     // wrapping mode on S axis
+        GLuint wrap_t_;     // wrapping mode on T axis
+        GLuint filter_min_; // filtering mode if texture pixels < screen pixels
+        GLuint filter_max_; // filtering mode if texture pixels > screen pixels
 
         // Constructor (sets defalt texture modes)
         Texture2D();

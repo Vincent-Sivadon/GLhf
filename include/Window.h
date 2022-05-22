@@ -14,10 +14,10 @@ namespace GLhf
     // In the future : to be an interface so there can be a linux window, windows...
     class Window {
     private:
-        inline static GLFWwindow *window;
-        std::string title;
-        int width;
-        int height;
+        inline static GLFWwindow *glfw_window_;
+        std::string title_;
+        int width_;
+        int height_;
 
     public:
         Window() {}

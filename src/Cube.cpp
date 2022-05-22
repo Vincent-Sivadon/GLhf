@@ -1,31 +1,96 @@
-#pragma once
+#include "Cube.h"
 
-#include "Shape.h"
-
-#include <GL/glext.h>
-
-#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include <string.h>
 
-namespace GLhf 
+namespace GLhf
 {
-        
-    class Cube : public Shape
-    {
-    private:
-        void CreateVertices(GLfloat **coords, GLfloat **texcoords) override;
-        void CreateVertices(GLfloat **coords, GLfloat **texcoords, GLfloat **normals) override;
-        GLuint *CreateElements() override;
-        GLfloat *CreateCoords() override;
-        GLfloat *CreateTexCoords() override;
-        GLfloat *CreateNormals() override;
-    };
 
-    GLfloat* Cube::CreateCoords()
+    void Cube::Create()
     {
-        int coords_size = 6/*faces*/ * 2/*triangles*/ * 3/*vertices*/ * 3/*coords*/;
-        GLfloat *coords = new GLfloat[coords_size]{
+        /* Create Buffers */
+        CreateCoordsBuffer();
+        CreateTexCoordsBuffer();
+        CreateNormalsBuffer();
+        CreateVertexArray();
+        CreateElementsBuffer();
+
+        /* Model Matrix */
+        model_matrix_ = glm::translate(model_matrix_, position_);
+        // model_matrix_ = glm::rotate(model_matrix_, angle, glm::vec3(0.0f, 0.0f, 1.0f));
+        model_matrix_ = glm::scale(model_matrix_, glm::vec3(scale_));
+
+        /* Create Shader */
+        shader_.Create("shape.vs", "shape.fs");
+
+        /* Texture Init */
+        texture_.Create(texture_file_.c_str());
+
+        /* Set Properties */
+        SetColor(color_.x, color_.y, color_.z);
+        SetModel(model_matrix_);
+        SetView(view_matrix_);
+    }
+
+    Cube::~Cube()
+    {
+        coord_buffer_.Destroy();
+        tex_coord_buffer_.Destroy();
+        normal_buffer_.Destroy();
+        element_buffer_.Destroy();
+        vertex_array_.Destroy();
+        // Texture.Destroy() ?
+    }
+
+    void Cube::SetColor(float r, float g, float b)
+    {
+        shader_.Bind();
+        color_ = glm::vec3(r, g, b);
+        shader_.SetUniform("color", color_);
+    }
+
+    void Cube::SetPosition(float x, float y, float z)
+    {
+        position_ = glm::vec3(x, y, z);
+    }
+
+    void Cube::SetTexture(const std::string& filename)
+    {
+        texture_file_ = filename;
+    }
+
+    void Cube::SetModel(const glm::mat4& mat)
+    {
+        shader_.Bind(); // Use shader program
+        model_matrix_ = mat;
+        shader_.SetUniform("model", model_matrix_);
+    }
+
+    void Cube::SetView(const glm::mat4& mat)
+    {
+        shader_.Bind(); // Use shader program
+        view_matrix_ = mat;
+        shader_.SetUniform("view", view_matrix_);
+    }
+
+    void Cube::SetProjection(const glm::mat4& mat)
+    {
+        shader_.Bind(); // Use shader program
+        projection_matrix_ = mat;
+        shader_.SetUniform("projection", projection_matrix_);
+    }
+
+    void Cube::Bind() const
+    {
+        texture_.Bind();
+        shader_.Bind();
+        vertex_array_.Bind();
+    }
+
+    void Cube::CreateCoordsBuffer()
+    {
+        int coords_count = 6/*faces*/ * 2/*triangles*/ * 3/*vertices*/ * 3/*coords*/;
+        GLfloat *coords = new GLfloat[coords_count]{
             -0.5f, -0.5f, -0.5f,
             0.5f, -0.5f, -0.5f, 
             0.5f,  0.5f, -0.5f, 
@@ -69,14 +134,13 @@ namespace GLhf
             -0.5f,  0.5f, -0.5f
         };
 
-        CoordsSize = coords_size * sizeof(GLfloat);
-        return coords;
+        coord_buffer_.Create(coords, coords_count * sizeof(GLfloat));
     }
 
-    GLfloat *Cube::CreateTexCoords()
+    void Cube::CreateTexCoordsBuffer()
     {
-        int texcoords_size = 6*2*3*2;
-        GLfloat *texcoords = new GLfloat[texcoords_size] {
+        int texcoords_count = 6/*faces*/*2/*triangles*/*3/*vertices*/*2/*tex_coords*/;
+        GLfloat *texcoords = new GLfloat[texcoords_count] {
             0.0f, 0.0f,
             1.0f, 0.0f,
             1.0f, 1.0f,
@@ -120,14 +184,14 @@ namespace GLhf
             0.0f, 1.0f
           };
 
-          TexCoordsSize = texcoords_size * sizeof(GLfloat);
-          return texcoords;
+        tex_coord_buffer_.Create(texcoords, texcoords_count * sizeof(GLfloat));
+
     }
 
-    GLfloat *Cube::CreateNormals()
+    void Cube::CreateNormalsBuffer()
     {
-        int size = CoordsSize;
-        GLfloat *normals = new GLfloat[size] {
+        int normals_count = 6/*faces*/ * 2/*triangles*/ * 3/*vertices*/ * 3/*coords*/;
+        GLfloat *normals = new GLfloat[normals_count] {
             0.0f,  0.0f, -1.0f,
             0.0f,  0.0f, -1.0f, 
             0.0f,  0.0f, -1.0f, 
@@ -171,26 +235,13 @@ namespace GLhf
             0.0f,  1.0f,  0.0f        
         };
 
-        return normals;
+        normal_buffer_.Create(normals, normals_count * sizeof(GLfloat));
     }
 
-    void Cube::CreateVertices(GLfloat **coords, GLfloat **texcoords)
+    void Cube::CreateElementsBuffer()
     {
-        *coords = CreateCoords();
-        *texcoords = CreateTexCoords();
-    }
-
-    void Cube::CreateVertices(GLfloat **coords, GLfloat **texcoords, GLfloat **normals)
-    {
-        *coords = CreateCoords();
-        *texcoords = CreateTexCoords();
-        *normals = CreateNormals();
-    }
-
-    GLuint *Cube::CreateElements()
-    {
-        int size = 6/*faces*/ * 2/*triangles*/ * 3/*Elements*/;
-        GLuint *elements = new GLuint[size]{
+        int elements_count = 6/*faces*/ * 2/*triangles*/ * 3/*Elements*/;
+        GLuint *elements = new GLuint[elements_count]{
             0, 1, 2,
             3, 4, 5,
             6, 7, 8,
@@ -205,9 +256,13 @@ namespace GLhf
             33, 34, 35
         };
 
-        ElementsSize = size * sizeof(GLuint);
-
-        return elements;
+        element_buffer_.Create(elements, elements_count * sizeof(GLuint));
     }
 
+    void Cube::CreateVertexArray()
+    {
+        vertex_array_.Create(coord_buffer_, tex_coord_buffer_, normal_buffer_);
+    }
+
+    
 }

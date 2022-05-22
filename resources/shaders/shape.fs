@@ -5,7 +5,6 @@ in vec3 FragPos;
 
 uniform vec3 color;
 uniform sampler2D ourTexture;
-uniform int textured;
 
 in vec2 TexCoord;
 in vec3 Normal;
@@ -25,8 +24,5 @@ void main()
     
     vec3 result = (ambient + diffuse) * color;
 
-    if (textured == 1)
-        FragColor = texture(ourTexture, TexCoord) * vec4(result, 1.0f);
-    else
-        FragColor = vec4(result ,1.0f);
+    FragColor = texture(ourTexture, TexCoord) * vec4(color, 1.0f);
 }

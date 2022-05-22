@@ -3,12 +3,12 @@
 namespace GLhf
 {
 
-    void Window::Create(const std::string title_, int width_, int height_)
+    void Window::Create(const std::string title, int width, int height)
     {
         // Define member variables
-        title = title_;
-        width = width_;
-        height = height_;
+        title_ = title;
+        width_ = width;
+        height_ = height;
 
         // GLFW initialization
         // -------------------
@@ -19,17 +19,17 @@ namespace GLhf
 
         // GLFW window creation
         // -------------------
-        window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
-        if (window == NULL)
+        glfw_window_ = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+        if (glfw_window_ == NULL)
         {
             throw "Failed to create GLFW window";
             glfwTerminate();
         }
-        glfwMakeContextCurrent(window);
-        glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
+        glfwMakeContextCurrent(glfw_window_);
+        glfwSetInputMode(glfw_window_, GLFW_STICKY_KEYS, GLFW_TRUE);
 
         // tell GLFW to capture our mouse
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetInputMode(glfw_window_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
         // GLEW Initialization
         // -------------------
@@ -46,19 +46,19 @@ namespace GLhf
 
     int Window::GetWidth()
     {
-        glfwGetWindowSize(window, &width, &height);
-        return width;
+        glfwGetWindowSize(glfw_window_, &width_, &height_);
+        return width_;
     }
 
     int Window::GetHeight()
     {
-        glfwGetWindowSize(window, &width, &height);
-        return height;
+        glfwGetWindowSize(glfw_window_, &width_, &height_);
+        return height_;
     }
 
     GLFWwindow *Window::GetWindow()
     {
-        return window;
+        return glfw_window_;
     }
 
 }

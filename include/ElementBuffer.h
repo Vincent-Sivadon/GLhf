@@ -11,8 +11,8 @@ namespace GLhf
     {
     private:
         // Every OpenGL object will have an ID (name)
-        GLuint ID;
-        GLuint count;
+        GLuint id_;
+        GLuint size_;
 
     public:
         ElementBuffer() {}
@@ -25,7 +25,7 @@ namespace GLhf
         void Destroy();
 
         // Getter
-        inline GLuint GetCount() const { return count; };
+        inline GLuint Size() const { return size_; }
     };
 
 }

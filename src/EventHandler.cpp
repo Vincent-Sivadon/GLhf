@@ -3,9 +3,9 @@
 namespace GLhf
 {
 
-    void EventHandler::Create(Camera * camera_)
+    void EventHandler::Create(Camera * camera)
     {
-        camera = camera_;
+        camera_ = camera;
         SetEventCallback();
     }
 
@@ -13,7 +13,7 @@ namespace GLhf
     {
         // Set center
         int width, height;
-        GLFWwindow * glfw_window = window->GetWindow();
+        GLFWwindow * glfw_window = window_->GetWindow();
         glfwGetWindowSize(glfw_window, &width, &height);
         lastX = width / 2.0f;
         lastY = height / 2.0f;
@@ -64,7 +64,7 @@ namespace GLhf
         lastX = xpos;
         lastY = ypos;
 
-        camera->ProcessMouseMovement(xoffset, yoffset);
+        camera_->ProcessMouseMovement(xoffset, yoffset);
     }
 
     void EventHandler::KeyCallback(int key, int scancode, int action, int mods)
@@ -73,33 +73,33 @@ namespace GLhf
         {
             case GLFW_KEY_ESCAPE:
                 if (action==GLFW_PRESS)
-                    glfwSetWindowShouldClose(window->GetWindow(), true);
+                    glfwSetWindowShouldClose(window_->GetWindow(), true);
                 break;
 
             case GLFW_KEY_W:
-                if (action == GLFW_PRESS) keys.W = true;
-                else if (action == GLFW_RELEASE) keys.W = false;
+                if (action == GLFW_PRESS) keys_.W = true;
+                else if (action == GLFW_RELEASE) keys_.W = false;
                 break;
             case GLFW_KEY_S:
-                if (action == GLFW_PRESS) keys.S = true;
-                else if (action == GLFW_RELEASE) keys.S = false;
+                if (action == GLFW_PRESS) keys_.S = true;
+                else if (action == GLFW_RELEASE) keys_.S = false;
                 break;
             case GLFW_KEY_A:
-                if (action == GLFW_PRESS) keys.A = true;
-                else if (action == GLFW_RELEASE) keys.A = false;
+                if (action == GLFW_PRESS) keys_.A = true;
+                else if (action == GLFW_RELEASE) keys_.A = false;
                 break;
             case GLFW_KEY_D:
-                if (action == GLFW_PRESS) keys.D = true;
-                else if (action == GLFW_RELEASE) keys.D = false;
+                if (action == GLFW_PRESS) keys_.D = true;
+                else if (action == GLFW_RELEASE) keys_.D = false;
                 break;
                     
             case GLFW_KEY_SPACE:
-                if (action == GLFW_PRESS) keys.SPACE = true;
-                else if (action == GLFW_RELEASE) keys.SPACE = false;
+                if (action == GLFW_PRESS) keys_.SPACE = true;
+                else if (action == GLFW_RELEASE) keys_.SPACE = false;
                 break;
             case GLFW_KEY_LEFT_SHIFT:
-                if (action == GLFW_PRESS) keys.LEFT_SHIFT = true;
-                else if (action == GLFW_RELEASE) keys.LEFT_SHIFT = false;
+                if (action == GLFW_PRESS) keys_.LEFT_SHIFT = true;
+                else if (action == GLFW_RELEASE) keys_.LEFT_SHIFT = false;
                 break;
 
             default:
@@ -110,20 +110,20 @@ namespace GLhf
     void EventHandler::ScrollCallback(double xoffset, double yoffset)
     {
         if (yoffset>0)
-            camera->ProcessKeyboard(FORWARD, 0.1f);
+            camera_->ProcessKeyboard(FORWARD, 0.1f);
         else
-            camera->ProcessKeyboard(BACKWARD, 0.1f);
+            camera_->ProcessKeyboard(BACKWARD, 0.1f);
     }
 
 
     void EventHandler::Process(float dt)
     {
-        if (keys.W) camera->ProcessKeyboard(FORWARD, dt);
-        if (keys.S) camera->ProcessKeyboard(BACKWARD, dt);
-        if (keys.A) camera->ProcessKeyboard(LEFT, dt);
-        if (keys.D) camera->ProcessKeyboard(RIGHT, dt);
-        if (keys.SPACE) camera->ProcessKeyboard(UP, dt);
-        if (keys.LEFT_SHIFT) camera->ProcessKeyboard(DOWN, dt);
+        if (keys_.W) camera_->ProcessKeyboard(FORWARD, dt);
+        if (keys_.S) camera_->ProcessKeyboard(BACKWARD, dt);
+        if (keys_.A) camera_->ProcessKeyboard(LEFT, dt);
+        if (keys_.D) camera_->ProcessKeyboard(RIGHT, dt);
+        if (keys_.SPACE) camera_->ProcessKeyboard(UP, dt);
+        if (keys_.LEFT_SHIFT) camera_->ProcessKeyboard(DOWN, dt);
     }
 
 }

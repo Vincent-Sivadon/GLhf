@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 17)
 # Libraries
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} external/cmake/)
 find_package(glfw3 REQUIRED)
-find_package(glew REQUIRED)
+find_package(GLEW REQUIRED)
 find_package(glm REQUIRED)
 set(LIBS opengl32 glew32 glfw3)
 

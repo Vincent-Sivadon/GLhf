@@ -12,7 +12,7 @@ namespace GLhf
     class VertexArray
     {
     private:
-        GLuint ID;
+        GLuint id_;
 
     public:
         VertexArray() {}
@@ -25,8 +25,8 @@ namespace GLhf
                     const VertexBuffer& texcoords_buffer,
                     const VertexBuffer& normals_buffer);
 
-        void Bind();
-        void Unbind();
+        void Bind() const;
+        void Unbind() const;
 
         void Destroy();
     };

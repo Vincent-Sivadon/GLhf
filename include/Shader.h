@@ -18,7 +18,7 @@ namespace GLhf
     {
     private:
         // Shader program
-        GLuint program;
+        GLuint program_;
 
     public:
         Shader() {}
@@ -32,8 +32,8 @@ namespace GLhf
             const char *tessEvalPath);
 
         // Bind the shader program
-        void Bind() { glUseProgram(program); }
-        void Unbind() { glUseProgram(0); }
+        inline void Bind()   const { glUseProgram(program_); }
+        inline void Unbind() const { glUseProgram(0); }
 
         // Set uniform named name
         void SetUniform(const std::string &name, const glm::mat4 &mat);
@@ -43,10 +43,10 @@ namespace GLhf
         // Get uniform named name location
         GLint GetUniformLocation(const std::string &name);
         // Set program
-        void SetProgram(GLuint prog) { program = prog; }
+        void SetProgram(GLuint prog) { program_ = prog; }
 
         // Cleans memory
-        void Destroy() { glDeleteProgram(program); }
+        void Destroy() { glDeleteProgram(program_); }
     };
 
 }

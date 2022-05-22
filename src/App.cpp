@@ -8,16 +8,19 @@ namespace GLhf
     // App's main function
     void App::Run()
     {
-        window.Create();
-        event_handler.Create(&camera);
+        window_.Create();
+        camera_.Create();
+        event_handler_.Create(&camera_);
 
         // Overrided function
         // ------------------
         Startup();
 
+        renderer_.Init(scene_);
+
         // Game loop
         // ----------
-        while (!glfwWindowShouldClose(window.GetWindow()))
+        while (!glfwWindowShouldClose(window_.GetWindow()))
         {
             // per-frame time logic
             // -------------------
@@ -26,36 +29,24 @@ namespace GLhf
             lt = ct;
 
             // Input management
-            event_handler.Process(dt);
-            PollEvents(dt);
+            event_handler_.Process(dt);
 
             // Rendering
-            // ---------
-            glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            renderer_.Clear();
+            glm::mat4 view_matrix = camera_.GetViewMatrix();
+            for (Cube& cube : scene_.cubes_)
+                renderer_.Draw(cube, view_matrix);
 
-            // Draw every shapes
-            for (Shape *shape : shapes)
-            {
-                shape->SetView(camera.GetViewMatrix());
-                shape->Draw();
-            }
 
-            Render(ct);
-
-            glfwSwapBuffers(window.GetWindow());
+            glfwSwapBuffers(window_.GetWindow());
 
             // Input
-            // -----
             glfwPollEvents();
         }
 
         // Clean memory
         // ------------
-        for (Shape *shape : shapes)
-            shape->Destroy();
-        Shutdown();
-        glfwDestroyWindow(window.GetWindow());
+        glfwDestroyWindow(window_.GetWindow());
         glfwTerminate();
     }
 

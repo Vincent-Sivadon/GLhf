@@ -11,9 +11,14 @@ namespace GLhf
     class Scene
     {
     public:
-        Camera Camera_;
-        std::vector<Cube> Cubes_;
-    }
+        std::vector<Cube> cubes_;
+
+        void AddCube(const Cube& cube)
+        {
+            cubes_.push_back(cube);
+        }
+
+    };
 
 
 }

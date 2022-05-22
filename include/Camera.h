@@ -26,44 +26,28 @@ namespace GLhf
     class Camera
     {
     public:
+        Camera() {}
+
         // Properties
-        float Yaw = -90.0f;
-        float Pitch = 0.0f;
-        float Speed = 5.0f;
-        float Sensitivity = 0.1f;
-        float Zoom = 45.0f;
+        float yaw_ = -90.0f;
+        float pitch_ = 0.0f;
+        float speed_ = 5.0f;
+        float sensitivity_ = 0.1f;
+        float zoom_ = 45.0f;
 
         // Directions
-        glm::vec3 Position;
-        glm::vec3 Front;
-        glm::vec3 Up;
-        glm::vec3 Right;
-        glm::vec3 WorldUp;
+        glm::vec3 position_;
+        glm::vec3 front_;
+        glm::vec3 up_;
+        glm::vec3 right_;
+        glm::vec3 world_up_;
 
-        // constructor with vectors
-        Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 4.0f),
-            glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f))
-            : Front(glm::vec3(0.0f, 0.0f, -1.0f)), Position(position), WorldUp(up)
-        {
-            updateCameraVectors();
-        }
-        // constructor with scalars
-        Camera(float posX, float posY, float posZ,
-            float upX, float upY, float upZ)
-            : Front(glm::vec3(0.0f, 0.0f, -1.0f)),
-            Position(glm::vec3(posX, posY, posZ)),
-            WorldUp(glm::vec3(upX, upY, upZ))
-        {
-            updateCameraVectors();
-        }
-        // constructor with scalars
-        Camera(float posX, float posY, float posZ)
-            : Front(glm::vec3(0.0f, 0.0f, -1.0f)),
-            Position(glm::vec3(posX, posY, posZ)),
-            WorldUp(glm::vec3(0.0f, 1.0f, 0.0f))
-        {
-            updateCameraVectors();
-        }
+        // Constructors
+        void Create(glm::vec3 position = glm::vec3(0.0f, 0.0f, 4.0f),
+                    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f));
+        void Create(float posX, float posY, float posZ,
+                    float upX, float upY, float upZ);
+        void Create(float posX, float posY, float posZ);
 
         glm::mat4 GetViewMatrix();
 
@@ -72,7 +56,7 @@ namespace GLhf
         void Set(float posX, float posY, float posZ,
                 float upX, float upY, float upZ);
         void Set(float posX, float posY, float posZ);
-        void SetSpeed(float s) { Speed = s;}
+        void SetSpeed(float s) { speed_ = s;}
 
         // processes input received from a mouse input system. Expects the offset value in both the x and y direction.
         void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);

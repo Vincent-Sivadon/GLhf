@@ -9,138 +9,138 @@ namespace GLhf
 {
 
     // Convert text from a file to a string
-    std::string readFile(const char *filePath)
+    std::string readFile(const char *file_path)
     {
         std::string content;
-        std::ifstream fileStream(filePath, std::ios::in);
+        std::ifstream file_stream(file_path, std::ios::in);
 
-        if (!fileStream.is_open())
+        if (!file_stream.is_open())
         {
-            std::cerr << "Could not read file " << filePath << ". File does not exist." << std::endl;
+            std::cerr << "Could not read file " << file_path << ". File does not exist." << std::endl;
             return "";
         }
 
         std::string line = "";
-        while (!fileStream.eof())
+        while (!file_stream.eof())
         {
-            std::getline(fileStream, line);
+            std::getline(file_stream, line);
             content.append(line + "\n");
         }
 
-        fileStream.close();
+        file_stream.close();
         return content;
     }
 
-    // Shader program creation from files (vertex, fragment)
-    void Shader::Create(const char *vertexShaderName, const char *fragmentShaderName)
+    // Shader program_ creation from files (vertex, fragment)
+    void Shader::Create(const char *vertex_shader_name, const char *fragment_shader_name)
     {
-        // Change "texture.vs" to "../resources/primitives/texture.vs"
+        // Change "texture.vs" to "../resources/texture.vs"
         // --------------------------------------------------------------
-        char vertexShaderPath[100];
-        char fragmentShaderPath[100];
-        const std::string dirPath("../resources/shaders/primitives/");
-        const std::string newVertexPath(dirPath + vertexShaderName);
-        strcpy(vertexShaderPath, newVertexPath.c_str());
-        const std::string newFragmentPath = dirPath + fragmentShaderName;
-        strcpy(fragmentShaderPath, newFragmentPath.c_str());
+        char vertex_shader_path[100];
+        char fragment_shader_path[100];
+        const std::string directory_path("../resources/shaders/");
+        const std::string new_vertex_path(directory_path + vertex_shader_name);
+        strcpy(vertex_shader_path, new_vertex_path.c_str());
+        const std::string new_fragment_path = directory_path + fragment_shader_name;
+        strcpy(fragment_shader_path, new_fragment_path.c_str());
         
         // Read shader files
         // -----------------
-        std::string vertexShaderStr = readFile(vertexShaderPath);
-        std::string fragmentShaderStr = readFile(fragmentShaderPath);
+        std::string vertex_shader_str = readFile(vertex_shader_path);
+        std::string fragment_shader_str = readFile(fragment_shader_path);
 
         // Type conversion
         // ---------------
-        const char *vertexShaderSrc = vertexShaderStr.c_str();
-        const char *fragmentShaderSrc = fragmentShaderStr.c_str();
+        const char *vertex_shader_src = vertex_shader_str.c_str();
+        const char *fragment_shader_src = fragment_shader_str.c_str();
 
         // Create shaders
         // --------------
-        GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-        GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+        GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
+        GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
 
         // Compile vertex shader
         // ---------------------
-        glShaderSource(vertexShader, 1, &vertexShaderSrc, NULL);
-        glCompileShader(vertexShader);
+        glShaderSource(vertex_shader, 1, &vertex_shader_src, NULL);
+        glCompileShader(vertex_shader);
 
         // Compile fragment shader
         // -----------------------
-        glShaderSource(fragmentShader, 1, &fragmentShaderSrc, NULL);
-        glCompileShader(fragmentShader);
+        glShaderSource(fragment_shader, 1, &fragment_shader_src, NULL);
+        glCompileShader(fragment_shader);
 
-        // Create final shader program
+        // Create final shader program_
         // ---------------------------
-        program = glCreateProgram(); // must be != 0
-        glAttachShader(program, vertexShader);
-        glAttachShader(program, fragmentShader);
-        glLinkProgram(program);
+        program_ = glCreateProgram(); // must be != 0
+        glAttachShader(program_, vertex_shader);
+        glAttachShader(program_, fragment_shader);
+        glLinkProgram(program_);
 
         // Delete shaders
         // --------------
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
+        glDeleteShader(vertex_shader);
+        glDeleteShader(fragment_shader);
     }
 
-    // Shader program creation from shader files (vertex, fragment, tessellation control, tesselation evaluation)
-    void Shader::Create(const char *vertexPath,
-                const char *fragmentPath,
-                const char *tessControlPath,
-                const char *tessEvalPath)
+    // Shader program_ creation from shader files (vertex, fragment, tessellation control, tesselation evaluation)
+    void Shader::Create(const char *vertex_path,
+                const char *fragment_path,
+                const char *tessellation_control_path,
+                const char *tessellation_evaluation_path)
     {
         // Read shader files
-        std::string vertexShaderStr = readFile(vertexPath);
-        std::string fragmentShaderStr = readFile(fragmentPath);
-        std::string tessControlShaderStr = readFile(tessControlPath);
-        std::string tessEvalShaderStr = readFile(tessEvalPath);
+        std::string vertex_shader_str = readFile(vertex_path);
+        std::string fragment_shader_str = readFile(fragment_path);
+        std::string tessellation_control_shader_str = readFile(tessellation_control_path);
+        std::string tessellation_evaluation_shader_str = readFile(tessellation_evaluation_path);
 
         // Type conversion
-        const char *vertexShaderSrc = vertexShaderStr.c_str();
-        const char *fragmentShaderSrc = fragmentShaderStr.c_str();
-        const char *tessControlShaderSrc = tessControlShaderStr.c_str();
-        const char *tessEvalShaderSrc = tessEvalShaderStr.c_str();
+        const char *vertex_shader_src = vertex_shader_str.c_str();
+        const char *fragment_shader_src = fragment_shader_str.c_str();
+        const char *tessellation_control_shader_src = tessellation_control_shader_str.c_str();
+        const char *tessellation_evaluation_shader_src = tessellation_evaluation_shader_str.c_str();
 
         // Create shaders
-        GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-        GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-        GLuint tessControlShader = glCreateShader(GL_TESS_CONTROL_SHADER);
-        GLuint tessEvalShader = glCreateShader(GL_TESS_EVALUATION_SHADER);
+        GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
+        GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+        GLuint tessellation_control_shader = glCreateShader(GL_TESS_CONTROL_SHADER);
+        GLuint tessellation_evaluation_shader = glCreateShader(GL_TESS_EVALUATION_SHADER);
 
         // Compile vertex shader
-        glShaderSource(vertexShader, 1, &vertexShaderSrc, NULL);
-        glCompileShader(vertexShader);
+        glShaderSource(vertex_shader, 1, &vertex_shader_src, NULL);
+        glCompileShader(vertex_shader);
 
         // Compile fragment shader
-        glShaderSource(fragmentShader, 1, &fragmentShaderSrc, NULL);
-        glCompileShader(fragmentShader);
+        glShaderSource(fragment_shader, 1, &fragment_shader_src, NULL);
+        glCompileShader(fragment_shader);
 
         // Compile tessellation control shader
-        glShaderSource(tessControlShader, 1, &tessControlShaderSrc, NULL);
-        glCompileShader(tessControlShader);
+        glShaderSource(tessellation_control_shader, 1, &tessellation_control_shader_src, NULL);
+        glCompileShader(tessellation_control_shader);
 
         // Compile tessellation evaluation shader
-        glShaderSource(tessEvalShader, 1, &tessEvalShaderSrc, NULL);
-        glCompileShader(tessEvalShader);
+        glShaderSource(tessellation_evaluation_shader, 1, &tessellation_evaluation_shader_src, NULL);
+        glCompileShader(tessellation_evaluation_shader);
 
-        // Create final shader program
-        program = glCreateProgram();
-        glAttachShader(program, vertexShader);
-        glAttachShader(program, fragmentShader);
-        glAttachShader(program, tessControlShader);
-        glAttachShader(program, tessEvalShader);
-        glLinkProgram(program);
+        // Create final shader program_
+        program_ = glCreateProgram();
+        glAttachShader(program_, vertex_shader);
+        glAttachShader(program_, fragment_shader);
+        glAttachShader(program_, tessellation_control_shader);
+        glAttachShader(program_, tessellation_evaluation_shader);
+        glLinkProgram(program_);
 
         // Delete shaders
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
-        glDeleteShader(tessControlShader);
-        glDeleteShader(tessEvalShader);
+        glDeleteShader(vertex_shader);
+        glDeleteShader(fragment_shader);
+        glDeleteShader(tessellation_control_shader);
+        glDeleteShader(tessellation_evaluation_shader);
     }
 
     // Get uniform named name location
     GLint Shader::GetUniformLocation(const std::string &name)
     {
-        return glGetUniformLocation(program, name.c_str());
+        return glGetUniformLocation(program_, name.c_str());
     }
 
     // Set uniform named name to mat

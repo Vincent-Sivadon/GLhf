@@ -11,7 +11,8 @@ namespace GLhf
     {
     public:
         // Every OpenGL object will have an ID (name)
-        GLuint ID;
+        GLuint id_;
+        GLuint size_;
 
         VertexBuffer() {}
         ~VertexBuffer() {}
@@ -21,6 +22,8 @@ namespace GLhf
 
         void Bind() const;
         void Unbind() const;
+
+        inline GLuint Size() const { return size_; }
 
         void Destroy();
     };

@@ -3,17 +3,17 @@
 namespace GLhf
 {
 
-    void ElementBuffer::Create(const GLuint *data, GLuint count_)
+    void ElementBuffer::Create(const GLuint *data, GLuint size)
     {
-        count = count_;
-        glGenBuffers(1, &ID);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ID);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLuint), data, GL_STATIC_DRAW);
+        glGenBuffers(1, &id_);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+        size_ = size;
     }
 
     void ElementBuffer::Bind() const
     {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ID);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_);
     }
 
     void ElementBuffer::Unbind() const
@@ -23,7 +23,7 @@ namespace GLhf
 
     void ElementBuffer::Destroy()
     {
-        glDeleteBuffers(1, &ID);
+        glDeleteBuffers(1, &id_);
     }
 
 }

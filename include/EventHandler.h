@@ -20,8 +20,8 @@ namespace GLhf
 
     class EventHandler {
     private:
-        inline static Window *window;
-        inline static Camera *camera;
+        inline static Window *window_;
+        inline static Camera *camera_;
 
         // Callback functions
         static void FramebufferSizeCallback(int width, int height);
@@ -31,7 +31,7 @@ namespace GLhf
         void SetEventCallback();
 
         // Key states
-        inline static Keys keys;
+        inline static Keys keys_;
 
         // Mouse callback variables
         inline static bool firstMouse = true;
