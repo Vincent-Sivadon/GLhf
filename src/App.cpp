@@ -16,7 +16,7 @@ namespace GLhf
         // ------------------
         Startup();
 
-        renderer_.Init(scene_);
+        renderer_.Create(scene_);
 
         // Game loop
         // ----------
@@ -35,8 +35,7 @@ namespace GLhf
             renderer_.Clear();
             glm::mat4 view_matrix = camera_.GetViewMatrix();
             for (Cube& cube : scene_.cubes_)
-                renderer_.Draw(cube, view_matrix);
-
+                renderer_.Draw(cube, view_matrix, camera_.position_);
 
             glfwSwapBuffers(window_.GetWindow());
 

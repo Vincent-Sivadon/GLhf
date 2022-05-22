@@ -80,6 +80,12 @@ namespace GLhf
         shader_.SetUniform("projection", projection_matrix_);
     }
 
+    void Cube::SetCameraPos(const glm::vec3& camera_pos)
+    {
+        shader_.Bind();
+        shader_.SetUniform("camera_pos", camera_pos);
+    }
+
     void Cube::Bind() const
     {
         texture_.Bind();

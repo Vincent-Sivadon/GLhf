@@ -13,16 +13,17 @@ namespace GLhf
     public:
         Renderer() {}
         
-        void Init(Scene& scene)
+        void Create(Scene& scene)
         {
             glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1800.0f / 950.0f, 0.1f, 400.0f);
             for(Cube& cube : scene.cubes_)
                 cube.SetProjection(projection);
         }
 
-        void Draw(Cube& cube, const glm::mat4& view_matrix)
+        void Draw(Cube& cube, glm::mat4& current_view_matrix, glm::vec3& camera_pos)
         {
-            cube.SetView(view_matrix);
+            cube.SetView(current_view_matrix);
+            cube.SetCameraPos(camera_pos);
             cube.Bind();
             glDrawElements(GL_TRIANGLES, cube.ElementsBufferSize(), GL_UNSIGNED_INT, 0);
         }

@@ -26,6 +26,7 @@ namespace GLhf
         void SetModel(const glm::mat4& mat);
         void SetView(const glm::mat4& mat);
         void SetProjection(const glm::mat4& mat);
+        void SetCameraPos(const glm::vec3& camera_pos);
 
         /* Binds for draw calls */
         void Bind() const;
