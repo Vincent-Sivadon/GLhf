@@ -1,4 +1,5 @@
 #include "App.h"
+#include "InstanceCube.h"
 
 #include <iostream>
 
@@ -36,6 +37,8 @@ namespace GLhf
             glm::mat4 view_matrix = camera_.GetViewMatrix();
             for (Cube& cube : scene_.cubes_)
                 renderer_.Draw(cube, view_matrix, camera_.position_);
+            for (InstanceCube& instance_cube : scene_.instance_cubes_)
+                renderer_.DrawInstance(instance_cube, view_matrix, camera_.position_);
 
             glfwSwapBuffers(window_.GetWindow());
 

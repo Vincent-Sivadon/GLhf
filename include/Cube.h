@@ -37,7 +37,7 @@ namespace GLhf
         inline int TexCoordsBufferSize() const { return tex_coord_buffer_.Size(); }
         inline int NormalsBufferSize()   const { return normal_buffer_.Size();   }
 
-    private:
+    protected:
         /* Buffers */
         VertexBuffer coord_buffer_;
         VertexBuffer tex_coord_buffer_;

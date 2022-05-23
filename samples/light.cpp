@@ -24,8 +24,8 @@ public:
         light_cube.SetColor(100.0f, 100.0f, 100.0f);
         light_cube.Create();
 
-        scene_.AddCube(cube);
-        scene_.AddCube(light_cube);
+        scene_.Add(cube);
+        scene_.Add(light_cube);
     }
 
 private:

@@ -24,6 +24,10 @@ namespace GLhf
         void Create(const VertexBuffer& coords_buffer,
                     const VertexBuffer& texcoords_buffer,
                     const VertexBuffer& normals_buffer);
+        void Create(const VertexBuffer& coord_buffer,
+                    const VertexBuffer& tex_coord_buffer,
+                    const VertexBuffer& normal_buffer,
+                    const VertexBuffer& instance_buffer);
 
         void Bind() const;
         void Unbind() const;
