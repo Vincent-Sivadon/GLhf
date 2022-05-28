@@ -5,6 +5,7 @@
 #include <EventHandler.h>
 #include <Scene.h>
 #include <Renderer.h>
+#include <PhysicsWorld.h>
 
 #include <GLFW/glfw3.h>
 #include <GL/glext.h>
@@ -38,6 +39,7 @@ namespace GLhf
         Scene scene_;
         Renderer renderer_;
         Camera camera_;
+        PhysicsWorld physics_world_;
 
         int argc;
         const char **argv;

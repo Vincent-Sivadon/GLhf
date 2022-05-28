@@ -19,7 +19,6 @@ namespace GLhf
         glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
     }
 
-
     void VertexBuffer::Bind() const
     {
         glBindBuffer(GL_ARRAY_BUFFER, id_);

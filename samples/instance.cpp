@@ -12,6 +12,12 @@ class Light : public GLhf::App
 public:
     void Startup() override
     {
+        /* PHYSICS */
+        objects.resize(3);
+        for (int i=0 ; i<3 ; i++)
+            objects[i].position_ = glm::vec3(i);
+        physics_world_.Create(objects);
+
         /* Texture Init */
         white.Create("../resources/white.png");
         brickwall.Create("../resources/brickwall.jpg");
@@ -40,6 +46,8 @@ private:
 
     GLhf::Texture2D white;
     GLhf::Texture2D brickwall;
+
+    std::vector<GLhf::Object> objects;
 };
 
 DECLARE_MAIN(Light);

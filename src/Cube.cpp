@@ -266,5 +266,13 @@ namespace GLhf
         vertex_array_.Create(coord_buffer_, tex_coord_buffer_, normal_buffer_);
     }
 
-    
+    void Cube::UpdateCoordsBuffer(std::vector<glm::vec3>* positions)
+    {
+        float size = 3 * positions->size();
+
+        glm::vec3* glm_data = reinterpret_cast<glm::vec3 *>(positions);
+        float* data = reinterpret_cast<float*>(glm_data);
+
+        coord_buffer_.UpdateData(data, size);
+    }
 }

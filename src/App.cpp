@@ -32,6 +32,9 @@ namespace GLhf
             // Input management
             event_handler_.Process(dt);
 
+            // Physics
+            physics_world_.Update(dt);
+
             // Rendering
             renderer_.Clear();
             glm::mat4 view_matrix = camera_.GetViewMatrix();

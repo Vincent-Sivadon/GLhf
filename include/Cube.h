@@ -31,6 +31,9 @@ namespace GLhf
         /* Binds for draw calls */
         void Bind() const;
 
+        /* Update */
+        void UpdateCoordsBuffer(std::vector<glm::vec3>* positions);
+
         /* Get */
         inline int ElementsBufferSize()  const { return element_buffer_.Size();  }
         inline int CoordsBufferSize()    const { return coord_buffer_.Size();    }

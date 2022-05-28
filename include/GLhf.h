@@ -10,3 +10,6 @@
 
 #include <Cube.h>
 #include <InstanceCube.h>
+
+#include <Object.h>
+#include <PhysicsWorld.h>
